@@ -1,5 +1,7 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import { CurrencyService } from '../currency-service';
+import { DataPointDto } from '../data-point-dto';
 
 @Component({
   selector: 'app-chart',
@@ -7,13 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  seriesToStringify = {
-    name: "EURUSD",
-    series: [{value:1, name:"1"}]
-  };
 
-  multi: any[]
-
+  multi: any[] = []
   view:[number,number] = [700, 300];
 
   // options
@@ -30,16 +27,19 @@ export class ChartComponent implements OnInit {
 
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
+  }; 
 
-  constructor() {
-    for(var i=0; i<100; i++){
-      this.seriesToStringify.series.push({value:Math.random(),name:(2+i).toString()})
+  constructor(private service:CurrencyService) {
+    service.getData().subscribe(data => this.loadData(data))
+  }
+
+  private loadData(points:DataPointDto[]){
+    var dataset = {
+      name:"EURUSD",
+      series:points
     }
-    var stringified:string = JSON.parse(JSON.stringify(this.seriesToStringify))
-    console.log(stringified)
-    this.multi = []
-    this.multi.push(stringified)
+    var processed = JSON.parse(JSON.stringify(dataset))
+    this.multi = [processed]
   }
 
   onSelect(data: any): void {
