@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,25 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  multi: any[] = [
-    {
-      "name": "Germany",
-      "series": [
-        {
-          "name": "1990",
-          "value": 62000000
-        },
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        }
-      ]
-    },
-  ];
+  seriesToStringify = {
+    name: "EURUSD",
+    series: [{value:1, name:"1"}]
+  };
+
+  multi: any[]
+
   view:[number,number] = [700, 300];
 
   // options
@@ -43,7 +32,15 @@ export class ChartComponent implements OnInit {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
 
-  constructor() {}
+  constructor() {
+    for(var i=0; i<100; i++){
+      this.seriesToStringify.series.push({value:Math.random(),name:(2+i).toString()})
+    }
+    var stringified:string = JSON.parse(JSON.stringify(this.seriesToStringify))
+    console.log(stringified)
+    this.multi = []
+    this.multi.push(stringified)
+  }
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
