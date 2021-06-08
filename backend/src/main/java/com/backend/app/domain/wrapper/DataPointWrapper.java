@@ -1,10 +1,10 @@
-package backend.app.domain.wrapper;
+package com.backend.app.domain.wrapper;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties
-public class DataPoint {
+public class DataPointWrapper {
 
     @JsonProperty("1. open")
     private String open;
@@ -17,7 +17,7 @@ public class DataPoint {
     @JsonProperty("5. volume")
     private String volume;
 
-    public DataPoint() {
+    public DataPointWrapper() {
     }
 
     public String getOpen() {

@@ -1,10 +1,10 @@
-package backend.app.domain.wrapper;
+package com.backend.app.domain.wrapper;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MetaData {
+public class MetaDataWrapper {
 
     @JsonProperty("1. Information")
     private String information;
@@ -19,7 +19,7 @@ public class MetaData {
     @JsonProperty("6. Time Zone")
     private String timeZone;
 
-    public MetaData() {
+    public MetaDataWrapper() {
     }
 
     public String getInformation() {
