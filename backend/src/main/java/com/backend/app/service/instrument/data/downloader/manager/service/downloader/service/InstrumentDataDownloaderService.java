@@ -1,16 +1,14 @@
-package com.backend.app.service.instrument.data.downloader.service;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service;
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.wrapper.CurrencyDataWrapper;
-import com.backend.app.domain.wrapper.DataPointWrapper;
-import com.backend.app.service.instrument.data.downloader.service.utilities.DataDownloaderService;
-import com.backend.app.service.instrument.data.downloader.service.utilities.DataPointProcessorService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataDownloaderService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointProcessorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -26,7 +24,7 @@ public class InstrumentDataDownloaderService {
 
     @Autowired
     private DataPointProcessorService dataPointProcessorService;
-
+/*
     public boolean loadLastDataPointToDatabase(){
         List<DataPoint> dataPoints = retrieveAndProcessPoints(baseEndPoint);
         if(dataPoints.isEmpty()){
@@ -34,7 +32,7 @@ public class InstrumentDataDownloaderService {
         } else {
             Optional<DataPoint> dataPointOptional = getLastPoint(dataPoints);
             if(dataPointOptional.isPresent()){
-                savePoints(Arrays.asList(dataPointOptional.get()));
+                //savePoints(Arrays.asList(dataPointOptional.get()));
                 return true;
             }
         }
@@ -50,7 +48,7 @@ public class InstrumentDataDownloaderService {
         if(dataPoints.isEmpty()){
             return false;
         } else {
-            savePoints(dataPoints);
+            //savePoints(dataPoints);
             return true;
         }
     }
@@ -64,7 +62,7 @@ public class InstrumentDataDownloaderService {
         }
     }
 
-
+*/
 
 
 

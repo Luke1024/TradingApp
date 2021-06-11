@@ -1,4 +1,4 @@
-package com.backend.app.service.instrument.data.downloader.service.utilities;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities;
 
 import com.backend.app.domain.wrapper.CurrencyDataWrapper;
 import org.slf4j.Logger;

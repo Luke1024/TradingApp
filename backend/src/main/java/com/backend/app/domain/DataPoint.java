@@ -1,14 +1,25 @@
 package com.backend.app.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class DataPoint {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     LocalDateTime timeStamp;
     double open;
     double high;
     double low;
     double close;
     double volume;
+
+    public DataPoint() {
+    }
 
     public DataPoint(LocalDateTime timeStamp, double open, double high, double low,
                      double close, double volume) {
@@ -18,6 +29,10 @@ public class DataPoint {
         this.low = low;
         this.close = close;
         this.volume = volume;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public LocalDateTime getTimeStamp() {

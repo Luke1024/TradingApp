@@ -19,3 +19,7 @@ u
 Esrc/main/java/com/backend/app/domain/wrapper/CurrencyDataWrapper.java,3\a\3a36268395c2be1a620141463e0780f9f26dc9ca
 ù
 msrc/main/java/com/backend/app/service/instrument/data/downloader/service/InstrumentDataDownloaderService.java,0\a\0a20c63f5ceac78231114cb45fce7e6c48dc0104
+ù
+msrc/main/java/com/backend/app/service/instrument/data/downloader/service/utilities/DataDownloaderService.java,9\f\9fdd8feae571f14a0c5dc895af76fcdc72954e4c
+°
+qsrc/main/java/com/backend/app/service/instrument/data/downloader/service/utilities/DataPointProcessorService.java,b\2\b286c8d5e282e14d46deba8e674055ec779de33a
