@@ -20,11 +20,14 @@ public class DataDownloaderManager {
     }
 
     private void downloadStartingData(){
+        downloadM5100PointsData();
+    }
 
+    private void downloadM5100PointsData(){
+        dataDownloaderService.loadLast100DataPointsToDatabase();
     }
 
     @Scheduled(fixedRate = 300000)
     public void runDataCollection(){
-
     }
 }
