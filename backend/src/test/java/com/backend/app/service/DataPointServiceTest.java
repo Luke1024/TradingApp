@@ -49,6 +49,22 @@ public class DataPointServiceTest {
         Assert.assertEquals(1, dataPointService.get100DataPoints().size());
     }
 
+    @Test
+    public void testSavingAndRetrievingDataPointsWithTheSameDate(){
+        DataPointService dataPointService = new DataPointService();
+
+        List<DataPoint> dataPointListToSave = new ArrayList<>();
+        for(int i=0; i<100; i++){
+            dataPointListToSave.add(randomPointGenerator(generateDateBasedOnInteger(1)));
+        }
+
+        dataPointService.saveDataPoints(dataPointListToSave);
+
+        //Expected value is 1 because if array is empty service block saving
+        // older points when first saved point working as reference.
+        Assert.assertEquals(1, dataPointService.get100DataPoints().size());
+    }
+
     private LocalDateTime generateDateBasedOnInteger(int i){
         return LocalDateTime.now().plusMinutes(i);
     }

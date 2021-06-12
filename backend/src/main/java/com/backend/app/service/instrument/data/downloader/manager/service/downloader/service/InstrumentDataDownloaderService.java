@@ -16,15 +16,15 @@ public class InstrumentDataDownloaderService {
 
     private Logger logger = LoggerFactory.getLogger(InstrumentDataDownloaderService.class);
 
-    private String baseEndPoint = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&" +
-            "symbol=TSLA&interval=5min&apikey=FGW9LY1I2F0A4VIB";
+    private String baseEndPoint = "https://www.alphavantage.co/query?function=FX_INTRADAY&" +
+            "from_symbol=EUR&to_symbol=USD&interval=5min&apikey=FGW9LY1I2F0A4VIB";
 
     @Autowired
     private DataDownloaderService dataDownloaderService;
 
     @Autowired
     private DataPointProcessorService dataPointProcessorService;
-/*
+
     public boolean loadLastDataPointToDatabase(){
         List<DataPoint> dataPoints = retrieveAndProcessPoints(baseEndPoint);
         if(dataPoints.isEmpty()){
@@ -40,7 +40,7 @@ public class InstrumentDataDownloaderService {
     }
 
     private Optional<DataPoint> getLastPoint(List<DataPoint> dataPoints){
-
+        return Optional.empty();
     }
 
     public boolean loadLast100DataPointsToDatabase() {
@@ -53,7 +53,7 @@ public class InstrumentDataDownloaderService {
         }
     }
 
-    public List<DataPoint> retrieveAndProcessPoints(String baseEndPoint) {
+    private List<DataPoint> retrieveAndProcessPoints(String baseEndPoint) {
         Optional<CurrencyDataWrapper> dataWrapper = dataDownloaderService.downloadDataFromApi(baseEndPoint);
         if (dataWrapper.isPresent()) {
             return dataPointProcessorService.processPoints(dataWrapper.get().getTimeSeries());
@@ -61,5 +61,4 @@ public class InstrumentDataDownloaderService {
             return new ArrayList<>();
         }
     }
-    */
 }

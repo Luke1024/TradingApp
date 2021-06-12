@@ -36,9 +36,6 @@ public class DataPointProcessorService {
         try {
             return Optional.of(new DataPoint(
                     LocalDateTime.parse(key),
-                    Double.parseDouble(pointWrapper.getOpen()),
-                    Double.parseDouble(pointWrapper.getHigh()),
-                    Double.parseDouble(pointWrapper.getLow()),
                     Double.parseDouble(pointWrapper.getClose())));
         } catch (Exception e){
             logger.warn("Failed to parse datapoint.");

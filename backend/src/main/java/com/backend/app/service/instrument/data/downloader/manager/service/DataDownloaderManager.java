@@ -11,23 +11,28 @@ public class DataDownloaderManager {
     @Autowired
     private InstrumentDataDownloaderService dataDownloaderService;
 
-    private boolean enableCollectingData;
+    private boolean enableCollectingSinglePointData;
 
     public DataDownloaderManager() {
-        this.enableCollectingData = false;
-        downloadStartingData();
-        this.enableCollectingData = true;
-    }
-
-    private void downloadStartingData(){
-        downloadM5100PointsData();
-    }
-
-    private void downloadM5100PointsData(){
-        //dataDownloaderService.loadLast100DataPointsToDatabase();
+        this.enableCollectingSinglePointData = false;
     }
 
     @Scheduled(fixedRate = 300000)
-    public void runDataCollection(){
+    private void downloadStartingData(){
+        if(enableCollectingSinglePointData) {
+            download_M5_single_point_data();
+        } else {
+            download_M5_100_Points_Data();
+            enableCollectingSinglePointData = true;
+        }
+
+    }
+
+    private void download_M5_100_Points_Data(){
+        dataDownloaderService.loadLast100DataPointsToDatabase();
+    }
+
+    private void download_M5_single_point_data(){
+        dataDownloaderService.loadLastDataPointToDatabase();
     }
 }

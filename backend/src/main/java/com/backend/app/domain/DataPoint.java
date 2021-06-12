@@ -12,20 +12,13 @@ public class DataPoint {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     LocalDateTime timeStamp;
-    double open;
-    double high;
-    double low;
     double close;
 
     public DataPoint() {
     }
 
-    public DataPoint(LocalDateTime timeStamp, double open, double high, double low,
-                     double close) {
+    public DataPoint(LocalDateTime timeStamp, double close) {
         this.timeStamp = timeStamp;
-        this.open = open;
-        this.high = high;
-        this.low = low;
         this.close = close;
     }
 
@@ -35,18 +28,6 @@ public class DataPoint {
 
     public LocalDateTime getTimeStamp() {
         return timeStamp;
-    }
-
-    public double getOpen() {
-        return open;
-    }
-
-    public double getHigh() {
-        return high;
-    }
-
-    public double getLow() {
-        return low;
     }
 
     public double getClose() {

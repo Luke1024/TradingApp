@@ -10,7 +10,7 @@ public class CurrencyDataWrapper {
 
     @JsonProperty("Meta Data")
     private MetaDataWrapper metaDataWrapper;
-    @JsonProperty("Time Series (5min)")
+    @JsonProperty("Time Series FX (5min)")
     private Map<String, DataPointWrapper> timeSeries;
 
     public CurrencyDataWrapper() {
