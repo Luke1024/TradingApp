@@ -16,19 +16,17 @@ public class DataPoint {
     double high;
     double low;
     double close;
-    double volume;
 
     public DataPoint() {
     }
 
     public DataPoint(LocalDateTime timeStamp, double open, double high, double low,
-                     double close, double volume) {
+                     double close) {
         this.timeStamp = timeStamp;
         this.open = open;
         this.high = high;
         this.low = low;
         this.close = close;
-        this.volume = volume;
     }
 
     public Long getId() {
@@ -53,9 +51,5 @@ public class DataPoint {
 
     public double getClose() {
         return close;
-    }
-
-    public double getVolume() {
-        return volume;
     }
 }

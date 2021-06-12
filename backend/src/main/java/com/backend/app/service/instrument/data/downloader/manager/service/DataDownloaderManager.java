@@ -24,7 +24,7 @@ public class DataDownloaderManager {
     }
 
     private void downloadM5100PointsData(){
-        dataDownloaderService.loadLast100DataPointsToDatabase();
+        //dataDownloaderService.loadLast100DataPointsToDatabase();
     }
 
     @Scheduled(fixedRate = 300000)

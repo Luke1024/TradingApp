@@ -24,7 +24,7 @@ public class InstrumentDataDownloaderService {
 
     @Autowired
     private DataPointProcessorService dataPointProcessorService;
-
+/*
     public boolean loadLastDataPointToDatabase(){
         List<DataPoint> dataPoints = retrieveAndProcessPoints(baseEndPoint);
         if(dataPoints.isEmpty()){
@@ -48,7 +48,7 @@ public class InstrumentDataDownloaderService {
         if(dataPoints.isEmpty()){
             return false;
         } else {
-            savePoints(dataPoints);
+            //savePoints(dataPoints);
             return true;
         }
     }
@@ -61,4 +61,5 @@ public class InstrumentDataDownloaderService {
             return new ArrayList<>();
         }
     }
+    */
 }

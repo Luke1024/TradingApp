@@ -1,11 +1,0 @@
-
-L
-java:S1068"*Remove this unused "logger" private field.(Ì¦†¦şÿÿÿÿ8ƒêŠİ/
-£
-java:S1186,"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¨®Åøÿÿÿÿ8¾òãŞ/
-S
-java:S1172,"1Remove this unused method parameter "dataPoints".(¨®Åøÿÿÿÿ8¾òãŞ/
-i
-java:S1128"LRemove this unused import 'com.backend.app.domain.wrapper.DataPointWrapper'.(˜…¾ï8Ç‰²Ş/
-V
-java:S1128"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8ƒêŠİ/

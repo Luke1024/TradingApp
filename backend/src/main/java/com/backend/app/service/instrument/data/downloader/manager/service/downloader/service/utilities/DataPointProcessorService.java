@@ -39,8 +39,7 @@ public class DataPointProcessorService {
                     Double.parseDouble(pointWrapper.getOpen()),
                     Double.parseDouble(pointWrapper.getHigh()),
                     Double.parseDouble(pointWrapper.getLow()),
-                    Double.parseDouble(pointWrapper.getClose()),
-                    Double.parseDouble(pointWrapper.getVolume())));
+                    Double.parseDouble(pointWrapper.getClose())));
         } catch (Exception e){
             logger.warn("Failed to parse datapoint.");
             return Optional.empty();

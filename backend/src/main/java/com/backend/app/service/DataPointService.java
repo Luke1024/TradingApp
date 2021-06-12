@@ -17,10 +17,14 @@ public class DataPointService {
 
     private List<DataPoint> dataPoints = new ArrayList<>();
 
-    public List<DataPoint> getDataPoints(){
-        if(dataPoints.size()>100) {
+    public List<DataPoint> get100DataPoints(){
+        if(dataPoints.size()>=100) {
             return dataPoints.subList(dataPoints.size() - 100, dataPoints.size());
         } else return dataPoints;
+    }
+
+    public List<DataPoint> getDataPoints() {
+        return dataPoints;
     }
 
     public void saveDataPoints(List<DataPoint> dataPoints){
