@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties
-public class Rate {
+public class RateWrapper {
 
     @JsonProperty("1. From_Currency Code")
     private String fromCurrencyCode;
-    @JsonProperty(". To_Currency Code")
+    @JsonProperty("3. To_Currency Code")
     private String toCurrencyCode;
     @JsonProperty("5. Exchange Rate")
     private String exchangeRate;
@@ -21,7 +21,7 @@ public class Rate {
     @JsonProperty("9. Ask Price")
     private String askPrice;
 
-    public Rate() {
+    public RateWrapper() {
     }
 
     public String getFromCurrencyCode() {

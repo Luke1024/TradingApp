@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ExchangeRateWrapper {
 
-    @JsonProperty("ealtime Currency Exchange Rate")
-    private Rate rate;
+    @JsonProperty("Realtime Currency Exchange Rate")
+    private RateWrapper rateWrapper;
 
     public ExchangeRateWrapper() {
     }
 
-    public Rate getRate() {
-        return rate;
+    public RateWrapper getRateWrapper() {
+        return rateWrapper;
     }
 }

@@ -7,8 +7,6 @@ Z
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 s
 Csrc/main/java/com/backend/app/controler/CurrencyDataController.java,9\b\9bc7adeb3d3050c35ef4ced9e88cd280b1129395
-p
-@src/main/java/com/backend/app/service/InstrumentDataService.java,3\7\376c8ec43bafbbd6b7f2f9f9d98e61947f901990
 r
 Bsrc/main/java/com/backend/app/domain/wrapper/DataPointWrapper.java,c\7\c7994e5303b5d1b770fc524a10235a7cf6a8a7e0
 q
@@ -17,10 +15,6 @@ c
 3src/main/java/com/backend/app/domain/DataPoint.java,3\f\3f3ab02af727affc9d00ffa6421ad3c2e0c5b27e
 u
 Esrc/main/java/com/backend/app/domain/wrapper/CurrencyDataWrapper.java,3\a\3a36268395c2be1a620141463e0780f9f26dc9ca
-Ω
-åsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/DataPointProcessorService.java,9\d\9d8520d3f2c4edc5b5c94803d3d3de2963229952
-π
-àsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/DataDownloaderService.java,f\9\f93d2b0bc341d35ee6471508aea740c697e1cb44
 q
 Asrc/main/java/com/backend/app/repository/DataPointRepository.java,4\1\41a2e6f1e181e4031de5fe15591b3fbf885d5ce6
 π
@@ -29,3 +23,23 @@ Asrc/main/java/com/backend/app/repository/DataPointRepository.java,4\1\41a2e6f1
 ksrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/DataDownloaderManager.java,c\a\cab923242cb94fbb7d12a4d71f1d878571876cbb
 k
 ;src/main/java/com/backend/app/service/DataPointService.java,7\1\719d363074b05c169bc70ed0276c3bd684e60d91
+u
+Esrc/main/java/com/backend/app/domain/wrapper/ExchangeRateWrapper.java,1\d\1d4bf2a850627583c7d5127e82f19f5d799892c9
+f
+6src/main/java/com/backend/app/domain/wrapper/Rate.java,7\a\7ae79831c895c23e3b4870458319ac5f0360aa51
+o
+?src/test/java/com/backend/app/service/DataPointServiceTest.java,1\6\16e20fecea7209e13216fb65f03882f104d34456
+Ω
+åsrc/test/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/InstrumentDataDownloaderServiceTest.java,e\b\eb0c4c0348af9d52114e19724b3f982284776bb1
+k
+;src/main/java/com/backend/app/domain/DataPointsPackage.java,c\4\c4a49132a4f905966df2187e31a25a382463a2ef
+b
+2src/main/java/com/backend/app/domain/MetaData.java,f\4\f4d2af2e37dafd9679eca0ebe4e384adce60f7af
+¬
+ësrc/test/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/DataPointsRetrieverServiceTest.java,1\4\1408ddfd8f3bd7288db9d115c6910d6424b97b5c
+æ
+çsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/DataPointsRetrieverService.java,3\0\3091861154c4e59a6d56b1690ba888ed9b7d9c8d
+∑
+Üsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/ApiConnectorService.java,3\c\3c03e20cf189e9042dd2a0bbdeb5b7df84132647
+ª
+äsrc/test/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/ApiConnectorServiceTest.java,8\d\8d04a43b0777ebdfa59995f3ff1ceac871edcfd6

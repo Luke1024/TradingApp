@@ -1,9 +1,11 @@
 package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service;
 
 import com.backend.app.domain.DataPoint;
+import com.backend.app.domain.DataPointsPackage;
 import com.backend.app.domain.wrapper.CurrencyDataWrapper;
-import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataDownloaderService;
-import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointProcessorService;
+import com.backend.app.service.DataPointService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointsRetrieverService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.ExchangeRateRetrieverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,29 @@ public class InstrumentDataDownloaderService {
 
     private Logger logger = LoggerFactory.getLogger(InstrumentDataDownloaderService.class);
 
-    private String baseEndPoint = "https://www.alphavantage.co/query?function=FX_INTRADAY&" +
-            "from_symbol=EUR&to_symbol=USD&interval=5min&apikey=FGW9LY1I2F0A4VIB";
 
     @Autowired
-    private DataDownloaderService dataDownloaderService;
+    private DataPointService dataPointService;
 
     @Autowired
-    private DataPointProcessorService dataPointProcessorService;
+    private DataPointsRetrieverService dataPointsRetrieverService;
 
-    public boolean loadLastDataPointToDatabase(){
-        List<DataPoint> dataPoints = retrieveAndProcessPoints(baseEndPoint);
+    @Autowired
+    private ExchangeRateRetrieverService exchangeRateRetrieverService;
+
+
+    public boolean saveTimeSeries(){
+        Optional<DataPointsPackage> dataPointsPackage = dataPointsRetrieverService.getTimeSeriesData();
+
+        if(dataPointsPackage.get()){
+
+        }
+    }
+
+
+
+    public boolean getCurrentExchangeRate(){
+        List<DataPoint> dataPoints = retrieveAndProcessPoints(b);
         if(dataPoints.isEmpty()){
             return false;
         } else {
@@ -44,11 +58,11 @@ public class InstrumentDataDownloaderService {
     }
 
     public boolean loadLast100DataPointsToDatabase() {
-        List<DataPoint> dataPoints = retrieveAndProcessPoints(baseEndPoint);
+        List<DataPoint> dataPoints = retrieveAndProcessPoints(fxIntradayEndpoint);
         if(dataPoints.isEmpty()){
             return false;
         } else {
-            //savePoints(dataPoints);
+            savePoints(dataPoints);
             return true;
         }
     }
@@ -61,4 +75,10 @@ public class InstrumentDataDownloaderService {
             return new ArrayList<>();
         }
     }
+
+    private void savePoints(List<DataPoint> dataPoints) {
+        dataPointService.saveDataPoints(dataPoints);
+    }
+
+
 }

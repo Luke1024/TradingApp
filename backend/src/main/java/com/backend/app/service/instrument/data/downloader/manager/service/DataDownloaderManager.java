@@ -29,10 +29,10 @@ public class DataDownloaderManager {
     }
 
     private void download_M5_100_Points_Data(){
-        dataDownloaderService.loadLast100DataPointsToDatabase();
+        //dataDownloaderService.loadLast100DataPointsToDatabase();
     }
 
     private void download_M5_single_point_data(){
-        dataDownloaderService.loadLastDataPointToDatabase();
+        //dataDownloaderService.getCurrentExchangeRate();
     }
 }

@@ -71,6 +71,6 @@ public class DataPointServiceTest {
 
     private DataPoint randomPointGenerator(LocalDateTime timeStamp){
         double randomValue = random.nextDouble();
-        return new DataPoint(timeStamp, randomValue, randomValue, randomValue, randomValue);
+        return new DataPoint(timeStamp, randomValue);
     }
 }

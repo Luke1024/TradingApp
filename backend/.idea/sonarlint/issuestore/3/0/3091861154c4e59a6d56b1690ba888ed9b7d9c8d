@@ -1,0 +1,12 @@
+
+T
+java:S1144-"2Remove this unused private "parseMetaData" method.(®¤ÿùøÿÿÿÿ8ªşî¦ /
+F
+java:S1128")Remove this unused import 'java.net.URI'.(Ö¦¨°8«éõ¦ /
+k
+java:S1128"NRemove this unused import 'org.springframework.web.util.UriComponentsBuilder'.(ßª»Ó8«éõ¦ /
+V
+java:S2864?"4Iterate over the "entrySet" instead of the "keySet".(±ö–ˆıÿÿÿÿ8òÕÌ¤ /
+j
+java:S1128"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Şûÿÿÿÿ8¢Ôó¦ /
+]	java:S125("<This block of commented-out lines of code should be removed.(çÒˆ¬ùÿÿÿÿ8ªşî¦ /

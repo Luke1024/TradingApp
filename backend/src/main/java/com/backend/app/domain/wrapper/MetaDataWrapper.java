@@ -3,7 +3,6 @@ package com.backend.app.domain.wrapper;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class MetaDataWrapper {
 
     @JsonProperty("1. Information")
