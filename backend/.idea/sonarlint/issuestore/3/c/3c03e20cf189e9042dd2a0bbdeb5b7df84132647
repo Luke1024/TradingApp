@@ -1,15 +1,11 @@
 
-F
-java:S1128")Remove this unused import 'java.net.URI'.(Ö¦¨°8þ¨ô§ /
-L
-java:S1172&"/Remove this unused method parameter "endPoint".(úšðÿ8þ¨ô§ /
-k
-java:S1128	"NRemove this unused import 'org.springframework.web.util.UriComponentsBuilder'.(ßª»Ó8þ¨ô§ /
-ž
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ñß™¥8Ì™Õ§ /
 c
-java:S3457,"AFormat specifiers should be used instead of string concatenation.(šõƒÆüÿÿÿÿ8ÞÎÏ§ /
-_
-java:S1854("BRemove this useless assignment to local variable "responseEntity".(ˆëåÎ8Ê·ù§ /
-P
-java:S1481("3Remove this unused "responseEntity" local variable.(ˆëåÎ8Ê·ù§ /
+java:S3457%"AFormat specifiers should be used instead of string concatenation.(šõƒÆüÿÿÿÿ8øœ„® /
+L
+java:S1172*"/Remove this unused method parameter "endPoint".(úšðÿ8þ¨ô§ /
+ž
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ñß™¥8Ì™Õ§ /
+c
+java:S3457/"AFormat specifiers should be used instead of string concatenation.(šõƒÆüÿÿÿÿ8ÞÎÏ§ /
+W
+java:S1068":Remove this unused "fxIntradayEndpointFull" private field.(ëð½ÿ8²º€® /

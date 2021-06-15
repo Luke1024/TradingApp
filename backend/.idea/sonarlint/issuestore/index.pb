@@ -25,8 +25,6 @@ k
 ;src/main/java/com/backend/app/service/DataPointService.java,7\1\719d363074b05c169bc70ed0276c3bd684e60d91
 u
 Esrc/main/java/com/backend/app/domain/wrapper/ExchangeRateWrapper.java,1\d\1d4bf2a850627583c7d5127e82f19f5d799892c9
-f
-6src/main/java/com/backend/app/domain/wrapper/Rate.java,7\a\7ae79831c895c23e3b4870458319ac5f0360aa51
 o
 ?src/test/java/com/backend/app/service/DataPointServiceTest.java,1\6\16e20fecea7209e13216fb65f03882f104d34456
 Ω
@@ -41,5 +39,9 @@ b
 çsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/DataPointsRetrieverService.java,3\0\3091861154c4e59a6d56b1690ba888ed9b7d9c8d
 ∑
 Üsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/ApiConnectorService.java,3\c\3c03e20cf189e9042dd2a0bbdeb5b7df84132647
-ª
-äsrc/test/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/ApiConnectorServiceTest.java,8\d\8d04a43b0777ebdfa59995f3ff1ceac871edcfd6
+m
+=src/main/java/com/backend/app/domain/wrapper/RateWrapper.java,0\9\09ee1f99d6724260ccd73e8cd5338089d0dec1dd
+f
+6src/main/java/com/backend/app/domain/ExchangeRate.java,9\4\945c0960943bdfc7e8b709ff8fd04e1597a3d90d
+¿
+èsrc/main/java/com/backend/app/service/instrument/data/downloader/manager/service/downloader/service/utilities/ExchangeRateRetrieverService.java,8\6\86350bf6fbcda610dacb4af739e2487d61b00b1d

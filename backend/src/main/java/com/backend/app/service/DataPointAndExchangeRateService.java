@@ -1,6 +1,7 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.DataPoint;
+import com.backend.app.domain.ExchangeRate;
 import com.backend.app.repository.DataPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,14 +9,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class DataPointService {
+public class DataPointAndExchangeRateService {
 
     @Autowired
     private DataPointRepository pointRepository;
 
     private List<DataPoint> dataPoints = new ArrayList<>();
+
+    private ExchangeRate currentExchangeRate = null;
 
     public List<DataPoint> get100DataPoints(){
         if(dataPoints.size()>=100) {
@@ -23,8 +27,26 @@ public class DataPointService {
         } else return dataPoints;
     }
 
-    public List<DataPoint> getDataPoints() {
+    public List<DataPoint> getAllDataPoints() {
         return dataPoints;
+    }
+
+    public Optional<ExchangeRate> getCurrentExchangeRate(){
+        if(currentExchangeRate != null){
+            return Optional.of(currentExchangeRate);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public void saveDataPointAsExchangeRateIn(ExchangeRate exchangeRate){
+        if(exchangeRate != null){
+            currentExchangeRate = exchangeRate;
+            DataPoint dataPointFromRate = new DataPoint(
+                    exchangeRate.getLastRefreshed(),
+                    exchangeRate.getExchangeRate());
+            saveDataPoint(dataPointFromRate);
+        }
     }
 
     public void saveDataPoints(List<DataPoint> dataPoints){
@@ -34,6 +56,8 @@ public class DataPointService {
             }
         }
     }
+
+
 
     private void saveDataPoint(DataPoint dataPoint){
         if(dataPoint != null) {

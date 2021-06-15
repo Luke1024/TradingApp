@@ -2,8 +2,8 @@ package com.backend.app.service.instrument.data.downloader.manager.service.downl
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.DataPointsPackage;
-import com.backend.app.domain.wrapper.CurrencyDataWrapper;
-import com.backend.app.service.DataPointService;
+import com.backend.app.domain.ExchangeRate;
+import com.backend.app.service.DataPointAndExchangeRateService;
 import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointsRetrieverService;
 import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.ExchangeRateRetrieverService;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class InstrumentDataDownloaderService {
 
 
     @Autowired
-    private DataPointService dataPointService;
+    private DataPointAndExchangeRateService dataPointAndExchangeRateService;
 
     @Autowired
     private DataPointsRetrieverService dataPointsRetrieverService;
@@ -32,53 +32,30 @@ public class InstrumentDataDownloaderService {
     public boolean saveTimeSeries(){
         Optional<DataPointsPackage> dataPointsPackage = dataPointsRetrieverService.getTimeSeriesData();
 
-        if(dataPointsPackage.get()){
-
-        }
-    }
-
-
-
-    public boolean getCurrentExchangeRate(){
-        List<DataPoint> dataPoints = retrieveAndProcessPoints(b);
-        if(dataPoints.isEmpty()){
-            return false;
-        } else {
-            Optional<DataPoint> dataPointOptional = getLastPoint(dataPoints);
-            if(dataPointOptional.isPresent()){
-                //savePoints(Arrays.asList(dataPointOptional.get()));
-                return true;
+        if(dataPointsPackage.isPresent()){
+            if(dataPointsPackage.get().getDataPoints() != null){
+                if( ! dataPointsPackage.get().getDataPoints().isEmpty()){
+                    savePoints(dataPointsPackage.get().getDataPoints());
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    private Optional<DataPoint> getLastPoint(List<DataPoint> dataPoints){
-        return Optional.empty();
-    }
-
-    public boolean loadLast100DataPointsToDatabase() {
-        List<DataPoint> dataPoints = retrieveAndProcessPoints(fxIntradayEndpoint);
-        if(dataPoints.isEmpty()){
-            return false;
-        } else {
-            savePoints(dataPoints);
+    public boolean saveCurrentExchangeRate(){
+        Optional<ExchangeRate> exchangeRate = exchangeRateRetrieverService.getCurrentExchangeRate();
+        if(exchangeRate.isPresent()){
+            saveRate(exchangeRate.get());
             return true;
-        }
-    }
-
-    private List<DataPoint> retrieveAndProcessPoints(String baseEndPoint) {
-        Optional<CurrencyDataWrapper> dataWrapper = dataDownloaderService.downloadDataFromApi(baseEndPoint);
-        if (dataWrapper.isPresent()) {
-            return dataPointProcessorService.processPoints(dataWrapper.get().getTimeSeries());
-        } else {
-            return new ArrayList<>();
-        }
+        } else return false;
     }
 
     private void savePoints(List<DataPoint> dataPoints) {
-        dataPointService.saveDataPoints(dataPoints);
+        dataPointAndExchangeRateService.saveDataPoints(dataPoints);
     }
 
-
+    private void saveRate(ExchangeRate rate){
+        dataPointAndExchangeRateService.saveDataPointAsExchangeRateIn(rate);
+    }
 }

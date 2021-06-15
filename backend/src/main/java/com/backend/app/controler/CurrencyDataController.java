@@ -1,7 +1,7 @@
 package com.backend.app.controler;
 
 import com.backend.app.domain.DataPointDto;
-import com.backend.app.service.DataPointService;
+import com.backend.app.service.DataPointAndExchangeRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CurrencyDataController {
 
     @Autowired
-    private DataPointService dataPointService;
+    private DataPointAndExchangeRateService dataPointAndExchangeRateService;
 
     @GetMapping(value = "/currencydata")
     public List<DataPointDto> getData(){

@@ -1,8 +1,11 @@
 
-L
-java:S1068"*Remove this unused "logger" private field.(Ì¦†¦þÿÿÿÿ8ƒêŠÝž/
-X	java:S125"<This block of commented-out lines of code should be removed.(øÔšö8ËÜÊ† /
-\
-java:S1068"?Remove this unused "currentExchangeRateEndpoint" private field.(”¤‰¦8íã¦† /
+b
+java:S3655#"@Call "dataPointsPackage.isPresent()" before accessing the value.(ªê÷©ûÿÿÿÿ8ŸºÞ¯ /
 S
-java:S1068"6Remove this unused "fxIntradayEndpoint" private field.(äóÛ¬8ìÓ»¦ /
+java:S11728"1Remove this unused method parameter "dataPoints".(¨®Åøÿÿÿÿ8å³É¯ /
+f
+java:S25830"DChange this condition so that it does not always evaluate to "false"(ÃßÒ¾ÿÿÿÿÿ8å³É¯ /
+J	java:S108#")Either remove or fill this block of code.(ªê÷©ûÿÿÿÿ8ŸºÞ¯ /
+X	java:S1251"<This block of commented-out lines of code should be removed.(¹Ò†Ê8å³É¯ /
+L
+java:S1068"*Remove this unused "logger" private field.(Ì¦†¦þÿÿÿÿ8ƒêŠÝž/
