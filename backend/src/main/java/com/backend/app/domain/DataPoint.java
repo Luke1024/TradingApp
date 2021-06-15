@@ -33,4 +33,13 @@ public class DataPoint {
     public double getClose() {
         return close;
     }
+
+    @Override
+    public String toString() {
+        return "DataPoint{" +
+                "id=" + id +
+                ", timeStamp=" + timeStamp +
+                ", close=" + close +
+                '}';
+    }
 }

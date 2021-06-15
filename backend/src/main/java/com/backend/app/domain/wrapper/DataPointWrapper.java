@@ -32,4 +32,14 @@ public class DataPointWrapper {
     public String getClose() {
         return close;
     }
+
+    @Override
+    public String toString() {
+        return "DataPointWrapper{" +
+                "open='" + open + '\'' +
+                ", high='" + high + '\'' +
+                ", low='" + low + '\'' +
+                ", close='" + close + '\'' +
+                '}';
+    }
 }

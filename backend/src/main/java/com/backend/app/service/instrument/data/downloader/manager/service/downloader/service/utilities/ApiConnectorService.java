@@ -20,7 +20,7 @@ public class ApiConnectorService {
 
     private String fxIntradayEndpointFull = "https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=EUR&to_symbol=USD&interval=5min&outputsize=full&apikey=FGW9LY1I2F0A4VIB";
 
-    private String fxEchangeRate = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=JPY&apikey=FGW9LY1I2F0A4VIB";
+    private String fxEchangeRate = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=FGW9LY1I2F0A4VIB";
 
 
     public ApiConnectorService() {
@@ -41,7 +41,7 @@ public class ApiConnectorService {
 
     private Optional<CurrencyDataWrapper> downloadDataFromApi(String endPoint){
         try {
-            return Optional.of(template.getForObject(fxIntradayEndpointCompact,
+            return Optional.of(template.getForObject(endPoint,
                     CurrencyDataWrapper.class));
         } catch (Exception e){
             logger.warn("Parsing or API failed. " + e.toString());

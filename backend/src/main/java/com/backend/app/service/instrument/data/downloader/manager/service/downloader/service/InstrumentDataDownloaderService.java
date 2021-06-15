@@ -28,7 +28,6 @@ public class InstrumentDataDownloaderService {
     @Autowired
     private ExchangeRateRetrieverService exchangeRateRetrieverService;
 
-
     public boolean saveTimeSeries(){
         Optional<DataPointsPackage> dataPointsPackage = dataPointsRetrieverService.getTimeSeriesData();
 
@@ -53,6 +52,7 @@ public class InstrumentDataDownloaderService {
 
     private void savePoints(List<DataPoint> dataPoints) {
         dataPointAndExchangeRateService.saveDataPoints(dataPoints);
+        logger.info("Saved points: " + dataPointAndExchangeRateService.getAllDataPoints().size());
     }
 
     private void saveRate(ExchangeRate rate){

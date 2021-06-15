@@ -14,4 +14,11 @@ public class ExchangeRateWrapper {
     public RateWrapper getRateWrapper() {
         return rateWrapper;
     }
+
+    @Override
+    public String toString() {
+        return "ExchangeRateWrapper{" +
+                "rateWrapper=" + rateWrapper.toString() +
+                '}';
+    }
 }

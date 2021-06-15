@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -34,7 +35,7 @@ public class ExchangeRateRetrieverService {
                     rateWrapper.getFromCurrencyCode(),
                     rateWrapper.getToCurrencyCode(),
                     Double.parseDouble(rateWrapper.getExchangeRate()),
-                    LocalDateTime.parse(rateWrapper.getLastRefreshed()),
+                    LocalDateTime.parse(rateWrapper.getLastRefreshed(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                     rateWrapper.getTimeZone(),
                     Double.parseDouble(rateWrapper.getBidPrice()),
                     Double.parseDouble(rateWrapper.getAskPrice())));

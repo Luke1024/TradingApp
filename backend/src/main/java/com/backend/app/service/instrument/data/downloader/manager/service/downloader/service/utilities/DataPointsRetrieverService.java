@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class DataPointsRetrieverService {
                     metaDataWrapper.getInformation(),
                     metaDataWrapper.getFromSymbol(),
                     metaDataWrapper.getToSymbol(),
-                    LocalDateTime.parse(metaDataWrapper.getLastRefreshed()),
+                    LocalDateTime.parse(metaDataWrapper.getLastRefreshed(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                     metaDataWrapper.getInterval(),
                     metaDataWrapper.getOutputSize(),
                     metaDataWrapper.getTimeZone()));
@@ -69,7 +70,7 @@ public class DataPointsRetrieverService {
     private Optional<DataPoint> parsePoint(String key, DataPointWrapper pointWrapper){
         try {
             return Optional.of(new DataPoint(
-                    LocalDateTime.parse(key),
+                    LocalDateTime.parse(key, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                     Double.parseDouble(pointWrapper.getClose())));
         } catch (Exception e){
             logger.warn("Failed to parse datapoint. " + e.toString());

@@ -51,4 +51,17 @@ public class RateWrapper {
     public String getAskPrice() {
         return askPrice;
     }
+
+    @Override
+    public String toString() {
+        return "RateWrapper{" +
+                "fromCurrencyCode='" + fromCurrencyCode + '\'' +
+                ", toCurrencyCode='" + toCurrencyCode + '\'' +
+                ", exchangeRate='" + exchangeRate + '\'' +
+                ", lastRefreshed='" + lastRefreshed + '\'' +
+                ", timeZone='" + timeZone + '\'' +
+                ", bidPrice='" + bidPrice + '\'' +
+                ", askPrice='" + askPrice + '\'' +
+                '}';
+    }
 }

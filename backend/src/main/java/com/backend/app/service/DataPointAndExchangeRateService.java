@@ -3,11 +3,14 @@ package com.backend.app.service;
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.ExchangeRate;
 import com.backend.app.repository.DataPointRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +19,8 @@ public class DataPointAndExchangeRateService {
 
     @Autowired
     private DataPointRepository pointRepository;
+
+    private Logger logger = LoggerFactory.getLogger(DataPointAndExchangeRateService.class);
 
     private List<DataPoint> dataPoints = new ArrayList<>();
 
@@ -51,11 +56,13 @@ public class DataPointAndExchangeRateService {
 
     public void saveDataPoints(List<DataPoint> dataPoints){
         if(dataPoints != null){
+            Collections.reverse(dataPoints);
             for(DataPoint dataPoint : dataPoints){
                 saveDataPoint(dataPoint);
             }
         }
     }
+
 
 
 
@@ -83,6 +90,9 @@ public class DataPointAndExchangeRateService {
         LocalDateTime newTimeStamp = dataPoint.getTimeStamp();
         if(lastTimeStamp.isBefore(newTimeStamp)){
             return true;
-        } else return false;
+        } else {
+            logger.warn(("New dataPoint has earlier timestamp."));
+            return false;
+        }
     }
 }

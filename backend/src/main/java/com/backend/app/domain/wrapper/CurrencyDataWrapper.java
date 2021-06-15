@@ -1,6 +1,5 @@
 package com.backend.app.domain.wrapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
@@ -21,5 +20,13 @@ public class CurrencyDataWrapper {
 
     public Map<String, DataPointWrapper> getTimeSeries() {
         return timeSeries;
+    }
+
+    @Override
+    public String toString() {
+        return "CurrencyDataWrapper{" +
+                "metaDataWrapper=" + metaDataWrapper.toString() +
+                ", timeSeries=" + timeSeries.toString() +
+                '}';
     }
 }
