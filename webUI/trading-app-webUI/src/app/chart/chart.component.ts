@@ -11,9 +11,10 @@ import { DataPointDto } from '../data-point-dto';
 export class ChartComponent implements OnInit {
 
   multi: any[] = []
-  view:[number,number] = [700, 300];
+  view:[number,number] = [700, 600];
 
   // options
+  autoScale: boolean = true;
   legend: boolean = true;
   showLabels: boolean = true;
   animations: boolean = true;
