@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { TradingViewComponent } from './trading-view/trading-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChartComponent,
     MenuComponent,
+    TradingViewComponent,
   ],
   imports: [
     BrowserModule,
