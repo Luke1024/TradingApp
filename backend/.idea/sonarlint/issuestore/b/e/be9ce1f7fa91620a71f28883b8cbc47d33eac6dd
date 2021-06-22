@@ -1,7 +1,9 @@
 
-Q
-java:S1066#"/Merge this if statement with the enclosing one.(‘æ¯‘øÿÿÿÿ8Ö¹Á÷ /
 L
 java:S1066$"/Merge this if statement with the enclosing one.(Š®¾ˆ8¾œÈ÷ /
-L
-java:S1068"*Remove this unused "logger" private field.(Ì¦†¦þÿÿÿÿ8ƒêŠÝž/
+c
+java:S34577"AFormat specifiers should be used instead of string concatenation.(‹–€ñÿÿÿÿÿ8ù¥üù /
+Q
+java:S1066#"/Merge this if statement with the enclosing one.(‘æ¯‘øÿÿÿÿ8Ö¹Á÷ /
+~
+java:S26297"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(‹–€ñÿÿÿÿÿ8Û®ýù /
