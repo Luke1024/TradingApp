@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrencyService } from '../currency-service';
 import { State } from '../models/state';
-import { TradingDto } from '../models/trading-dto';
+import { TradingState } from '../models/trading-state';
 
 @Component({
   selector: 'app-trading-view',
@@ -9,18 +10,17 @@ import { TradingDto } from '../models/trading-dto';
 })
 export class TradingViewComponent implements OnInit {
 
-  constructor() { }
-  tpPips:number = 0;
-  slPips:number = 0;
-  accountName = ""
-  leverageMax:number = 0
+  constructor(private currencyService:CurrencyService) { }
 
   ngOnInit(): void {
+    this.currencyService.tradingDataStream.subscribe(data => this.tradingDto = data as TradingState)
+  }
+  tradingDto2:TradingState = {
+    token: "",
+    accounts: []
   }
 
-  state = State
-
-  tradingDto:TradingDto = {
+  tradingDto:TradingState = {
     token: "sdasdasd",
     accounts: [{
       id: 42,
@@ -28,6 +28,7 @@ export class TradingViewComponent implements OnInit {
       leverage: 100,
       balance: 23400,
       state:State.OPEN,
+      message:"",
       orders: [{
         id: 23,
         currency: "EUR/USD",
@@ -37,7 +38,8 @@ export class TradingViewComponent implements OnInit {
         slPips: 30,
         slVal: 1000,
         profit: 300,
-        state:State.OPEN
+        state:State.OPEN,
+        message:""
       },{
         id: 23,
         currency: "EUR/USD",
@@ -48,6 +50,7 @@ export class TradingViewComponent implements OnInit {
         slVal: 1000,
         profit: 300,
         state:State.CREATION,
+        message:""
       }
     ]
     },
@@ -57,6 +60,7 @@ export class TradingViewComponent implements OnInit {
       leverage: 100,
       balance: 23400,
       state:State.EDIT,
+      message:"",
       orders: [{
         id: 23,
         currency: "EUR/USD",
@@ -67,6 +71,7 @@ export class TradingViewComponent implements OnInit {
         slVal: 1000,
         profit: 300,
         state: State.EDIT,
+        message:""
       }]
   },
   {
@@ -75,6 +80,16 @@ export class TradingViewComponent implements OnInit {
     leverage: 100,
     balance: 23400,
     state:State.CREATION,
+    message:"",
+    orders: []
+  },
+  {
+    id: 42,
+    accountName: "Test Account",
+    leverage: 100,
+    balance: 23400,
+    state:State.CREATION,
+    message:"",
     orders: []
   }
 

@@ -1,6 +1,6 @@
 import { State } from "./state";
 
-export interface OrderDto {
+export interface Order {
     id:number;
     currency:string;
     lot:number;
@@ -10,4 +10,5 @@ export interface OrderDto {
     slVal:number;
     profit:number;
     state:State
+    message:string;
 }

@@ -1,11 +1,12 @@
-import { OrderDto } from "./order-dto";
+import { Order } from "./order";
 import { State } from "./state";
 
-export interface AccountDto {
+export interface Account {
     id:number;
     accountName:string;
     leverage:number;
     balance:number;
     state: State;
-    orders:OrderDto[];
+    message: string;
+    orders:Order[];
 }

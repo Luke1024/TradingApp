@@ -1,0 +1,38 @@
+<div class="card-body">
+    <p>
+        <span>{{order.currency}} </span>
+        <span>{{order.lot}} / </span>
+        <span>{{order.tpPips}} </span>
+        <span>{{order.tpVal}} / </span>
+        <span>{{order.slPips}} </span>
+        <span>{{order.slVal}} </span>
+        <span>{{order.profit}} </span>
+    </p>
+    <div *ngIf="order.state==state.OPEN">
+        <button class="btn btn-primary mb-3" (click)="update()">Edit SL/TP</button>
+        <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
+        <p *ngIf="order.message">{{order.message}}</p>
+    </div>
+    <div *ngIf="order.state==state.EDIT">
+        <button class="btn btn-primary mb-3" (click)="update()">Save SL/TP</button>
+        <button class="btn btn-primary mb-3" (click)="delete()">Cancel Edit</button>
+        <div class="mb-3">
+            <label for="tpPips" class="form-label">Take profit in pips</label>
+            <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number">
+            <label for="slPips" class="form-label"> Stop loss in pips</label>
+            <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number">
+        </div>
+        <p *ngIf="order.message">{{order.message}}</p>
+    </div>
+    <div *ngIf="order.state==state.CREATION">
+        <button class="btn btn-primary mb-3" (click)="create()">Open Order</button>
+        <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
+        <div class="mb-3">
+            <label for="tpPips" class="form-label">Take profit in pips</label>
+            <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number">
+            <label for="slPips" class="form-label"> Stop loss in pips</label>
+            <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number">
+        </div>
+        <p *ngIf="order.message">{{order.message}}</p>
+    </div>
+</div>

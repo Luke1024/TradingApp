@@ -1,0 +1,37 @@
+<div class="card-body">
+    <div >
+        <div *ngIf="account.state==state.OPEN">
+            <p>
+                <span>{{account.accountName}} </span>
+                <span>{{account.leverage}} </span>
+                <span>{{account.balance}} </span>
+            </p>
+            <button class="btn btn-primary mb-3">Settings</button>
+            <p *ngIf="account.message">{{account.message}}</p>
+        </div>
+        <div *ngIf="account.state==state.EDIT">
+            <label for="account_name" class="form-label">Account Name</label>
+            <input type="number" class="form-control" id="account_name" [(ngModel)]="account.accountName">
+            <label for="leverage_max" class="form-label">Leverage Max</label>
+            <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage">
+            <button class="btn btn-primary mb-3" (click)="update()">Save Settings</button>
+            <button class="btn btn-primary mb-3" (click)="update()">Cancel Edit</button>
+            <button class="btn btn-primary mb-3" (click)="delete()">Remove Account</button>
+            <p *ngIf="account.message">{{account.message}}</p>
+        </div>
+        <div *ngIf="account.state==state.CREATION">
+            <label for="account_name" class="form-label">Account Name</label>
+            <input type="number" class="form-control" id="account_name" [(ngModel)]="account.accountName">
+            <label for="leverage_max" class="form-label">Leverage Max</label>
+            <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage">
+            <label for="balance" class="form-label">Balance</label>
+            <input type="number" class="form-control" id="balance" [(ngModel)]="account.balance">
+            <button class="btn btn-primary mb-3" (click)="create()">Save Account</button>
+            <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
+            <p *ngIf="account.message">{{account.message}}</p>
+        </div>
+        <div class="card m-2 shadow" *ngFor="let order of account.orders">
+            <app-order [orderInput]="order"></app-order>
+        </div>
+    </div>
+</div>
