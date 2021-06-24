@@ -1,4 +1,4 @@
-package com.backend.app.domain;
+package com.backend.app.domain.dto;
 
 public class DataPointDto {
     double value;

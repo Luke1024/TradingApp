@@ -1,7 +1,7 @@
 package com.backend.app.mapper;
 
 import com.backend.app.domain.DataPoint;
-import com.backend.app.domain.DataPointDto;
+import com.backend.app.domain.dto.DataPointDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
