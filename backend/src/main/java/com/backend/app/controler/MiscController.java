@@ -4,6 +4,7 @@ import com.backend.app.domain.dto.DataPointDto;
 import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.mapper.DataPointMapper;
 import com.backend.app.service.DataPointAndExchangeRateService;
+import com.backend.app.service.MiscService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

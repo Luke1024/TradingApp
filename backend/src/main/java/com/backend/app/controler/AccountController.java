@@ -2,6 +2,7 @@ package com.backend.app.controler;
 
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.TradingStateDto;
+import com.backend.app.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class AccountController {
     }
 
     @DeleteMapping(value = "/account/{token}/{id}")
-    public TradingStateDto deleteAccount(@PathVariable String token, PathVariable long id){
+    public TradingStateDto deleteAccount(@PathVariable String token, @PathVariable long id){
         return accountService.deleteAccount(token, id);
     }
 }

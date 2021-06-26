@@ -1,7 +1,6 @@
 package com.backend.app.domain.entity;
 
 import com.backend.app.domain.State;
-import com.backend.app.domain.dto.OrderDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,29 +18,29 @@ public class Account {
     private State state;
     private String message;
 
-    @OneToMany(targetEntity = Order.class,
+    @OneToMany(targetEntity = Currency_Order.class,
         mappedBy = "account",
         cascade = CascadeType.ALL,
         fetch = FetchType.LAZY)
     @OrderColumn
-    private List<OrderDto> orders;
+    private List<Currency_Order> currencyOrders;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     private User user;
 
     public Account(String accountName, int leverage, double balance, State state,
-                   String message, List<OrderDto> orders, User user) {
+                   String message, List<Currency_Order> currencyOrders, User user) {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
         this.state = state;
         this.message = message;
-        this.orders = new ArrayList<>();
+        this.currencyOrders = new ArrayList<>();
         setUser(user);
     }
 
-    private void setUser(User user){
+    public void setUser(User user){
         if(user != null){
             user.getAccounts().add(this);
         } else if(this.user != null){
@@ -74,8 +73,8 @@ public class Account {
         return message;
     }
 
-    public List<OrderDto> getOrders() {
-        return orders;
+    public List<Currency_Order> getCurrencyOrders() {
+        return currencyOrders;
     }
 
     public User getUser() {

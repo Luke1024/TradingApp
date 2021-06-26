@@ -1,9 +1,9 @@
 
 c
 java:S3457/"AFormat specifiers should be used instead of string concatenation.(šõƒÆüÿÿÿÿ8ÞÎÏ§ /
-W
-java:S1068":Remove this unused "fxIntradayEndpointFull" private field.(ëð½ÿ8²º€® /
 ž
 java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ñß™¥8Ì™Õ§ /
 c
 java:S3457%"AFormat specifiers should be used instead of string concatenation.(šõƒÆüÿÿÿÿ8øœ„® /
+W
+java:S1068":Remove this unused "fxIntradayEndpointFull" private field.(ëð½ÿ8²º€® /
