@@ -49,6 +49,12 @@ public class Account {
         this.user = user;
     }
 
+    public void addOrder(Currency_Order currency_order){
+        if(currency_order != null){
+            currency_order.setAccount(this);
+        }
+    }
+
     public long getId() {
         return id;
     }

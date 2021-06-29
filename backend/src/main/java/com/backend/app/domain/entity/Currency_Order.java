@@ -11,12 +11,12 @@ public class Currency_Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String currency;
-    private int lot;
+    private double lot;
     private int tpPips;
-    private int tpVal;
+    private double tpVal;
     private int slPips;
-    private int slVal;
-    private int profit;
+    private double slVal;
+    private double profit;
     private State state;
     private String message;
 
@@ -27,8 +27,8 @@ public class Currency_Order {
     public Currency_Order() {
     }
 
-    public Currency_Order(String currency, int lot, int tpPips, int tpVal, int slPips, int slVal,
-                          int profit, State state, String message, Account account) {
+    public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips, double slVal,
+                          double profit, State state, String message, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
@@ -41,7 +41,7 @@ public class Currency_Order {
         setAccount(account);
     }
 
-    private void setAccount(Account account){
+    public void setAccount(Account account){
         if(account != null){
             account.getCurrencyOrders().add(this);
         } else if(this.account != null){
@@ -58,7 +58,7 @@ public class Currency_Order {
         return currency;
     }
 
-    public int getLot() {
+    public double getLot() {
         return lot;
     }
 
@@ -66,7 +66,7 @@ public class Currency_Order {
         return tpPips;
     }
 
-    public int getTpVal() {
+    public double getTpVal() {
         return tpVal;
     }
 
@@ -74,11 +74,11 @@ public class Currency_Order {
         return slPips;
     }
 
-    public int getSlVal() {
+    public double getSlVal() {
         return slVal;
     }
 
-    public int getProfit() {
+    public double getProfit() {
         return profit;
     }
 
@@ -90,7 +90,31 @@ public class Currency_Order {
         return message;
     }
 
-    public Account getAccount() {
-        return account;
+    public void setTpPips(int tpPips) {
+        this.tpPips = tpPips;
+    }
+
+    public void setTpVal(double tpVal) {
+        this.tpVal = tpVal;
+    }
+
+    public void setSlPips(int slPips) {
+        this.slPips = slPips;
+    }
+
+    public void setSlVal(double slVal) {
+        this.slVal = slVal;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

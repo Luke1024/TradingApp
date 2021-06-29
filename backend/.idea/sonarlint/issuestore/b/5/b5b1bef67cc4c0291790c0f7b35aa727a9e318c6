@@ -1,23 +1,23 @@
 
+c	java:S107"BConstructor has 10 parameters, which is greater than 7 authorized.(ë®×–øÿÿÿÿ8¦¹Õî£/
 L
 java:S1068"*Remove this unused "profit" private field.(Ñö¤£øÿÿÿÿ8êİÏî£/
-c	java:S107"BConstructor has 10 parameters, which is greater than 7 authorized.(ë®×–øÿÿÿÿ8¦¹Õî£/
-N
-java:S1068",Remove this unused "currency" private field.(´£±òıÿÿÿÿ8¡°Íî£/
-M
-java:S1068"+Remove this unused "message" private field.(ù„è¿ûÿÿÿÿ8ˆ“Ñî£/
-F
-java:S1068
-")Remove this unused "tpVal" private field.(¦½£ñ8¡°Íî£/
+K
+java:S1068")Remove this unused "slVal" private field.(…êÂüÿÿÿÿ8êİÏî£/
 F
 java:S1068")Remove this unused "state" private field.(·˜é8©ÅĞî£/
-G
-java:S1068"*Remove this unused "slPips" private field.(üÒÉŒ8êİÏî£/
+L
+java:S1068	"*Remove this unused "tpPips" private field.(Úº°şşÿÿÿÿ8¡°Íî£/
 I
 java:S1068"'Remove this unused "lot" private field.(©ø­şÿÿÿÿ8¡°Íî£/
 H
 java:S1068"&Remove this unused "id" private field.(°µ€˜ıÿÿÿÿ8¡°Íî£/
-L
-java:S1068	"*Remove this unused "tpPips" private field.(Úº°şşÿÿÿÿ8¡°Íî£/
-K
-java:S1068")Remove this unused "slVal" private field.(…êÂüÿÿÿÿ8êİÏî£/
+F
+java:S1068
+")Remove this unused "tpVal" private field.(¦½£ñ8¡°Íî£/
+G
+java:S1068"*Remove this unused "slPips" private field.(üÒÉŒ8êİÏî£/
+N
+java:S1068",Remove this unused "currency" private field.(´£±òıÿÿÿÿ8¡°Íî£/
+M
+java:S1068"+Remove this unused "message" private field.(ù„è¿ûÿÿÿÿ8ˆ“Ñî£/

@@ -14,9 +14,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping(value = "/order/{token}")
-    public TradingStateDto saveAccount(@PathVariable String token, @RequestBody OrderDto orderDto) {
-        return orderService.saveOrder(token, orderDto);
+    @PostMapping(value = "/order/{token}/{account_id}")
+    public TradingStateDto saveAccount(@PathVariable String token, @PathVariable long account_id, @RequestBody OrderDto orderDto) {
+        return orderService.saveOrder(token, account_id, orderDto);
     }
 
     @PutMapping(value = "/order/{token}")

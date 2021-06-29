@@ -3,6 +3,12 @@ package com.backend.app.domain.entity;
 import javax.persistence.*;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "User.findByToken",
+        query = "SELECT * FROM user WHERE token=:TOKEN",
+        resultClass = User.class
+)
+
 @Entity
 public class User {
 
@@ -23,8 +29,13 @@ public class User {
 
     }
 
-    public void addAcounts(List<Account> accounts){
-        for(Account account : accounts){
+    public User(String token, List<Account> accounts) {
+        this.token = token;
+        this.accounts = accounts;
+    }
+
+    public void addAcount(Account account){
+        if(account != null) {
             account.setUser(this);
         }
     }

@@ -1,0 +1,11 @@
+
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆïÃ°
+D
+java:S1172-")Remove this unused method parameter "id".(Í¼ú»ıÿÿÿÿ
+E
+java:S1068"*Remove this unused "logger" private field.(ìÊÌıÿÿÿÿ
+E
+java:S1172)"/Remove this unused method parameter "orderDto".(÷‰
+J
+java:S1066"/Merge this if statement with the enclosing one.(À³˜Çüÿÿÿÿ
+>	java:S108!")Either remove or fill this block of code.(ç£ñÏ

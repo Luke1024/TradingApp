@@ -30,4 +30,44 @@ public class OrderDto {
         this.state = state;
         this.message = message;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public double getLot() {
+        return lot;
+    }
+
+    public int getTpPips() {
+        return tpPips;
+    }
+
+    public double getTpVal() {
+        return tpVal;
+    }
+
+    public int getSlPips() {
+        return slPips;
+    }
+
+    public double getSlVal() {
+        return slVal;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }
