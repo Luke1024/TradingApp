@@ -1,7 +1,6 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.dto.AccountDto;
-import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.mapper.AccountMapper;
@@ -11,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,7 +40,7 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public TradingStateDto saveAccount(String token, AccountDto accountDto){
+    public List<AccountDto> saveAccount(String token, AccountDto accountDto){
         if(accountDtoNullCheck(accountDto)) {
             Optional<User> userOptional = userService.getUser(token);
             if(userOptional.isPresent()) {
@@ -60,7 +60,7 @@ public class AccountService {
         }
     }
 
-    public TradingStateDto updateAccount(String token, AccountDto accountDto){
+    public List<AccountDto> updateAccount(String token, AccountDto accountDto){
         if(accountDtoNullCheck(accountDto)){
             Optional<Account> accountOptional = getAccount(accountDto);
             if(accountOptional.isPresent()){
@@ -82,7 +82,7 @@ public class AccountService {
         accountRepository.save(accountModified);
     }
 
-    public TradingStateDto deleteAccount(String token, long id){
+    public List<AccountDto> deleteAccount(String token, long id){
         Optional<Account> accountOptional = accountRepository.findById(id);
         if(accountOptional.isPresent()){
             accountRepository.deleteById(id);

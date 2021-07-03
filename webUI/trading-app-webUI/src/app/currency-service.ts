@@ -55,38 +55,38 @@ export class CurrencyService {
 
     //account
     public accountCreate(accountDto:AccountDto){
-        this.http.post<TradingStateDto>(this.accountUrl + this.token, accountDto, {observe:'response'})
+        this.http.post<AccountDto[]>(this.accountUrl + this.token, accountDto, {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public accountUpdate(accountDto:AccountDto){
-        this.http.put<TradingStateDto>(this.accountUrl + this.token, accountDto, {observe:'response'})
+        this.http.put<AccountDto[]>(this.accountUrl + this.token, accountDto, {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public accountDelete(accountDto:AccountDto){
-        this.http.delete<TradingStateDto>(this.accountUrl + this.token + '/' + accountDto.id.toString())
+        this.http.delete<AccountDto[]>(this.accountUrl + this.token + '/' + accountDto.id.toString())
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     //order
     public orderCreate(orderDto:OrderDto, account:AccountDto){
-        this.http.post<TradingStateDto>(this.orderUrl + this.token + '/' + account.id,orderDto, {observe:'response'})
+        this.http.post<AccountDto[]>(this.orderUrl + this.token + '/' + account.id,orderDto, {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public orderUpdate(orderDto:OrderDto){
-        this.http.put<TradingStateDto>(this.orderUrl + this.token, orderDto, {observe:'response'})
+        this.http.put<AccountDto[]>(this.orderUrl + this.token, orderDto, {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public deleteOrder(orderDto:OrderDto){
-        this.http.delete<TradingStateDto>(this.orderUrl + this.token + '/' + orderDto.id.toString())
+        this.http.delete<AccountDto[]>(this.orderUrl + this.token + '/' + orderDto.id.toString())
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
@@ -96,7 +96,6 @@ export class CurrencyService {
             var status = response.status
             if(response.body != null){
                 if(status==200){
-                    this.token = response.body.token
                     this.tradingData.next(response.body)
                 }
             }

@@ -1,7 +1,6 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.dto.AccountDto;
-import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.mapper.AccountMapper;
@@ -21,13 +20,13 @@ public class TradingStateService {
     @Autowired
     private AccountMapper accountMapper;
 
-    public TradingStateDto getTradingState(String token){
+    public List<AccountDto> getTradingState(String token){
         Optional<User> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
             User user = userOptional.get();
             List<AccountDto> accountDtos = assembleAccountDtos(user);
-            return new TradingStateDto(token, accountDtos);
-        } else return new TradingStateDto(token, new ArrayList<>());
+            return accountDtos;
+        } else return new ArrayList<>();
     }
 
     private List<AccountDto> assembleAccountDtos(User user){

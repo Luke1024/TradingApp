@@ -16,12 +16,11 @@ export class TradingViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.currencyService.getToken()
-    this.currencyService.tradingDataStream.subscribe(data => this.tradingDto = data as TradingStateDto)
+    this.currencyService.tradingDataStream.subscribe(data => this.accounts = data as AccountDto[])
   }
-  tradingDto:TradingStateDto = {
-    token: "",
-    accounts: []
-  }
+
+  accounts!:AccountDto[]
+  
 
   addAccount() {
     var account:AccountDto = {

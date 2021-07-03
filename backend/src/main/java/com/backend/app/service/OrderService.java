@@ -1,8 +1,8 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.State;
+import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.OrderDto;
-import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.Currency_Order;
 import com.backend.app.mapper.OrderMapper;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Order;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,7 +36,7 @@ public class OrderService {
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     //use account id for creation
-    public TradingStateDto saveOrder(String token, long account_id, OrderDto orderDto){
+    public List<AccountDto> saveOrder(String token, long account_id, OrderDto orderDto){
         if(orderDtoNullCheck(orderDto)){
             if(checkStateForSaving(orderDto)){
                 Optional<Account> accountOptional = accountService.getAccount(account_id);
@@ -69,7 +69,7 @@ public class OrderService {
         }
     }
 
-    public TradingStateDto updateOrder(String token, OrderDto orderDto){
+    public List<AccountDto> updateOrder(String token, OrderDto orderDto){
         if(orderDtoNullCheck(orderDto)){
             Optional<Currency_Order> orderOptional = getOrder(orderDto);
             if(orderOptional.isPresent()){
@@ -90,7 +90,7 @@ public class OrderService {
         return orderRepository.findById(orderDto.getId());
     }
 
-    public TradingStateDto deleteOrder(String token, long id){
+    public List<AccountDto> deleteOrder(String token, long id){
         Optional<Currency_Order> orderOptional = orderRepository.findById(id);
         if(orderOptional.isPresent()){
             orderRepository.deleteById(id);
