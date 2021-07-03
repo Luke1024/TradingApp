@@ -12,4 +12,20 @@ public class TradingStateDto {
         this.token = token;
         this.accounts = accounts;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<AccountDto> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<AccountDto> accounts) {
+        this.accounts = accounts;
+    }
 }

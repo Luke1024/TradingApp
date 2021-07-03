@@ -1,3 +1,5 @@
 <div class="card m-2 shadow" *ngFor="let account of tradingDto.accounts">
     <app-account [accountInput]="account"></app-account>
 </div>
+<button class="btn btn-primary mb-3" (click)='addAccount()'>Add Account
+</button>

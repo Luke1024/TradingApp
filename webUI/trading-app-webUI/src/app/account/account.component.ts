@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
-import { Account as Account } from '../models/account';
+import { AccountDto as AccountDto } from '../models/account';
+import { OrderDto } from '../models/order';
 import { State } from '../models/state';
 
 @Component({
@@ -10,22 +11,58 @@ import { State } from '../models/state';
 })
 export class AccountComponent implements OnInit {
 
-  @Input() accountInput!:Account
+  @Input() accountInput!:AccountDto
 
   state = State
 
-  account!:Account
+  account!:AccountDto
 
   constructor(private currencyService:CurrencyService) {
-    
+
   }
 
-  create(){
-    this.currencyService.accountCreate(this.account);
+  addOrder(){
+    var order:OrderDto = {
+      id:1,
+      currency:"EUR/USD",
+      lot:0.1,
+      tpPips:0,
+      tpVal:0,
+      slPips:0,
+      slVal:0,
+      profit:0,
+      state:State.CREATION,
+      message:""
+    }
+    this.currencyService.orderCreate(order,this.account)
+  }
+//open state methods
+  settings(){
+    this.account.state = State.EDIT
+    this.update()
+  }
+
+//edit state methods
+
+  saveSettings(){
+    this.account.state = State.OPEN
+    this.update()
+  }
+
+  cancelEditSettings(){
+    this.account.state = State.OPEN
+    this.currencyService.accountUpdate(this.account);
+  }
+
+  // creation state methods
+
+  saveAccount(){
+    this.account.state = State.OPEN
+    this.update;
   }
 
   update(){
-    this.currencyService.accountUpdate(this.account);
+    this.currencyService.accountUpdate(this.account)
   }
 
   delete(){
@@ -35,5 +72,4 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.account = Object.assign({},this.accountInput)
   }
-
 }

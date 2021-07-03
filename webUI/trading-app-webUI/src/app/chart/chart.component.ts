@@ -31,7 +31,7 @@ export class ChartComponent implements OnInit {
   }; 
 
   constructor(private service:CurrencyService) {
-    service.getData().subscribe(data => this.loadData(data))
+    //service.getData().subscribe(data => this.loadData(data))
   }
 
   private loadData(points:DataPointDto[]){

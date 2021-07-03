@@ -25,9 +25,12 @@ public class Account {
     @OrderColumn
     private List<Currency_Order> currencyOrders;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    public Account() {
+    }
 
     public Account(String accountName, int leverage, double balance, State state,
                    String message, List<Currency_Order> currencyOrders, User user) {
@@ -101,5 +104,9 @@ public class Account {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
+import { AccountDto } from '../models/account';
+import { OrderDto } from '../models/order';
 import { State } from '../models/state';
-import { TradingState } from '../models/trading-state';
+import { TradingStateDto } from '../models/trading-state';
 
 @Component({
   selector: 'app-trading-view',
@@ -13,13 +15,28 @@ export class TradingViewComponent implements OnInit {
   constructor(private currencyService:CurrencyService) { }
 
   ngOnInit(): void {
-    this.currencyService.tradingDataStream.subscribe(data => this.tradingDto = data as TradingState)
+    this.currencyService.getToken()
+    this.currencyService.tradingDataStream.subscribe(data => this.tradingDto = data as TradingStateDto)
   }
-  tradingDto2:TradingState = {
+  tradingDto:TradingStateDto = {
     token: "",
     accounts: []
   }
 
+  addAccount() {
+    var account:AccountDto = {
+      id:1,
+      accountName:"",
+      leverage:10,
+      balance:10000,
+      state:State.CREATION,
+      message:"",
+      orders:[]
+    }
+    this.currencyService.accountCreate(account);
+  }
+
+  /*
   tradingDto:TradingState = {
     token: "sdasdasd",
     accounts: [{
@@ -95,5 +112,5 @@ export class TradingViewComponent implements OnInit {
 
 ]
 
-}
+} */
 }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Order;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,9 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderModdingService orderModdingService;
+
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     //use account id for creation
@@ -38,7 +42,7 @@ public class OrderService {
                 Optional<Account> accountOptional = accountService.getAccount(account_id);
                 if(accountOptional.isPresent()){
                     Account account = accountOptional.get();
-                    account.addOrder(orderMapper.mapToNewOrder(orderDto, account));
+                    orderRepository.save(orderMapper.mapToNewOrder(orderDto, account));
                 } else {
                     logger.warn("Account not found.");
                 }
@@ -78,12 +82,8 @@ public class OrderService {
     }
 
     private void mapAndUpdateOrder(Currency_Order currency_order, OrderDto orderDto){
-        currency_order.setTpPips(orderDto.getTpPips());
-        currency_order.setTpVal(orderDto.getTpVal());
-        currency_order.setProfit(orderDto.getProfit());
-        currency_order.setState(orderDto.getState());
-        currency_order.setMessage(orderDto.getMessage());
-        orderRepository.save(currency_order);
+        Currency_Order orderMofified = orderModdingService.mod(currency_order, orderDto);;
+        orderRepository.save(orderMofified);
     }
 
     private Optional<Currency_Order> getOrder(OrderDto orderDto){

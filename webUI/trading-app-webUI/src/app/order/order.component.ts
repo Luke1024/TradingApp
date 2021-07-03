@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
-import { Order } from '../models/order';
+import { OrderDto } from '../models/order';
 import { State } from '../models/state';
 
 @Component({
@@ -10,18 +10,34 @@ import { State } from '../models/state';
 })
 export class OrderComponent implements OnInit {
 
-  @Input() orderInput!:Order
+  @Input() orderInput!:OrderDto
 
-  order!:Order
+  order!:OrderDto
 
   state = State
 
   constructor(private currencyService:CurrencyService) { }
 
-
-  create(){
-    this.currencyService.orderCreate(this.order);
+  editSlTp(){
+    this.order.state = State.EDIT
+    this.update()
   }
+
+  saveSlTp(){
+    this.order.state = State.OPEN
+    this.update()
+  }
+
+  cancelEdit(){
+    this.order.state = State.OPEN
+    this.update()
+  }
+
+  openOrder(){
+    this.order.state = State.OPEN
+    this.update()
+  }
+
 
   update(){
     this.currencyService.orderUpdate(this.order);
@@ -34,5 +50,4 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.order = Object.assign({},this.orderInput);
   }
-
 }

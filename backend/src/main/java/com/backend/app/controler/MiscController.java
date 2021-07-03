@@ -1,15 +1,14 @@
 package com.backend.app.controler;
 
 import com.backend.app.domain.dto.DataPointDto;
+import com.backend.app.domain.dto.StringDto;
 import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.mapper.DataPointMapper;
 import com.backend.app.service.DataPointAndExchangeRateService;
 import com.backend.app.service.MiscService;
+import com.backend.app.service.TradingStateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,18 +26,21 @@ public class MiscController {
     @Autowired
     private MiscService miscService;
 
+    @Autowired
+    private TradingStateService tradingStateService;
+
     @GetMapping(value = "/currencydata")
     public List<DataPointDto> getData(){
         return dataPointMapper.mapToDtoList(dataPointAndExchangeRateService.get100DataPoints());
     }
 
     @GetMapping(value = "/token")
-    public String getToken(){
+    public StringDto getToken(){
         return miscService.getToken();
     }
 
-    @GetMapping(value = "/getTradingState")
-    public TradingStateDto getTradingState(){
-        return miscService.getTradingState();
+    @GetMapping(value = "/getTradingState/{token}")
+    public TradingStateDto getTradingState(@PathVariable String token){
+        return tradingStateService.getTradingState(token);
     }
 }

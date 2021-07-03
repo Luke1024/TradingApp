@@ -30,7 +30,7 @@ import { OrderComponent } from './order/order.component';
     HttpClientModule,
     NgxChartsModule,
     NgbModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

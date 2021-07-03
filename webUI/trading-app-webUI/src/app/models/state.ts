@@ -1,3 +1,5 @@
 export enum State{
-    CREATION, OPEN, EDIT, CLOSE
+    CREATION = 'CREATION',
+    OPEN = 'OPEN',
+    EDIT = 'EDIT'
 }

@@ -1,6 +1,5 @@
 package com.backend.app.service;
 
-import com.backend.app.domain.State;
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.TradingStateDto;
 import com.backend.app.domain.entity.Account;
@@ -24,13 +23,16 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private AccountMapper accountMapper;
-
-    @Autowired
     private OrderService orderService;
 
     @Autowired
     private TradingStateService tradingStateService;
+
+    @Autowired
+    private AccountModdingService accountModdingService;
+
+    @Autowired
+    private AccountMapper accountMapper;
 
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
@@ -40,12 +42,10 @@ public class AccountService {
 
     public TradingStateDto saveAccount(String token, AccountDto accountDto){
         if(accountDtoNullCheck(accountDto)) {
-            if (checkStateForSaving(accountDto)) {
-                Optional<User> userOptional = userService.getUser(token);
-                if (userOptional.isPresent()) {
-                    User user = userOptional.get();
-                    user.addAcount(accountMapper.mapToNewAccount(accountDto, user));
-                }
+            Optional<User> userOptional = userService.getUser(token);
+            if(userOptional.isPresent()) {
+                User user = userOptional.get();
+                accountRepository.save(accountMapper.mapToNewAccount(accountDto, user));
             }
         }
         return tradingStateService.getTradingState(token);
@@ -56,15 +56,6 @@ public class AccountService {
             return true;
         } else {
             logger.warn("AccountDto is null.");
-            return false;
-        }
-    }
-
-    private boolean checkStateForSaving(AccountDto accountDto){
-        if(accountDto.getState()==State.CREATION){
-            return true;
-        } else {
-            logger.warn("Account must be in creation mode for saving.");
             return false;
         }
     }
@@ -86,11 +77,9 @@ public class AccountService {
     }
 
     private void mapAndUpdateAccount(Account accountFromDatabase, AccountDto accountDto){
-        accountFromDatabase.setAccountName(accountDto.getAccountName());
-        accountFromDatabase.setLeverage(accountDto.getLeverage());
-        accountFromDatabase.setState(accountDto.getState());
-        accountFromDatabase.setMessage(accountDto.getMessage());
-        accountRepository.save(accountFromDatabase);
+        Account accountModified = accountModdingService.mod(accountFromDatabase, accountDto);
+
+        accountRepository.save(accountModified);
     }
 
     public TradingStateDto deleteAccount(String token, long id){

@@ -1,16 +1,20 @@
 package com.backend.app.service;
 
-import com.backend.app.domain.dto.TradingStateDto;
+import com.backend.app.domain.dto.StringDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @Service
 public class MiscService {
 
-    public String getToken(){
-        return "";
-    }
+    private Random random = new Random();
 
-    public TradingStateDto getTradingState(){
-        return new TradingStateDto();
+    @Autowired
+    private UserService userService;
+
+    public StringDto getToken(){
+        return new StringDto(userService.createUser());
     }
 }

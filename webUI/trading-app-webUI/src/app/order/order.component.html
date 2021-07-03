@@ -9,13 +9,13 @@
         <span>{{order.profit}} </span>
     </p>
     <div *ngIf="order.state==state.OPEN">
-        <button class="btn btn-primary mb-3" (click)="update()">Edit SL/TP</button>
+        <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
         <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
         <p *ngIf="order.message">{{order.message}}</p>
     </div>
     <div *ngIf="order.state==state.EDIT">
-        <button class="btn btn-primary mb-3" (click)="update()">Save SL/TP</button>
-        <button class="btn btn-primary mb-3" (click)="delete()">Cancel Edit</button>
+        <button class="btn btn-primary mb-3" (click)="saveSlTp()">Save SL/TP</button>
+        <button class="btn btn-primary mb-3" (click)="cancelEdit()">Cancel Edit</button>
         <div class="mb-3">
             <label for="tpPips" class="form-label">Take profit in pips</label>
             <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number">
@@ -25,7 +25,7 @@
         <p *ngIf="order.message">{{order.message}}</p>
     </div>
     <div *ngIf="order.state==state.CREATION">
-        <button class="btn btn-primary mb-3" (click)="create()">Open Order</button>
+        <button class="btn btn-primary mb-3" (click)="openOrder()">Open Order</button>
         <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
         <div class="mb-3">
             <label for="tpPips" class="form-label">Take profit in pips</label>

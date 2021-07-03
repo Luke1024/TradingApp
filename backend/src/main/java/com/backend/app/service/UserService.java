@@ -17,12 +17,16 @@ public class UserService {
 
     private Random random = new Random();
 
-    public String saveUser(){
+    public String createUser(){
         String token = generateToken();
         User user = userRepository.save(new User(token, new ArrayList<>()));
         if(user != null){
             return user.getToken();
         } else return "";
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 
     public Optional<User> getUser(String token){

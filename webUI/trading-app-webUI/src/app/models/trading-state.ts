@@ -1,6 +1,6 @@
-import { Account } from "./account";
+import { AccountDto } from "./account";
 
-export interface TradingState {
+export interface TradingStateDto {
     token:string;
-    accounts: Account[];
+    accounts: AccountDto[];
 }

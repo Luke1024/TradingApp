@@ -21,7 +21,7 @@ public class DataDownloaderManager {
         this.enableCollectingSinglePointData = false;
     }
 
-    @Scheduled(fixedRate = 300000)
+    //@Scheduled(fixedRate = 300000)
     private void downloadStartingData(){
         if(enableCollectingSinglePointData) {
             if(downloadCurrentExchangeRate()){

@@ -20,7 +20,7 @@ public class Currency_Order {
     private State state;
     private String message;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
@@ -116,5 +116,9 @@ public class Currency_Order {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setLot(double lot) {
+        this.lot = lot;
     }
 }

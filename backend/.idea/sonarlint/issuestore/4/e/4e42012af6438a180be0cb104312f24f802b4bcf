@@ -1,11 +1,9 @@
 
-f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆïÃ°
-D
-java:S1172-")Remove this unused method parameter "id".(Í¼ú»ýÿÿÿÿ
-E
-java:S1068"*Remove this unused "logger" private field.(ìÊÌýÿÿÿÿ
-E
-java:S1172)"/Remove this unused method parameter "orderDto".(÷ž‰
 J
-java:S1066"/Merge this if statement with the enclosing one.(À³˜Çüÿÿÿÿ
->	java:S108!")Either remove or fill this block of code.(ç£ñÏ
+java:S1066)"/Merge this if statement with the enclosing one.(À³˜Çüÿÿÿÿ
+r	java:S117T"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µáûøÿÿÿÿ8ˆ§û¼¥/
+f	java:S117'"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆïÃ°
+_
+java:S1128"=Remove this unused import 'javax.persistence.criteria.Order'.(ñ“¯Þøÿÿÿÿ8 ‡˜¾¦/
+>
+java:S1116U"Remove this empty statement.( ‰­Àýÿÿÿÿ8”õ˜¾¦/
