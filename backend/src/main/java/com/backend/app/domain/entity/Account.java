@@ -16,7 +16,6 @@ public class Account {
     private int leverage;
     private double balance;
     private State state;
-    private String message;
 
     @OneToMany(targetEntity = Currency_Order.class,
         mappedBy = "account",
@@ -32,13 +31,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountName, int leverage, double balance, State state,
-                   String message, List<Currency_Order> currencyOrders, User user) {
+    public Account(String accountName, int leverage, double balance, State state, List<Currency_Order> currencyOrders, User user) {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
         this.state = state;
-        this.message = message;
         this.currencyOrders = new ArrayList<>();
         setUser(user);
     }
@@ -78,9 +75,6 @@ public class Account {
         return state;
     }
 
-    public String getMessage() {
-        return message;
-    }
 
     public List<Currency_Order> getCurrencyOrders() {
         return currencyOrders;
@@ -100,10 +94,6 @@ public class Account {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void setBalance(double balance) {

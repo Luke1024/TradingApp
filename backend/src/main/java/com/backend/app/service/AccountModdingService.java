@@ -24,7 +24,6 @@ public class AccountModdingService {
         accountFromDatabase.setAccountName(accountDto.getAccountName());
         accountFromDatabase.setLeverage(accountDto.getLeverage());
         accountFromDatabase.setState(accountDto.getState());
-        accountFromDatabase.setMessage(accountDto.getMessage());
         return accountFromDatabase;
     }
 
@@ -33,7 +32,6 @@ public class AccountModdingService {
         accountFromDatabase.setLeverage(accountDto.getLeverage());
         accountFromDatabase.setBalance(accountDto.getBalance());
         accountFromDatabase.setState(accountDto.getState());
-        accountFromDatabase.setMessage(accountDto.getMessage());
         return accountFromDatabase;
     }
 }

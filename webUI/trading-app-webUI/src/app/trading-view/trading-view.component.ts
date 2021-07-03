@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto } from '../models/account';
+import { AccountDtoMessage } from '../models/account-message';
 import { OrderDto } from '../models/order';
 import { State } from '../models/state';
-import { TradingStateDto } from '../models/trading-state';
 
 @Component({
   selector: 'app-trading-view',
@@ -29,7 +29,7 @@ export class TradingViewComponent implements OnInit {
       leverage:10,
       balance:10000,
       state:State.CREATION,
-      message:"",
+      message:{} as AccountDtoMessage,
       orders:[]
     }
     this.currencyService.accountCreate(account);

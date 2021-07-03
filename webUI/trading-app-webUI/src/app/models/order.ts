@@ -1,3 +1,4 @@
+import { OrderDtoMessage } from "./order-message";
 import { State } from "./state";
 
 export interface OrderDto {
@@ -10,5 +11,5 @@ export interface OrderDto {
     slVal:number;
     profit:number;
     state:State
-    message:string;
+    message:OrderDtoMessage;
 }

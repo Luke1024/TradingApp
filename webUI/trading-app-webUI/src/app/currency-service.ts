@@ -4,9 +4,10 @@ import { Injectable } from "@angular/core"
 import { Observable, Subject } from "rxjs"
 import { AccountDto } from "./models/account"
 import { OrderDto } from "./models/order"
-import { TradingStateDto } from "./models/trading-state"
 import { catchError } from "rxjs/operators"
 import { StringDto } from "./models/string-dto"
+import { AccountDtoMessage } from "./models/account-message"
+import { OrderDtoMessage } from "./models/order-message"
 
 @Injectable({
     providedIn: 'root'
@@ -55,13 +56,13 @@ export class CurrencyService {
 
     //account
     public accountCreate(accountDto:AccountDto){
-        this.http.post<AccountDto[]>(this.accountUrl + this.token, accountDto, {observe:'response'})
+        this.http.post<AccountDto[]>(this.accountUrl + this.token, this.accountDtoReducing(accountDto), {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public accountUpdate(accountDto:AccountDto){
-        this.http.put<AccountDto[]>(this.accountUrl + this.token, accountDto, {observe:'response'})
+        this.http.put<AccountDto[]>(this.accountUrl + this.token, this.accountDtoReducing(accountDto), {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
@@ -72,15 +73,21 @@ export class CurrencyService {
         .subscribe(response => this.setResponse(response));
     }
 
+    private accountDtoReducing(accountDto:AccountDto):AccountDto{
+        accountDto.orders = []
+        accountDto.message = {} as AccountDtoMessage
+        return accountDto; 
+    }
+
     //order
     public orderCreate(orderDto:OrderDto, account:AccountDto){
-        this.http.post<AccountDto[]>(this.orderUrl + this.token + '/' + account.id,orderDto, {observe:'response'})
+        this.http.post<AccountDto[]>(this.orderUrl + this.token + '/' + account.id,this.orderDtoReducing(orderDto), {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
 
     public orderUpdate(orderDto:OrderDto){
-        this.http.put<AccountDto[]>(this.orderUrl + this.token, orderDto, {observe:'response'})
+        this.http.put<AccountDto[]>(this.orderUrl + this.token, this.orderDtoReducing(orderDto), {observe:'response'})
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
     }
@@ -89,6 +96,11 @@ export class CurrencyService {
         this.http.delete<AccountDto[]>(this.orderUrl + this.token + '/' + orderDto.id.toString())
         .pipe(catchError(error => this.handlingError(error)))
         .subscribe(response => this.setResponse(response));
+    }
+
+    private orderDtoReducing(orderDto:OrderDto):OrderDto {
+        orderDto.message = {} as OrderDtoMessage
+        return orderDto;
     }
 
     private setResponse(response:any){

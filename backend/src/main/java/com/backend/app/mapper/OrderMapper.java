@@ -21,7 +21,6 @@ public class OrderMapper {
                 orderDto.getSlVal(),
                 orderDto.getProfit(),
                 orderDto.getState(),
-                orderDto.getMessage(),
                 account);
     }
 
@@ -44,7 +43,7 @@ public class OrderMapper {
                 order.getSlVal(),
                 order.getProfit(),
                 order.getState(),
-                order.getMessage()
+                null
         );
     }
 }

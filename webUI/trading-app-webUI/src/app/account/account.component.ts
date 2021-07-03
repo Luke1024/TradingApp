@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
 import { OrderDto } from '../models/order';
+import { OrderDtoMessage } from '../models/order-message';
 import { State } from '../models/state';
 
 @Component({
@@ -32,7 +33,7 @@ export class AccountComponent implements OnInit {
       slVal:0,
       profit:0,
       state:State.CREATION,
-      message:""
+      message:{} as OrderDtoMessage
     }
     this.currencyService.orderCreate(order,this.account)
   }

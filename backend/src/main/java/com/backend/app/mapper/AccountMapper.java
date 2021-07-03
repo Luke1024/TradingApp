@@ -20,7 +20,6 @@ public class AccountMapper {
                 accountDto.getLeverage(),
                 accountDto.getBalance(),
                 accountDto.getState(),
-                accountDto.getMessage(),
                 new ArrayList<>(),
                 user
         );
@@ -33,7 +32,7 @@ public class AccountMapper {
                 account.getLeverage(),
                 account.getBalance(),
                 account.getState(),
-                account.getMessage(),
+                null,
                 orderMapper.mapToOrderDtoList(account.getCurrencyOrders())
         );
     }

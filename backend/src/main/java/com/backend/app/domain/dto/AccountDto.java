@@ -10,14 +10,14 @@ public class AccountDto {
     private int leverage;
     private double balance;
     private State state;
-    private String message;
+    private AccountDtoMessage message;
     private List<OrderDto> orders;
 
     public AccountDto() {
     }
 
     public AccountDto(long id, String accountName, int leverage, double balance,
-                      State state, String message, List<OrderDto> orders) {
+                      State state, AccountDtoMessage message, List<OrderDto> orders) {
         this.id = id;
         this.accountName = accountName;
         this.leverage = leverage;
@@ -47,7 +47,7 @@ public class AccountDto {
         return state;
     }
 
-    public String getMessage() {
+    public AccountDtoMessage getMessage() {
         return message;
     }
 

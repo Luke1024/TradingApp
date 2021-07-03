@@ -12,13 +12,13 @@ public class OrderDto {
     private double slVal;
     private double profit;
     private State state;
-    private String message;
+    private OrderDtoMessage message;
 
     public OrderDto() {
     }
 
     public OrderDto(long id, String currency, double lot, int tpPips, double tpVal,
-                    int slPips, double slVal, double profit, State state, String message) {
+                    int slPips, double slVal, double profit, State state, OrderDtoMessage message) {
         this.id = id;
         this.currency = currency;
         this.lot = lot;
@@ -67,7 +67,7 @@ public class OrderDto {
         return state;
     }
 
-    public String getMessage() {
+    public OrderDtoMessage getMessage() {
         return message;
     }
 }

@@ -35,7 +35,6 @@ public class OrderModdingService {
         orderFromDatabase.setSlVal(orderDto.getSlVal());
         orderFromDatabase.setProfit(orderDto.getProfit());
         orderFromDatabase.setState(orderDto.getState());
-        orderFromDatabase.setMessage(orderDto.getMessage());
         return orderFromDatabase;
     }
 }

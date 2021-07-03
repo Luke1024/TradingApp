@@ -18,7 +18,6 @@ public class Currency_Order {
     private double slVal;
     private double profit;
     private State state;
-    private String message;
 
     @ManyToOne()
     @JoinColumn(name = "ACCOUNT_ID")
@@ -28,7 +27,7 @@ public class Currency_Order {
     }
 
     public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips, double slVal,
-                          double profit, State state, String message, Account account) {
+                          double profit, State state, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
@@ -37,7 +36,6 @@ public class Currency_Order {
         this.slVal = slVal;
         this.profit = profit;
         this.state = state;
-        this.message = message;
         setAccount(account);
     }
 
@@ -86,10 +84,6 @@ public class Currency_Order {
         return state;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public void setTpPips(int tpPips) {
         this.tpPips = tpPips;
     }
@@ -112,10 +106,6 @@ public class Currency_Order {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void setLot(double lot) {
