@@ -14,37 +14,54 @@ export class OrderComponent implements OnInit {
 
   order!:OrderDto
 
-  state = State
+  edit:boolean
+  message:string
+  correctnessStatus:boolean;
 
-  constructor(private currencyService:CurrencyService) { }
+  constructor(private currencyService:CurrencyService) { 
+    this.edit = false;
+    this.message = "";
+    this.correctnessStatus = false;
+  }
+
+  getCorrectnessInfo(){
+    this.currencyService.getOrderInfo(this.order).subscribe(response => {
+      if(response != null){
+        this.correctnessStatus = response.status;
+      }
+    })
+  }
 
   editSlTp(){
-    this.order.state = State.EDIT
-    this.update()
+    this.edit = true;
   }
 
   saveSlTp(){
-    this.order.state = State.OPEN
-    this.update()
+    if(this.correctnessStatus && this.order.created){
+      this.currencyService.orderUpdate(this.order).subscribe(response => {
+        if(response.status){
+          this.order = response.orderDto
+        } 
+      })
+    }
   }
 
   cancelEdit(){
-    this.order.state = State.OPEN
-    this.update()
+    this.edit = false;
   }
 
   openOrder(){
-    this.order.state = State.OPEN
-    this.update()
-  }
-
-
-  update(){
-    this.currencyService.orderUpdate(this.order);
+    if( ! this.order.created && this.correctnessStatus){
+      this.currencyService.saveOrder(this.order).subscribe(response => {
+        if(response.status){
+          this.order = response.orderDto
+        }
+      })
+    }
   }
 
   delete(){
-    this.currencyService.deleteOrder(this.order);
+    //to solve
   }
 
   ngOnInit(): void {
