@@ -29,10 +29,13 @@ public class AccountService {
     private TradingStateService tradingStateService;
 
     @Autowired
-    private AccountModdingService accountModdingService;
+    private AccountGateway accountGateway;
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private AccountCorrectnessGuardService accountCorrectnessGuard;
 
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
@@ -45,7 +48,8 @@ public class AccountService {
             Optional<User> userOptional = userService.getUser(token);
             if(userOptional.isPresent()) {
                 User user = userOptional.get();
-                accountRepository.save(accountMapper.mapToNewAccount(accountDto, user));
+                Optional<AccountDto> accountDtoOptional = accountCorrectnessGuard.saveAccount(accountDto);
+                accountRepository.save(accountMapper.mapToNewAccount(, user));
             }
         }
         return tradingStateService.getTradingState(token);
@@ -77,9 +81,10 @@ public class AccountService {
     }
 
     private void mapAndUpdateAccount(Account accountFromDatabase, AccountDto accountDto){
-        Account accountModified = accountModdingService.mod(accountFromDatabase, accountDto);
+        //think about implementation of correctness guard
+        AccountDto accountDtoCorrected = accountCorrectnessGuard.updateAccount(accountFromDatabase, accountDto);
 
-        accountRepository.save(accountModified);
+        accountRepository.save(accountMapper.mapToExistAccount(accountDtoCorrected));
     }
 
     public List<AccountDto> deleteAccount(String token, long id){
