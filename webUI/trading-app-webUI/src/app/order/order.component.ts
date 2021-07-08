@@ -10,16 +10,23 @@ import { State } from '../models/state';
 })
 export class OrderComponent implements OnInit {
 
-  @Input() orderInput!:OrderDto
+  @Input() orderInput!:OrderDto;
 
-  order!:OrderDto
+  order!:OrderDto;
 
-  edit:boolean
-  message:string
+  //correctnessMessages;
+
+
+  edit:boolean;
+  message:string;
   correctnessStatus:boolean;
 
+  //parameters in edit mode when created
+  tpPips!:number;
+  slPips!:number;
+
   constructor(private currencyService:CurrencyService) { 
-    this.edit = false;
+    this.edit = true;
     this.message = "";
     this.correctnessStatus = false;
   }
@@ -28,6 +35,11 @@ export class OrderComponent implements OnInit {
     this.currencyService.getOrderInfo(this.order).subscribe(response => {
       if(response != null){
         this.correctnessStatus = response.status;
+        this.order.tpVal = response.tpVal;
+        this.order.slVal = response.slVal;
+        if(!this.correctnessStatus){
+
+        }
       }
     })
   }
@@ -40,7 +52,8 @@ export class OrderComponent implements OnInit {
     if(this.correctnessStatus && this.order.created){
       this.currencyService.orderUpdate(this.order).subscribe(response => {
         if(response.status){
-          this.order = response.orderDto
+          this.update(response.orderDto)
+          this.edit = false;
         } 
       })
     }
@@ -54,9 +67,18 @@ export class OrderComponent implements OnInit {
     if( ! this.order.created && this.correctnessStatus){
       this.currencyService.saveOrder(this.order).subscribe(response => {
         if(response.status){
-          this.order = response.orderDto
+          this.update(response.orderDto)
+          this.edit = false;
         }
       })
+    }
+  }
+
+  private update(orderDto:OrderDto){
+    this.order = orderDto
+    if(!this.edit){
+      this.tpPips = orderDto.tpPips;
+      this.slPips = orderDto.slPips;
     }
   }
 

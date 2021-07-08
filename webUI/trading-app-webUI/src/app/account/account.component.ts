@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
+import { AccountInfoDto } from '../models/account-info';
 import { OrderDto } from '../models/order';
 import { OrderInfoDto } from '../models/order-info';
 import { State } from '../models/state';
@@ -17,11 +18,14 @@ export class AccountComponent implements OnInit {
 
   account!:AccountDto
 
+  //correctnessMessages;
+  nameInfo!:string;
+  leverageInfo!:string;
+  balanceInfo!:string;
+
   edit:boolean
   message:string
   correctnessStatus:boolean;
-
-
 
   //parameters in edit mode when created
   accountName!:string;
@@ -29,7 +33,7 @@ export class AccountComponent implements OnInit {
   leverage!:number;
 
   constructor(private currencyService:CurrencyService, private refreshService:RefreshService) {
-    this.edit = false;
+    this.edit = true;
     this.message = "";
     this.correctnessStatus = false;
   }
@@ -58,12 +62,27 @@ export class AccountComponent implements OnInit {
     }
     this.account.orders.push(order)
   }
-//open state methods
+
   settings(){
     this.edit = true;
   }
 
-//edit state methods
+  cancelEditSettings(){
+    this.edit = false;
+  }
+
+  saveSettings(){
+    this.currencyService.accountUpdate(this.account).subscribe(response => {
+      if(response != null){
+        if(response.status = true){
+          if(response.accountDto != null){
+            this.update(response.accountDto);
+            this.edit = false;
+          }
+        }
+      }
+    })
+  }
 
   refreshState(){
     this.currencyService.getAccount(this.account).subscribe(response => {
@@ -73,30 +92,21 @@ export class AccountComponent implements OnInit {
     })
   }
 
-
-
   getCorrectnessInfo(){
     this.currencyService.getAccountInfo(this.account).subscribe(response => {
       if(response != null){
         this.correctnessStatus = response.status;
-      }
-    })
-  }
-
-  saveSettings(){
-    this.currencyService.accountUpdate(this.account).subscribe(response => {
-      if(response != null){
-        if(response.status = true){
-          if(response.accountDto != null){
-            this.update(response.accountDto);
-          }
+        if(!this.correctnessStatus){
+          this.setInfoMessages(response);
         }
       }
     })
   }
 
-  cancelEditSettings(){
-    this.edit = false;
+  private setInfoMessages(accountInfo:AccountInfoDto){
+    this.nameInfo=accountInfo.nameInfo;
+    this.leverageInfo=accountInfo.leverageInfo;
+    this.balanceInfo=accountInfo.balanceInfo;
   }
 
   // creation state methods
@@ -108,6 +118,7 @@ export class AccountComponent implements OnInit {
           if(response.status){
             if(response.accountDto != null){
               this.update(response.accountDto)
+              this.edit = false;
             }
           }
         }
@@ -122,6 +133,7 @@ export class AccountComponent implements OnInit {
           if(response.status){
             if(response.accountDto != null){
               this.update(response.accountDto)
+              this.edit = false;
             }
           }
         }
@@ -129,22 +141,15 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  update(accountDto:AccountDto){
+  private update(accountDto:AccountDto){
     this.account = accountDto;
-    //this.sendLastRefreshed(accountDto.lastRefreshed)
     if( ! this.edit){
       this.accountName = accountDto.accountName;
       this.leverage = accountDto.leverage;
     }
   }
 
-  //private sendLastRefreshed(lastRefreshed:string){
-    //this.refreshService.updateRefreshTime(lastRefreshed)
-  //}
-
   delete(){
     //to solve
   }
-
-
 }

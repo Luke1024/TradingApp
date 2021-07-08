@@ -27,8 +27,7 @@ export class CurrencyService {
     tradingDataStream = this.tradingData.asObservable()
     accountInfoUrl:string = ""
 
-    constructor(private http:HttpClient) {
-    }
+    constructor(private http:HttpClient) {}
 
     //token
     public getToken():void {
