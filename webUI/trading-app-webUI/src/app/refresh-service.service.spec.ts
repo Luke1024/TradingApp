@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RefreshServiceService } from './refresh-service.service';
+import { RefreshService } from './refresh-service.service';
 
 describe('RefreshServiceService', () => {
-  let service: RefreshServiceService;
+  let service: RefreshService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RefreshServiceService);
+    service = TestBed.inject(RefreshService);
   });
 
   it('should be created', () => {

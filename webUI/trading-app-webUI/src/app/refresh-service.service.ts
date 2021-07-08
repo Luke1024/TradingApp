@@ -11,10 +11,11 @@ export class RefreshService {
   private updatePulse = new Subject()
   updatePulseStream = this.updatePulse.asObservable()
 
-
-  updateRefreshTIme(lastRefreshed:string){
+  updateRefreshTime(lastRefreshed:string){
 
   }
 
-  executePulse()
+  executePulse(){
+    this.updatePulse.next(true);
+  }
 }

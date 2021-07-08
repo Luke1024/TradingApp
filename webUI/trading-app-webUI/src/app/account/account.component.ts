@@ -34,6 +34,15 @@ export class AccountComponent implements OnInit {
     this.correctnessStatus = false;
   }
 
+  ngOnInit(): void {
+    this.account = Object.assign({},this.accountInput)
+    this.refreshService.updatePulseStream.subscribe(pulse => {
+      if(pulse){
+        this.update(this.account)
+      }
+    })
+  }
+
   addOrder(){
     var order:OrderDto = {
       accountId:this.account.id,
@@ -122,27 +131,20 @@ export class AccountComponent implements OnInit {
 
   update(accountDto:AccountDto){
     this.account = accountDto;
-    this.sendLastRefreshed(accountDto.lastRefreshed)
+    //this.sendLastRefreshed(accountDto.lastRefreshed)
     if( ! this.edit){
       this.accountName = accountDto.accountName;
       this.leverage = accountDto.leverage;
     }
   }
 
-  private sendLastRefreshed(lastRefreshed:string){
-    this.refreshService.updateRefreshTime(lastRefreshed)
-  }
+  //private sendLastRefreshed(lastRefreshed:string){
+    //this.refreshService.updateRefreshTime(lastRefreshed)
+  //}
 
   delete(){
     //to solve
   }
 
-  ngOnInit(): void {
-    this.account = Object.assign({},this.accountInput)
-    this.refreshService.updatePulseStream.subscribe(pulse => {
-      if(pulse){
-        this.update(this.account)
-      }
-    })
-  }
+
 }
