@@ -1,15 +1,12 @@
 package com.backend.app.service;
 
-import com.backend.app.domain.State;
 import com.backend.app.domain.dto.AccountDto;
-import com.backend.app.domain.entity.Account;
+import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AccountCorrectnessGuardService {
@@ -17,70 +14,46 @@ public class AccountCorrectnessGuardService {
     @Autowired
     private AccountMessageService accountMessageService;
 
-    @Autowired
-    private AccountSettings accountSettings;
+    private static int maxLeverage = 100;
 
     @Autowired
     private AccountRepository accountRepository;
 
     private Logger logger = LoggerFactory.getLogger(AccountCorrectnessGuardService.class);
 
-    public Optional<AccountDto> saveAccount(AccountDto accountDto){
-        State state = accountDto.getState();
-        if(state==State.CREATION){
-            return allowCreatingAccount(accountDto);
+
+    public AccountInfoDto getInfo(AccountDto accountDto){
+        String nameInfo = analyzeName(accountDto);
+        String leverageInfo = analyzeLeverage(accountDto);
+        String balanceInfo = analyzeBalance(accountDto);
+        if(isStringBiggerThanZero(nameInfo, leverageInfo, balanceInfo)){
+            return new AccountInfoDto(nameInfo, leverageInfo, balanceInfo, false);
+        } else return new AccountInfoDto(nameInfo, leverageInfo, balanceInfo, true);
+    }
+
+    private boolean isStringBiggerThanZero(String nameInfo, String leverageInfo, String balanceInfo){
+        if(nameInfo.length()>0 || leverageInfo.length()>0 || balanceInfo.length()>0){
+            return true;
+        } else return false;
+    }
+
+    private String analyzeName(AccountDto accountDto){
+        if(accountDto.getAccountName().length()>0){
+            return "";
         } else {
-            logger.warn("Account to save must be in creation mode.");
-            return Optional.empty();
+            return accountMessageService.accountNameToShort;
         }
     }
 
-    private Optional<AccountDto> allowCreatingAccount(AccountDto accountDto){
-        analyzeNaming(accountDto);
-        analyzeLeverage(accountDto);
-        return Optional.of(modifiedDto);
+    private String analyzeLeverage(AccountDto accountDto){
+        if(accountDto.getLeverage()>maxLeverage){
+            return accountMessageService.maxLeverage;
+        } else return "";
     }
 
-    private AccountDto analyzeNaming(AccountDto inputDto){
-        if(inputDto.getAccountName().length()==0){
-            inputDto.setNameMessage(accountMessageService.getToShortAccountName());
-        } else {
-            inputDto.setNameMessage("");
-        }
-        return inputDto;
-    }
-
-    private AccountDto analyzeLeverage(AccountDto accountDto){
-        if(accountDto.getLeverage() > accountSettings.getMaxLeverage()) {
-            accountDto.setLeverageMessage(accountMessageService.getToBigLeverage);
-        } else if(accountDto.getLeverage() < 1){
-            accountDto.setLeverageMessage(accountMessageService.getToSmallLeverage);
-        } else {
-            accountDto.setLeverageMessage("");
-        }
-        return accountDto;
-    }
-
-    public Optional<AccountDto> updateAccount(AccountDto accountDto){
-        Optional<Account> realAccount = accountRepository.findById(accountDto.getId());
-        if(realAccount.isPresent()){
-            return allowUpdatingAccount(realAccount.get(), accountDto);
-        } else {
-            logger.warn("Allow to update don't exist");
-            return Optional.empty();
-        }
-    }
-
-    private Optional<AccountDto> allowUpdatingAccount(Account accountToUpdate, AccountDto accountDto){
-        AccountDto
-        AccountDto dtoWithStateFiltered = analyzeIfOperationIsAllowable(accountToUpdate, accountDto);
-
-    }
-
-    private AccountDto analyzeIfOperationIsAllowable(Account accountToUpdate, AccountDto accountDto){
-        State accountState = accountToUpdate.getState();
-        State dtoState = accountDto.getState();
-
-
+    private String analyzeBalance(AccountDto accountDto){
+        if(accountDto.getBalance()<0){
+            return accountMessageService.balanceOnMinus;
+        } else return "";
     }
 }

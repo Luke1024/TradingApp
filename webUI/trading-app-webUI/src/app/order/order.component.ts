@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { OrderDto } from '../models/order';
+import { OrderInfoDto } from '../models/order-info';
 import { State } from '../models/state';
 
 @Component({
@@ -15,7 +16,9 @@ export class OrderComponent implements OnInit {
   order!:OrderDto;
 
   //correctnessMessages;
-
+  lotInfo!:string;
+  tpPipsInfo!:string;
+  slPipsInfo!:string;
 
   edit:boolean;
   message:string;
@@ -38,10 +41,16 @@ export class OrderComponent implements OnInit {
         this.order.tpVal = response.tpVal;
         this.order.slVal = response.slVal;
         if(!this.correctnessStatus){
-
+          this.setInfoMessages(response);
         }
       }
     })
+  }
+
+  private setInfoMessages(orderInfoDto:OrderInfoDto){
+    this.lotInfo=orderInfoDto.lotInfo;
+    this.tpPipsInfo=orderInfoDto.tpPipsInfo;
+    this.slPipsInfo=orderInfoDto.slPipsInfo;
   }
 
   editSlTp(){

@@ -1,6 +1,7 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.dto.AccountDto;
+import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.mapper.AccountMapper;
@@ -39,61 +40,39 @@ public class AccountService {
 
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
-    public Optional<Account> getAccount(long id){
+    public Optional<Account> getAccount(String token,long id){
         return accountRepository.findById(id);
     }
 
-    public List<AccountDto> saveAccount(String token, AccountDto accountDto){
-        if(accountDtoNullCheck(accountDto)) {
-            Optional<User> userOptional = userService.getUser(token);
-            if(userOptional.isPresent()) {
-                User user = userOptional.get();
-                Optional<AccountDto> accountDtoOptional = accountCorrectnessGuard.saveAccount(accountDto);
-                accountRepository.save(accountMapper.mapToNewAccount(, user));
+    public Optional<Account> saveAccount(String token, AccountDto accountDto){
+        Optional<User> userOptional = userService.getUser(token);
+        if(userOptional.isPresent()) {
+            User user = userOptional.get();
+            Account account = accountRepository.save(accountMapper.mapToNewAccount(accountDto, user));
+            if (account != null) {
+                return Optional.of(account);
             }
         }
-        return tradingStateService.getTradingState(token);
+        return Optional.empty();
     }
 
-    private boolean accountDtoNullCheck(AccountDto accountDto){
-        if(accountDto != null){
-            return true;
-        } else {
-            logger.warn("AccountDto is null.");
-            return false;
-        }
-    }
-
-    public List<AccountDto> updateAccount(String token, AccountDto accountDto){
-        if(accountDtoNullCheck(accountDto)){
-            Optional<Account> accountOptional = getAccount(accountDto);
-            if(accountOptional.isPresent()){
-                mapAndUpdateAccount(accountOptional.get(),accountDto);
-            } else {
-                logger.warn("Account not found.");
+    public Optional<Account> updateAccount(String token, AccountDto accountDto){
+        Optional<Account> accountOptional = accountMapper.mapToExistingAccount(accountDto);
+        if(accountOptional.isPresent()) {
+            Account account = accountRepository.save(accountOptional.get());
+            if(account != null){
+                return Optional.of(account);
             }
         }
-        return tradingStateService.getTradingState(token);
+        return Optional.empty();
     }
 
     private Optional<Account> getAccount(AccountDto accountDto){
         return accountRepository.findById(accountDto.getId());
     }
 
-    private void mapAndUpdateAccount(Account accountFromDatabase, AccountDto accountDto){
-        //think about implementation of correctness guard
-        AccountDto accountDtoCorrected = accountCorrectnessGuard.updateAccount(accountFromDatabase, accountDto);
-
-        accountRepository.save(accountMapper.mapToExistAccount(accountDtoCorrected));
-    }
-
-    public List<AccountDto> deleteAccount(String token, long id){
-        Optional<Account> accountOptional = accountRepository.findById(id);
-        if(accountOptional.isPresent()){
-            accountRepository.deleteById(id);
-        } else {
-            logger.warn("Account to delete not found.");
-        }
-        return tradingStateService.getTradingState(token);
+    public boolean deleteAccount(String token, long id){
+        accountRepository.deleteById(id);
+        return true;
     }
 }
