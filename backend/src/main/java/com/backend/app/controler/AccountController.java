@@ -45,7 +45,7 @@ public class AccountController {
     public AccountResponseDto getAccount(@PathVariable String token, @PathVariable long id){
         Optional<Account> accountOptional = accountService.getAccount(token, id);
         if(accountOptional.isPresent()){
-            return new AccountResponseDto(true, accountMapper.mapToAccountDtoWithoutOrder(accountOptional.get()));
+            return new AccountResponseDto(true, accountMapper.mapToExistingAccountDtoWithoutOrder(accountOptional.get()));
         } else {
             return new AccountResponseDto(false, new AccountDto());
         }
@@ -57,7 +57,7 @@ public class AccountController {
         if(accountInfoDto.isStatus()){
             Optional<Account> accountOptional = accountService.saveAccount(token, accountDto);
             if(accountOptional.isPresent()){
-                return new AccountResponseDto(true, accountMapper.mapToAccountDtoWithoutOrder(accountOptional.get()));
+                return new AccountResponseDto(true, accountMapper.mapToExistingAccountDtoWithoutOrder(accountOptional.get()));
             }
         }
         return new AccountResponseDto(false, new AccountDto());
@@ -69,7 +69,7 @@ public class AccountController {
         if(accountInfoDto.isStatus()){
             Optional<Account> accountOptional = accountService.updateAccount(token, accountDto);
             if(accountOptional.isPresent()){
-                return new AccountResponseDto(true, accountMapper.mapToAccountDtoWithoutOrder(accountOptional.get()));
+                return new AccountResponseDto(true, accountMapper.mapToExistingAccountDtoWithoutOrder(accountOptional.get()));
             }
         }
         return new AccountResponseDto(false, new AccountDto());

@@ -1,6 +1,6 @@
 package com.backend.app.domain.entity;
 
-import com.backend.app.domain.State;
+import com.backend.app.domain.ShortLong;
 
 import javax.persistence.*;
 
@@ -17,7 +17,7 @@ public class Currency_Order {
     private int slPips;
     private double slVal;
     private double profit;
-    private State state;
+    private ShortLong shortLong;
 
     @ManyToOne()
     @JoinColumn(name = "ACCOUNT_ID")
@@ -26,8 +26,9 @@ public class Currency_Order {
     public Currency_Order() {
     }
 
-    public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips, double slVal,
-                          double profit, State state, Account account) {
+    public Currency_Order(long id, String currency, double lot, int tpPips, double tpVal, int slPips,
+                          double slVal, double profit, ShortLong shortLong, Account account) {
+        this.id = id;
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
@@ -35,7 +36,7 @@ public class Currency_Order {
         this.slPips = slPips;
         this.slVal = slVal;
         this.profit = profit;
-        this.state = state;
+        this.shortLong = shortLong;
         setAccount(account);
     }
 
@@ -80,8 +81,8 @@ public class Currency_Order {
         return profit;
     }
 
-    public State getState() {
-        return state;
+    public Account getAccount() {
+        return account;
     }
 
     public void setTpPips(int tpPips) {
@@ -102,10 +103,6 @@ public class Currency_Order {
 
     public void setProfit(double profit) {
         this.profit = profit;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public void setLot(double lot) {

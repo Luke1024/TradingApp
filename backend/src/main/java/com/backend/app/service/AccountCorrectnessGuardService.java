@@ -3,8 +3,6 @@ package com.backend.app.service;
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.repository.AccountRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +16,6 @@ public class AccountCorrectnessGuardService {
 
     @Autowired
     private AccountRepository accountRepository;
-
-    private Logger logger = LoggerFactory.getLogger(AccountCorrectnessGuardService.class);
-
 
     public AccountInfoDto getInfo(AccountDto accountDto){
         String nameInfo = analyzeName(accountDto);

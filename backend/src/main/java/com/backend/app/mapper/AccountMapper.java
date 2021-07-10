@@ -38,12 +38,13 @@ public class AccountMapper {
         }
     }
 
-    public AccountDto mapToAccountDtoWithoutOrder(Account account){
+    public AccountDto mapToExistingAccountDtoWithoutOrder(Account account){
         return new AccountDto(
                 account.getId(),
                 account.getAccountName(),
                 account.getLeverage(),
                 account.getBalance(),
+                true,
                 new ArrayList<>()
         );
     }
@@ -60,6 +61,7 @@ public class AccountMapper {
                 account.getAccountName(),
                 account.getLeverage(),
                 account.getBalance(),
+                true,
                 orderMapper.mapToOrderDtoList(account.getCurrencyOrders())
         );
     }

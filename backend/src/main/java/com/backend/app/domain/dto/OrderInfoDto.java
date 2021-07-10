@@ -3,16 +3,25 @@ package com.backend.app.domain.dto;
 public class OrderInfoDto {
     private String lotInfo;
     private String tpPipsInfo;
-    private int tpVal;
+    private double tpVal;
     private String slPipsInfo;
-    private int slVal;
+    private double slVal;
     private boolean status;
 
     public OrderInfoDto() {
     }
 
-    public OrderInfoDto(String lotInfo, String tpPipsInfo, int tpVal,
-                        String slPipsInfo, int slVal, boolean status) {
+    public OrderInfoDto(boolean status) {
+        this.lotInfo = "";
+        this.tpPipsInfo = "";
+        this.tpVal = 0;
+        this.slPipsInfo = "";
+        this.slVal = 0;
+        this.status = status;
+    }
+
+    public OrderInfoDto(String lotInfo, String tpPipsInfo, double tpVal,
+                        String slPipsInfo, double slVal, boolean status) {
         this.lotInfo = lotInfo;
         this.tpPipsInfo = tpPipsInfo;
         this.tpVal = tpVal;
@@ -29,7 +38,7 @@ public class OrderInfoDto {
         return tpPipsInfo;
     }
 
-    public int getTpVal() {
+    public double getTpVal() {
         return tpVal;
     }
 
@@ -37,7 +46,7 @@ public class OrderInfoDto {
         return slPipsInfo;
     }
 
-    public int getSlVal() {
+    public double getSlVal() {
         return slVal;
     }
 

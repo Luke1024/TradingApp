@@ -67,10 +67,6 @@ public class AccountService {
         return Optional.empty();
     }
 
-    private Optional<Account> getAccount(AccountDto accountDto){
-        return accountRepository.findById(accountDto.getId());
-    }
-
     public boolean deleteAccount(String token, long id){
         accountRepository.deleteById(id);
         return true;
