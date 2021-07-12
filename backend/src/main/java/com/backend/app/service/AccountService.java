@@ -1,7 +1,6 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.dto.AccountDto;
-import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.mapper.AccountMapper;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,9 +26,6 @@ public class AccountService {
 
     @Autowired
     private TradingStateService tradingStateService;
-
-    @Autowired
-    private AccountGateway accountGateway;
 
     @Autowired
     private AccountMapper accountMapper;

@@ -29,9 +29,6 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
-    @Autowired
-    private OrderModdingService orderModdingService;
-
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     public Optional<Currency_Order> getOrder(String token, long id){

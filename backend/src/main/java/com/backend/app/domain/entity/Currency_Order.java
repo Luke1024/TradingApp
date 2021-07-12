@@ -77,6 +77,10 @@ public class Currency_Order {
         return slVal;
     }
 
+    public ShortLong getShortLong() {
+        return shortLong;
+    }
+
     public double getProfit() {
         return profit;
     }

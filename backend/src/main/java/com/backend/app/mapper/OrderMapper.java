@@ -24,6 +24,7 @@ public class OrderMapper {
 
     public Currency_Order mapToNewOrder(OrderDto orderDto, Account account){
         return new Currency_Order(
+                orderDto.getId(),
                 orderDto.getCurrency(),
                 orderDto.getLot(),
                 orderDto.getTpPips(),
@@ -31,6 +32,7 @@ public class OrderMapper {
                 orderDto.getSlPips(),
                 orderDto.getSlVal(),
                 orderDto.getProfit(),
+                orderDto.getShortLong(),
                 account);
     }
 
@@ -74,6 +76,7 @@ public class OrderMapper {
                     order.getSlPips(),
                     order.getSlVal(),
                     order.getProfit(),
+                    order.getShortLong(),
                     true));
         } else {
             return Optional.empty();
