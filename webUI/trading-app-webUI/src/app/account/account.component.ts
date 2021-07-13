@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
 import { AccountInfoDto } from '../models/account-info';
 import { OrderDto } from '../models/order';
 import { OrderInfoDto } from '../models/order-info';
 import { State } from '../models/state';
-import { RefreshService } from '../refresh-service.service';
 
 @Component({
   selector: 'app-account',
@@ -18,46 +17,54 @@ export class AccountComponent implements OnInit {
 
   account!:AccountDto
 
-  //correctnessMessages;
-  nameInfo!:string;
-  leverageInfo!:string;
-  balanceInfo!:string;
+  correctness!:AccountInfoDto
 
-  edit:boolean
-  message:string
-  correctnessStatus:boolean;
+  edit:boolean;
 
   //parameters in edit mode when created
   accountName!:string;
   //detection when lowered;
   leverage!:number;
 
-  constructor(private currencyService:CurrencyService, private refreshService:RefreshService) {
+  constructor(private currencyService:CurrencyService) {
     this.edit = true;
-    this.message = "";
-    this.correctnessStatus = false;
+    this.correctness = {nameInfo:"", leverageInfo:"", balanceInfo:"", status:false} as AccountInfoDto
   }
 
   ngOnInit(): void {
     this.account = Object.assign({},this.accountInput)
-    this.refreshService.updatePulseStream.subscribe(pulse => {
+    this.onChange()
+    this.currencyService.pulseStream.subscribe(pulse => {
       if(pulse){
-        this.update(this.account)
+        this.getAccount(this.account);
       }
     })
+  }
+
+  private getAccount(account:AccountDto){
+    if(account.created){
+      this.currencyService.getAccount(account).subscribe(account => {
+        if(account != null){
+          if(account.status){
+            this.update(account.accountDto);
+          }
+        }
+      });
+    }
   }
 
   addOrder(){
     var order:OrderDto = {
       accountId:this.account.id,
       id:1,
+      currency:"EUR/USD",
       lot:0.1,
       tpPips:0,
       tpVal:0,
       slPips:0,
       slVal:0,
       profit:0,
-      lastRefreshed: "",
+      longOrder:true,
       created:false
     }
     this.account.orders.push(order)
@@ -84,35 +91,22 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  refreshState(){
-    this.currencyService.getAccount(this.account).subscribe(response => {
-      if(response != null){
-        this.update(response)
-      }
-    })
-  }
-
-  getCorrectnessInfo(){
+  onChange(){
     this.currencyService.getAccountInfo(this.account).subscribe(response => {
       if(response != null){
-        this.correctnessStatus = response.status;
-        if(!this.correctnessStatus){
           this.setInfoMessages(response);
-        }
       }
     })
   }
 
   private setInfoMessages(accountInfo:AccountInfoDto){
-    this.nameInfo=accountInfo.nameInfo;
-    this.leverageInfo=accountInfo.leverageInfo;
-    this.balanceInfo=accountInfo.balanceInfo;
+    this.correctness = accountInfo;
   }
 
   // creation state methods
 
   saveAccount(){
-    if(this.correctnessStatus){
+    if(this.correctness.status){
       this.currencyService.accountSave(this.account).subscribe(response => {
         if(response != null){
           if(response.status){
@@ -127,7 +121,7 @@ export class AccountComponent implements OnInit {
   }
 
   updateAccount(){
-    if(this.correctnessStatus){
+    if(this.correctness.status){
       this.currencyService.accountUpdate(this.account).subscribe(response => {
         if(response != null){
           if(response.status){

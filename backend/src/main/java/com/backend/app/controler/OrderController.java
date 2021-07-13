@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @RequestMapping("/trading")
 public class OrderController {

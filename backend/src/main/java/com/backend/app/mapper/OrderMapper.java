@@ -1,5 +1,6 @@
 package com.backend.app.mapper;
 
+import com.backend.app.domain.ShortLong;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.dto.OrderResponseDto;
 import com.backend.app.domain.entity.Account;
@@ -32,8 +33,16 @@ public class OrderMapper {
                 orderDto.getSlPips(),
                 orderDto.getSlVal(),
                 orderDto.getProfit(),
-                orderDto.getShortLong(),
+                booleanOrderToEnumMapper(orderDto.isLongOrder()),
                 account);
+    }
+
+    private ShortLong booleanOrderToEnumMapper(boolean longOrder){
+        if(longOrder){
+            return ShortLong.LONG;
+        } else {
+            return ShortLong.SHORT;
+        }
     }
 
     public Optional<Currency_Order> mapToExistingOrder(OrderDto orderDto){
@@ -76,10 +85,16 @@ public class OrderMapper {
                     order.getSlPips(),
                     order.getSlVal(),
                     order.getProfit(),
-                    order.getShortLong(),
+                    enumToBooleanOrderMapper(order.getShortLong()),
                     true));
         } else {
             return Optional.empty();
         }
+    }
+
+    private boolean enumToBooleanOrderMapper(ShortLong shortLong){
+        if(shortLong==ShortLong.LONG){
+            return true;
+        } else return false;
     }
 }

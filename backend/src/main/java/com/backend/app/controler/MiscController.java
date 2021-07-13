@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @RequestMapping("/trading")
 public class MiscController {
@@ -37,10 +37,5 @@ public class MiscController {
     @GetMapping(value = "/token")
     public StringDto getToken(){
         return miscService.getToken();
-    }
-
-    @GetMapping(value = "/getTradingState/{token}")
-    public List<AccountDto> getTradingState(@PathVariable String token){
-        return tradingStateService.getTradingState(token);
     }
 }

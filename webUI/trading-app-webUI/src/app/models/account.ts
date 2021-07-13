@@ -8,6 +8,5 @@ export interface AccountDto {
     leverage:number;
     balance:number;
     created:boolean;
-    lastRefreshed:string;
     orders:OrderDto[];
 }

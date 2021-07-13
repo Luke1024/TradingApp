@@ -15,14 +15,9 @@ export class OrderComponent implements OnInit {
 
   order!:OrderDto;
 
-  //correctnessMessages;
-  lotInfo!:string;
-  tpPipsInfo!:string;
-  slPipsInfo!:string;
+  correctness!:OrderInfoDto;
 
   edit:boolean;
-  message:string;
-  correctnessStatus:boolean;
 
   //parameters in edit mode when created
   tpPips!:number;
@@ -30,27 +25,15 @@ export class OrderComponent implements OnInit {
 
   constructor(private currencyService:CurrencyService) { 
     this.edit = true;
-    this.message = "";
-    this.correctnessStatus = false;
+    this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
 
-  getCorrectnessInfo(){
+  onChange(){
     this.currencyService.getOrderInfo(this.order).subscribe(response => {
       if(response != null){
-        this.correctnessStatus = response.status;
-        this.order.tpVal = response.tpVal;
-        this.order.slVal = response.slVal;
-        if(!this.correctnessStatus){
-          this.setInfoMessages(response);
-        }
+        this.correctness = response;
       }
     })
-  }
-
-  private setInfoMessages(orderInfoDto:OrderInfoDto){
-    this.lotInfo=orderInfoDto.lotInfo;
-    this.tpPipsInfo=orderInfoDto.tpPipsInfo;
-    this.slPipsInfo=orderInfoDto.slPipsInfo;
   }
 
   editSlTp(){
@@ -58,7 +41,7 @@ export class OrderComponent implements OnInit {
   }
 
   saveSlTp(){
-    if(this.correctnessStatus && this.order.created){
+    if(this.correctness.status && this.order.created){
       this.currencyService.orderUpdate(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -73,7 +56,7 @@ export class OrderComponent implements OnInit {
   }
 
   openOrder(){
-    if( ! this.order.created && this.correctnessStatus){
+    if( ! this.order.created && this.correctness.status){
       this.currencyService.saveOrder(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -97,5 +80,25 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.order = Object.assign({},this.orderInput);
+    this.onChange()
+    this.currencyService.pulseStream.subscribe(
+      pulse => {
+        if(pulse){
+          this.getOrder(this.order)
+        }
+      }
+    )
+  }
+
+  private getOrder(order:OrderDto){
+    if(order.created){
+      this.currencyService.getOrder(order).subscribe(response => {
+        if(response != null){
+          if(response.status){
+            this.update(response.orderDto)
+          }
+        }
+      })
+    }
   }
 }

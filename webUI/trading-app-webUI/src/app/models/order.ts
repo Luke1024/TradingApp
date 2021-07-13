@@ -4,12 +4,13 @@ import { State } from "./state";
 export interface OrderDto {
     accountId:number;
     id:number;
+    currency:string;
     lot:number;
     tpPips:number;
     tpVal:number;
     slPips:number;
     slVal:number;
     profit:number;
-    lastRefreshed:string;
+    longOrder:boolean;
     created:boolean;
 }

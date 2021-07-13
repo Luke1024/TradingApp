@@ -15,7 +15,7 @@ export class TradingViewComponent implements OnInit {
     this.currencyService.getToken()
   }
 
-  accounts!:AccountDto[]
+  accounts:AccountDto[] = []
   
 
   addAccount() {
@@ -24,8 +24,7 @@ export class TradingViewComponent implements OnInit {
       accountName:"",
       leverage:10,
       balance:10000,
-      created:false;
-      lastRefreshed:"",
+      created:false,
       orders:[]
     }
     this.accounts.push(account)
