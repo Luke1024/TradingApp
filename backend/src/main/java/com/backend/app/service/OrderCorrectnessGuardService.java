@@ -3,6 +3,8 @@ package com.backend.app.service;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.dto.OrderInfoDto;
 import com.backend.app.repository.OrderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +16,17 @@ public class OrderCorrectnessGuardService {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderLimitsComputingService orderLimitsComputingService;
+
+    private Logger logger = LoggerFactory.getLogger(OrderCorrectnessGuardService.class);
 
     private static double lotMin = 0.01;
 
     public OrderInfoDto getInfo(OrderDto orderDto) {
-        Optional<OrderLimitsComputingService.AvailableParameters> parameters =
-                orderLimitsComputingService.computeOrderAvailableParameters(orderDto);
-
-        if (parameters.isPresent()) {
-            return processWithAnalysis(orderDto, parameters.get());
-        } else return new OrderInfoDto(false);
-    }
-
-    private OrderInfoDto processWithAnalysis(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
-
-        String lotInfo = analyzeLot(orderDto, parameters);
-        String tpPipsInfo = analyzeTpPips(orderDto, parameters);
-        double tpVal = computeTpVal(orderDto, parameters);
-        String slPipsInfo = analyzeSlPips(orderDto, parameters);
-        double slVal = computeSlVal(orderDto, parameters);
+        String lotInfo = analyzeLot(orderDto);
+        String tpPipsInfo = analyzeTpPips(orderDto);
+        double tpVal = computeTpVal(orderDto);
+        String slPipsInfo = analyzeSlPips(orderDto);
+        double slVal = computeSlVal(orderDto);
 
         if(isStringBiggerThanZero(lotInfo, tpPipsInfo, slPipsInfo)){
             return new OrderInfoDto(lotInfo, tpPipsInfo, tpVal, slPipsInfo, slVal, false);
@@ -48,10 +40,10 @@ public class OrderCorrectnessGuardService {
         else return false;
     }
 
-    private String analyzeLot(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
+    private String analyzeLot(OrderDto orderDto){
         double lot = orderDto.getLot();
-        double lotMin = parameters.lotMin;
-        double lotMax = parameters.lotMax;
+        double lotMin = 0.1;
+        double lotMax = 1;
         //when available lot is below minimal lot settings it should be blocking order opening
         if(lot < lotMin || lot > lotMax){
             return generateStringlotValueBetween(lotMin, lotMax);
@@ -61,13 +53,13 @@ public class OrderCorrectnessGuardService {
     }
 
     private String generateStringlotValueBetween(double lotMin, double lotMax){
-        return "";
+        return "Problem with lot value";
     }
 
-    private String analyzeTpPips(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
+    private String analyzeTpPips(OrderDto orderDto){
         int tpPips = orderDto.getTpPips();
-        int tpPipsMin = parameters.tpPipsMin;
-        int tpPipsMax = parameters.tpPipsMax;
+        int tpPipsMin = 1;
+        int tpPipsMax = 1000;
         if(tpPips < tpPipsMin || tpPips > tpPipsMax){
             return generateStringTpPipsValueBetween(tpPipsMin, tpPipsMax);
         } else {
@@ -76,17 +68,17 @@ public class OrderCorrectnessGuardService {
     }
 
     private String generateStringTpPipsValueBetween(int tpPipsMin, int tpPipsMax){
-        return "";
+        return "Problem with tp pips value.";
     }
 
-    private double computeTpVal(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
-        return orderDto.getTpPips() * parameters.valMultiplier;
+    private double computeTpVal(OrderDto orderDto){
+        return orderDto.getTpPips() * 10;
     }
 
-    private String analyzeSlPips(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
+    private String analyzeSlPips(OrderDto orderDto){
         int slPips = orderDto.getSlPips();
-        int slPipsMin = parameters.slPipsMin;
-        int slPipsMax = parameters.slPipsMax;
+        int slPipsMin = -1;
+        int slPipsMax = -1000;
         if(slPips < slPipsMin || slPipsMax > slPipsMax){
             return genetateStringSlPipsValueBetween(slPipsMin, slPipsMax);
         } else {
@@ -95,10 +87,10 @@ public class OrderCorrectnessGuardService {
     }
 
     private String genetateStringSlPipsValueBetween(int slPipsMin, int slPipsMax){
-        return "";
+        return "Problem with sl pips value";
     }
 
-    private double computeSlVal(OrderDto orderDto, OrderLimitsComputingService.AvailableParameters parameters){
-        return orderDto.getSlVal() * parameters.valMultiplier;
+    private double computeSlVal(OrderDto orderDto){
+        return orderDto.getSlVal() * 10;
     }
 }

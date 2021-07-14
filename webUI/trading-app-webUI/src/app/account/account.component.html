@@ -14,9 +14,9 @@
                 <label for="leverage_max" class="form-label">Leverage Max</label>
                 <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage" (ngModelChange)="onChange()">
                 <p>{{correctness.leverageInfo}}</p>
-                <button class="btn btn-primary mb-3" (click)="saveSettings()">Save Settings</button>
-                <button class="btn btn-primary mb-3" (click)="cancelEditSettings()">Cancel Edit</button>
-                <button class="btn btn-primary mb-3" (click)="delete()">Remove Account</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="saveSettings()">Save Settings</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="cancelEditSettings()">Cancel Edit</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Remove Account</button>
             </div>
             <div *ngIf="!account.created">
                 <label for="account_name" class="form-label">Account Name</label>
@@ -28,8 +28,8 @@
                 <label for="balance" class="form-label">Balance</label>
                 <input type="number" class="form-control" id="balance" [(ngModel)]="account.balance" (ngModelChange)="onChange()">
                 <p>{{correctness.balanceInfo}}</p>
-                <button class="btn btn-primary mb-3" (click)="saveAccount()">Save Account</button>
-                <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="saveAccount()">Save Account</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Cancel</button>
             </div>
         </div>
         <div class="card m-2 shadow" *ngFor="let order of account.orders">

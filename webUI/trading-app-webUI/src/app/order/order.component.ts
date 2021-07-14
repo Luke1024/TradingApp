@@ -67,7 +67,15 @@ export class OrderComponent implements OnInit {
   }
 
   private update(orderDto:OrderDto){
-    this.order = orderDto
+    this.order.accountId = orderDto.accountId
+    this.order.id = orderDto.id
+    this.order.currency = orderDto.currency
+    this.order.lot = orderDto.lot
+    this.order.tpVal = orderDto.tpVal
+    this.order.slVal = orderDto.slVal
+    this.order.profit = orderDto.profit
+    this.order.longOrder = orderDto.longOrder
+    this.order.created = orderDto.created
     if(!this.edit){
       this.tpPips = orderDto.tpPips;
       this.slPips = orderDto.slPips;

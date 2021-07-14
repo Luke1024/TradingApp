@@ -17,14 +17,9 @@ export class AccountComponent implements OnInit {
 
   account!:AccountDto
 
-  correctness!:AccountInfoDto
+  correctness:AccountInfoDto
 
   edit:boolean;
-
-  //parameters in edit mode when created
-  accountName!:string;
-  //detection when lowered;
-  leverage!:number;
 
   constructor(private currencyService:CurrencyService) {
     this.edit = true;
@@ -32,6 +27,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("account init")
     this.account = Object.assign({},this.accountInput)
     this.onChange()
     this.currencyService.pulseStream.subscribe(pulse => {
@@ -39,6 +35,10 @@ export class AccountComponent implements OnInit {
         this.getAccount(this.account);
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    console.log("account destroyed")
   }
 
   private getAccount(account:AccountDto){
@@ -79,9 +79,10 @@ export class AccountComponent implements OnInit {
   }
 
   saveSettings(){
+    if(this.correctness.status){
     this.currencyService.accountUpdate(this.account).subscribe(response => {
       if(response != null){
-        if(response.status = true){
+        if(response.status){
           if(response.accountDto != null){
             this.update(response.accountDto);
             this.edit = false;
@@ -90,6 +91,7 @@ export class AccountComponent implements OnInit {
       }
     })
   }
+}
 
   onChange(){
     this.currencyService.getAccountInfo(this.account).subscribe(response => {
@@ -100,7 +102,11 @@ export class AccountComponent implements OnInit {
   }
 
   private setInfoMessages(accountInfo:AccountInfoDto){
-    this.correctness = accountInfo;
+    //map to not restart models 
+    this.correctness.balanceInfo = accountInfo.balanceInfo
+    this.correctness.leverageInfo = accountInfo.leverageInfo
+    this.correctness.nameInfo = accountInfo.nameInfo
+    this.correctness.status = accountInfo.status
   }
 
   // creation state methods
@@ -120,27 +126,18 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  updateAccount(){
-    if(this.correctness.status){
-      this.currencyService.accountUpdate(this.account).subscribe(response => {
-        if(response != null){
-          if(response.status){
-            if(response.accountDto != null){
-              this.update(response.accountDto)
-              this.edit = false;
-            }
-          }
-        }
-      })
-    }
+  private update(accountDto:AccountDto){
+    this.smartMapping(accountDto);
   }
 
-  private update(accountDto:AccountDto){
-    this.account = accountDto;
-    if( ! this.edit){
-      this.accountName = accountDto.accountName;
-      this.leverage = accountDto.leverage;
+  private smartMapping(account:AccountDto){
+    this.account.id = account.id
+    if(!this.edit){
+      this.account.accountName = account.accountName
+      this.account.leverage = account.leverage
     }
+    this.account.balance = account.balance
+    this.account.created = account.created
   }
 
   delete(){

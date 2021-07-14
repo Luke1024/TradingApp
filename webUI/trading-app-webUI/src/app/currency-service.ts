@@ -31,7 +31,7 @@ export class CurrencyService {
     orderInfoUrl = this.rootUrl + "order/info/"
     orderUrl = this.rootUrl + "order/"
     saveOrderUrl = this.rootUrl + "order/save/"
-    updateOrderUrl = this.rootUrl + "order/update"
+    updateOrderUrl = this.rootUrl + "order/update/"
 
     token=""
 
@@ -118,7 +118,7 @@ export class CurrencyService {
     }
 
     public getOrder(orderDto:OrderDto): Observable<OrderResponseDto>{
-        return this.http.get<OrderResponseDto>(this.orderUrl + '/' + this.token + orderDto.id)
+        return this.http.get<OrderResponseDto>(this.orderUrl + this.token + '/' + orderDto.id)
         .pipe(catchError(this.handleError<OrderResponseDto>("get order")))
     }
 

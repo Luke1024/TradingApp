@@ -19,16 +19,15 @@ public class Currency_Order {
     private double profit;
     private ShortLong shortLong;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
     public Currency_Order() {
     }
 
-    public Currency_Order(long id, String currency, double lot, int tpPips, double tpVal, int slPips,
+    public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips,
                           double slVal, double profit, ShortLong shortLong, Account account) {
-        this.id = id;
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;

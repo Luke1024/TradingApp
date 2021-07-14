@@ -25,7 +25,6 @@ public class OrderMapper {
 
     public Currency_Order mapToNewOrder(OrderDto orderDto, Account account){
         return new Currency_Order(
-                orderDto.getId(),
                 orderDto.getCurrency(),
                 orderDto.getLot(),
                 orderDto.getTpPips(),

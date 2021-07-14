@@ -44,6 +44,14 @@
                 <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number" (ngModelChange)="onChange()">
                 <p>Sl pips value in currency {{correctness.slVal}}</p>
                 <p>{{correctness.slPipsInfo}}</p>
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="order.longOrder" (ngModelChange)="onChange()">
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="true">Long
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="false">Short
+                    </label>
+                </div>
             </div>
         </div>
     </div>

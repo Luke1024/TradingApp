@@ -9,8 +9,11 @@ export class MenuComponent implements OnInit {
 
   constructor() { }
 
-  model = "1";
+  model = "howTo";
 
   ngOnInit(): void {}
 
+  onChange(): void {
+    console.log(this.model)
+  }
 }

@@ -19,7 +19,7 @@ public class Account {
     @OneToMany(targetEntity = Currency_Order.class,
         mappedBy = "account",
         cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY)
+        fetch = FetchType.EAGER)
     @OrderColumn
     private List<Currency_Order> currencyOrders;
 
