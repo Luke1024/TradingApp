@@ -1,12 +1,12 @@
-package com.backend.app.service;
+package com.backend.app.service.order;
 
-import com.backend.app.domain.State;
-import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.Currency_Order;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.repository.OrderRepository;
+import com.backend.app.service.TradingStateService;
+import com.backend.app.service.account.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

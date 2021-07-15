@@ -1,6 +1,5 @@
-package com.backend.app.domain.wrapper;
+package com.backend.app.service.instrument.data.downloader.manager.service.wrapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DataPointWrapper {

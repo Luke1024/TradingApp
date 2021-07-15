@@ -3,7 +3,7 @@ package com.backend.app.service.instrument.data.downloader.manager.service.downl
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.DataPointsPackage;
 import com.backend.app.domain.ExchangeRate;
-import com.backend.app.service.DataPointAndExchangeRateService;
+import com.backend.app.service.instrument.data.downloader.manager.service.DataPointAndExchangeRateService;
 import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointsRetrieverService;
 import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.ExchangeRateRetrieverService;
 import org.slf4j.Logger;

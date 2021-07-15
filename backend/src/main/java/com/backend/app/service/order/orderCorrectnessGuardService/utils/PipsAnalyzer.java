@@ -1,4 +1,4 @@
-package com.backend.app.service.orderCorrectnessGuardService.utils;
+package com.backend.app.service.order.orderCorrectnessGuardService.utils;
 
 import com.backend.app.domain.dto.OrderDto;
 import org.springframework.stereotype.Component;

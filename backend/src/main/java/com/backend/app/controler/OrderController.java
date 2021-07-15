@@ -5,8 +5,8 @@ import com.backend.app.domain.dto.OrderInfoDto;
 import com.backend.app.domain.dto.OrderResponseDto;
 import com.backend.app.domain.entity.Currency_Order;
 import com.backend.app.mapper.OrderMapper;
-import com.backend.app.service.orderCorrectnessGuardService.OrderCorrectnessGuardService;
-import com.backend.app.service.OrderService;
+import com.backend.app.service.order.orderCorrectnessGuardService.OrderCorrectnessGuardService;
+import com.backend.app.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

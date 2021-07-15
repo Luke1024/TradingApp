@@ -1,6 +1,7 @@
 package com.backend.app.service;
 
 import com.backend.app.domain.DataPoint;
+import com.backend.app.service.instrument.data.downloader.manager.service.DataPointAndExchangeRateService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

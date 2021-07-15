@@ -1,9 +1,9 @@
-package com.backend.app.service.orderCorrectnessGuardService;
+package com.backend.app.service.order.orderCorrectnessGuardService;
 
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.dto.OrderInfoDto;
 import com.backend.app.repository.OrderRepository;
-import com.backend.app.service.orderCorrectnessGuardService.utils.PipsAnalyzer;
+import com.backend.app.service.order.orderCorrectnessGuardService.utils.PipsAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.backend.app.service;
+package com.backend.app.service.instrument.data.downloader.manager.service;
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.ExchangeRate;

@@ -1,4 +1,4 @@
-package com.backend.app.service;
+package com.backend.app.service.account;
 
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.AccountInfoDto;
@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountCorrectnessGuardService {
 
-    @Autowired
-    private AccountMessageService accountMessageService;
-
-    private static int maxLeverage = 100;
+    private static int leverage = 100;
 
     @Autowired
     private AccountRepository accountRepository;
+
+    public static String accountNameToShort = "Account name to short";
+    public static String maxLeverage = "Leverage must be under 100";
+    public static String balanceOnMinus = "Balance on minus";
 
     public AccountInfoDto getInfo(AccountDto accountDto){
         String nameInfo = analyzeName(accountDto);
@@ -36,19 +37,19 @@ public class AccountCorrectnessGuardService {
         if(accountDto.getAccountName().length()>0){
             return "";
         } else {
-            return accountMessageService.accountNameToShort;
+            return accountNameToShort;
         }
     }
 
     private String analyzeLeverage(AccountDto accountDto){
-        if(accountDto.getLeverage()>maxLeverage){
-            return accountMessageService.maxLeverage;
+        if(accountDto.getLeverage()>leverage){
+            return maxLeverage;
         } else return "";
     }
 
     private String analyzeBalance(AccountDto accountDto){
         if(accountDto.getBalance()<0){
-            return accountMessageService.balanceOnMinus;
+            return balanceOnMinus;
         } else return "";
     }
 }

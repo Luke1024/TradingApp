@@ -1,7 +1,7 @@
 package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities;
 
-import com.backend.app.domain.wrapper.CurrencyDataWrapper;
-import com.backend.app.domain.wrapper.ExchangeRateWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.wrapper.CurrencyDataWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.wrapper.ExchangeRateWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

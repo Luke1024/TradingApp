@@ -1,10 +1,13 @@
-package com.backend.app.service;
+package com.backend.app.service.account;
 
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.mapper.AccountMapper;
 import com.backend.app.repository.AccountRepository;
+import com.backend.app.service.order.OrderService;
+import com.backend.app.service.TradingStateService;
+import com.backend.app.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
