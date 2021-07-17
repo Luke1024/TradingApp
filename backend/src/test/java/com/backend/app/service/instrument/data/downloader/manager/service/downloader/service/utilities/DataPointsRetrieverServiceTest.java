@@ -2,7 +2,7 @@ package com.backend.app.service.instrument.data.downloader.manager.service.downl
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.DataPointsPackage;
-import com.backend.app.domain.MetaData;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.MetaData;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

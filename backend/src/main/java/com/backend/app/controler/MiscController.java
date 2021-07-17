@@ -3,7 +3,7 @@ package com.backend.app.controler;
 import com.backend.app.domain.dto.DataPointDto;
 import com.backend.app.domain.dto.StringDto;
 import com.backend.app.mapper.DataPointMapper;
-import com.backend.app.service.instrument.data.downloader.manager.service.DataPointAndExchangeRateService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointAndExchangeRateService;
 import com.backend.app.service.MiscService;
 import com.backend.app.service.TradingStateService;
 import org.springframework.beans.factory.annotation.Autowired;

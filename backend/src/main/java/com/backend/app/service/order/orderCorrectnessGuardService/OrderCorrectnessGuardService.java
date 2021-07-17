@@ -59,7 +59,8 @@ public class OrderCorrectnessGuardService {
     private double computeTpVal(OrderDto orderDto){
         int tpPips = orderDto.getTpPips();
         double lot = orderDto.getLot();
-        return computeProfit(tpPips, lot);
+        boolean isLong = orderDto.isLongOrder();
+        return computeProfit(tpPips, lot, isLong);
     }
 
     private String analyzeSlPips(OrderDto orderDto){
@@ -69,10 +70,15 @@ public class OrderCorrectnessGuardService {
     private double computeSlVal(OrderDto orderDto){
         int slPips = orderDto.getSlPips();
         double lot = orderDto.getLot();
-        return computeProfit(slPips, lot);
+        boolean isLong = orderDto.isLongOrder();
+        return computeProfit(slPips, lot, isLong);
     }
 
-    private double computeProfit(int pips, double lot){
-        return pips * lot * 10;
+    private double computeProfit(int pips, double lot, boolean isLong){
+        if(isLong) {
+            return pips * lot * 10;
+        } else {
+            return -pips * lot * 10;
+        }
     }
 }

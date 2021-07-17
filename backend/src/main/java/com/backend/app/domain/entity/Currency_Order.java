@@ -1,6 +1,7 @@
 package com.backend.app.domain.entity;
 
-import com.backend.app.domain.ShortLong;
+import com.backend.app.domain.enums.OrderState;
+import com.backend.app.domain.enums.ShortLong;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Currency_Order {
     private double slVal;
     private double profit;
     private ShortLong shortLong;
-
+    private OrderState orderState;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
@@ -27,7 +28,7 @@ public class Currency_Order {
     }
 
     public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips,
-                          double slVal, double profit, ShortLong shortLong, Account account) {
+                          double slVal, double profit, ShortLong shortLong, OrderState orderState, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
@@ -35,6 +36,7 @@ public class Currency_Order {
         this.slPips = slPips;
         this.slVal = slVal;
         this.profit = profit;
+        this.orderState = orderState;
         this.shortLong = shortLong;
         setAccount(account);
     }
@@ -86,6 +88,14 @@ public class Currency_Order {
 
     public Account getAccount() {
         return account;
+    }
+
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 
     public void setTpPips(int tpPips) {

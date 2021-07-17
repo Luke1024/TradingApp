@@ -1,4 +1,4 @@
-package com.backend.app.domain;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
 import java.time.LocalDateTime;
 

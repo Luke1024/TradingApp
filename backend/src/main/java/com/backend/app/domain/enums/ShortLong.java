@@ -1,4 +1,4 @@
-package com.backend.app.domain;
+package com.backend.app.domain.enums;
 
 public enum ShortLong {
     LONG, SHORT

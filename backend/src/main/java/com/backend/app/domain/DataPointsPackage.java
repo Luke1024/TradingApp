@@ -1,5 +1,7 @@
 package com.backend.app.domain;
 
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.MetaData;
+
 import java.util.List;
 import java.util.Optional;
 

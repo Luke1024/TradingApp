@@ -2,10 +2,10 @@ package com.backend.app.service.instrument.data.downloader.manager.service.downl
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.DataPointsPackage;
-import com.backend.app.domain.MetaData;
-import com.backend.app.service.instrument.data.downloader.manager.service.wrapper.CurrencyDataWrapper;
-import com.backend.app.service.instrument.data.downloader.manager.service.wrapper.DataPointWrapper;
-import com.backend.app.service.instrument.data.downloader.manager.service.wrapper.MetaDataWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.MetaData;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.CurrencyDataWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.DataPointWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.MetaDataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

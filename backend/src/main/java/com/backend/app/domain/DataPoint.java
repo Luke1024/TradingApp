@@ -1,25 +1,19 @@
 package com.backend.app.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Entity
 public class DataPoint {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
     LocalDateTime timeStamp;
-    double close;
+    double closeValue;
 
     public DataPoint() {
     }
 
-    public DataPoint(LocalDateTime timeStamp, double close) {
+    public DataPoint(LocalDateTime timeStamp, double closeValue) {
         this.timeStamp = timeStamp;
-        this.close = close;
+        this.closeValue = closeValue;
     }
 
     public Long getId() {
@@ -30,8 +24,8 @@ public class DataPoint {
         return timeStamp;
     }
 
-    public double getClose() {
-        return close;
+    public double getCloseValue() {
+        return closeValue;
     }
 
     @Override
@@ -39,7 +33,7 @@ public class DataPoint {
         return "DataPoint{" +
                 "id=" + id +
                 ", timeStamp=" + timeStamp +
-                ", close=" + close +
+                ", close=" + closeValue +
                 '}';
     }
 }

@@ -19,6 +19,6 @@ public class DataPointMapper {
     }
 
     public DataPointDto mapToDto(DataPoint dataPoint){
-        return new DataPointDto(dataPoint.getClose(), dataPoint.getTimeStamp().toString());
+        return new DataPointDto(dataPoint.getCloseValue(), dataPoint.getTimeStamp().toString());
     }
 }

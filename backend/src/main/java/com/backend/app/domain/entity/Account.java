@@ -1,7 +1,5 @@
 package com.backend.app.domain.entity;
 
-import com.backend.app.domain.State;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

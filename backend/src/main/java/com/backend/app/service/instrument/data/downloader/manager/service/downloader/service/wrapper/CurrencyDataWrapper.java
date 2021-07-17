@@ -1,4 +1,4 @@
-package com.backend.app.service.instrument.data.downloader.manager.service.wrapper;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
