@@ -1,7 +1,7 @@
 package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities;
 
-import com.backend.app.domain.wrapper.CurrencyDataWrapper;
-import com.backend.app.domain.wrapper.ExchangeRateWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.CurrencyDataWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.ExchangeRateWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,8 @@ public class ApiConnectorService {
 
     private String fxIntradayEndpointCompact = "https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=EUR&to_symbol=USD&interval=5min&apikey=FGW9LY1I2F0A4VIB";
 
-    private String fxIntradayEndpointFull = "https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=EUR&to_symbol=USD&interval=5min&outputsize=full&apikey=FGW9LY1I2F0A4VIB";
-
     private String fxEchangeRate = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=FGW9LY1I2F0A4VIB";
 
-
-    public ApiConnectorService() {
-    }
 
     public Optional<CurrencyDataWrapper> getM5(){
         return downloadDataFromApi(fxIntradayEndpointCompact);

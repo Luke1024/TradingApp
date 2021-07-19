@@ -1,11 +1,12 @@
 package com.backend.app.domain.entity;
 
-import com.backend.app.domain.State;
+import com.backend.app.domain.enums.OrderState;
+import com.backend.app.domain.enums.ShortLong;
 
 import javax.persistence.*;
 
 @Entity
-public class Currency_Order {
+public class CurrencyOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,25 +18,26 @@ public class Currency_Order {
     private int slPips;
     private double slVal;
     private double profit;
-    private State state;
-
-    @ManyToOne()
+    private ShortLong shortLong;
+    private OrderState orderState;
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
-    public Currency_Order() {
+    public CurrencyOrder() {
     }
 
-    public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips, double slVal,
-                          double profit, State state, Account account) {
+    public CurrencyOrder(String currency, double lot, int tpPips, double tpVal, int slPips,
+                         double slVal, ShortLong shortLong, OrderState orderState, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
         this.tpVal = tpVal;
         this.slPips = slPips;
         this.slVal = slVal;
-        this.profit = profit;
-        this.state = state;
+        this.profit = 0;
+        this.orderState = orderState;
+        this.shortLong = shortLong;
         setAccount(account);
     }
 
@@ -76,12 +78,24 @@ public class Currency_Order {
         return slVal;
     }
 
+    public ShortLong getShortLong() {
+        return shortLong;
+    }
+
     public double getProfit() {
         return profit;
     }
 
-    public State getState() {
-        return state;
+    public Account getAccount() {
+        return account;
+    }
+
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 
     public void setTpPips(int tpPips) {
@@ -102,10 +116,6 @@ public class Currency_Order {
 
     public void setProfit(double profit) {
         this.profit = profit;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public void setLot(double lot) {

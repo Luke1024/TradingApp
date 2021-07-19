@@ -1,14 +1,19 @@
 package com.backend.app.controler;
 
-import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.OrderDto;
-import com.backend.app.service.OrderService;
+import com.backend.app.domain.dto.OrderInfoDto;
+import com.backend.app.domain.dto.OrderResponseDto;
+import com.backend.app.domain.entity.CurrencyOrder;
+import com.backend.app.mapper.OrderMapper;
+import com.backend.app.service.order.orderCorrectnessGuardService.OrderCorrectnessGuardService;
+import com.backend.app.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin("*")
+
+@CrossOrigin
 @RestController
 @RequestMapping("/trading")
 public class OrderController {
@@ -16,18 +21,65 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping(value = "/order/{token}/{account_id}")
-    public List<AccountDto> saveAccount(@PathVariable String token, @PathVariable long account_id, @RequestBody OrderDto orderDto) {
-        return orderService.saveOrder(token, account_id, orderDto);
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderCorrectnessGuardService orderCorrectnessGuardService;
+
+    @PutMapping(value="/order/info")
+    public OrderInfoDto getOrderInfo(@RequestBody OrderDto orderDto){
+        return getInfo(orderDto);
     }
 
-    @PutMapping(value = "/order/{token}")
-    public List<AccountDto> updateAccount(@PathVariable String token, @RequestBody OrderDto orderDto) {
-        return orderService.updateOrder(token, orderDto);
+    @GetMapping(value="/order/{token}/{id}")
+    public OrderResponseDto getOrder(@PathVariable String token, @PathVariable long id){
+        Optional<CurrencyOrder> orderOptional = orderService.getOrder(token, id);
+        if(orderOptional.isPresent()) {
+            Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
+            if(orderDtoOptional.isPresent()){
+                return new OrderResponseDto(true, orderDtoOptional.get());
+            }
+        }
+        return new OrderResponseDto(false, new OrderDto());
     }
 
-    @DeleteMapping(value = "/order/{token}/{id}")
-    public List<AccountDto> deleteAccount(@PathVariable String token, @PathVariable long id) {
+    @PutMapping(value="/order/save/{token}")
+    public OrderResponseDto saveOrder(@PathVariable String token, @RequestBody OrderDto orderDto){
+        OrderInfoDto orderInfoDto = getInfo(orderDto);
+        if(orderInfoDto.isStatus()){
+            Optional<CurrencyOrder> orderOptional = orderService.saveOrder(token, orderDto);
+            if(orderOptional.isPresent()){
+                Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
+                if(orderDtoOptional.isPresent()){
+                    return new OrderResponseDto(true, orderDtoOptional.get());
+                }
+            }
+        }
+        return new OrderResponseDto(false, new OrderDto());
+    }
+
+    @PutMapping(value="/order/update/{token}")
+    public OrderResponseDto orderUpdate(@PathVariable String token, @RequestBody OrderDto orderDto){
+        OrderInfoDto orderInfoDto = getInfo(orderDto);
+        if(orderInfoDto.isStatus()){
+            Optional<CurrencyOrder> orderOptional = orderService.updateOrder(token, orderDto);
+            if(orderOptional.isPresent()){
+                Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
+                if(orderDtoOptional.isPresent()){
+                    return new OrderResponseDto(true, orderDtoOptional.get());
+                }
+            }
+        }
+        return new OrderResponseDto(false, new OrderDto());
+    }
+
+    @DeleteMapping(value="/order/{token}/{id}")
+    public boolean deleteOrder(@PathVariable String token, @PathVariable long id){
         return orderService.deleteOrder(token, id);
+    }
+
+    private OrderInfoDto getInfo(OrderDto orderDto){
+        return orderCorrectnessGuardService.getInfo(orderDto);
     }
 }

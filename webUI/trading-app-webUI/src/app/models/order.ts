@@ -1,7 +1,8 @@
-import { OrderDtoMessage } from "./order-message";
+import { OrderInfoDto } from "./order-info";
 import { State } from "./state";
 
 export interface OrderDto {
+    accountId:number;
     id:number;
     currency:string;
     lot:number;
@@ -10,6 +11,6 @@ export interface OrderDto {
     slPips:number;
     slVal:number;
     profit:number;
-    state:State
-    message:OrderDtoMessage;
+    longOrder:boolean;
+    created:boolean;
 }

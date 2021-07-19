@@ -1,6 +1,5 @@
-package com.backend.app.domain.wrapper;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MetaDataWrapper {
@@ -19,9 +18,6 @@ public class MetaDataWrapper {
     private String outputSize;
     @JsonProperty("7. Time Zone")
     private String timeZone;
-
-    public MetaDataWrapper() {
-    }
 
     public String getInformation() {
         return information;

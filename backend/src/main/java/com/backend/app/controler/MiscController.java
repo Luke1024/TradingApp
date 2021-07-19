@@ -1,10 +1,9 @@
 package com.backend.app.controler;
 
-import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.DataPointDto;
 import com.backend.app.domain.dto.StringDto;
 import com.backend.app.mapper.DataPointMapper;
-import com.backend.app.service.DataPointAndExchangeRateService;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointAndExchangeRateService;
 import com.backend.app.service.MiscService;
 import com.backend.app.service.TradingStateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @RequestMapping("/trading")
 public class MiscController {
@@ -37,10 +36,5 @@ public class MiscController {
     @GetMapping(value = "/token")
     public StringDto getToken(){
         return miscService.getToken();
-    }
-
-    @GetMapping(value = "/getTradingState/{token}")
-    public List<AccountDto> getTradingState(@PathVariable String token){
-        return tradingStateService.getTradingState(token);
     }
 }

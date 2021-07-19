@@ -1,4 +1,4 @@
-package com.backend.app.domain.wrapper;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,11 +8,11 @@ public class ExchangeRateWrapper {
     @JsonProperty("Realtime Currency Exchange Rate")
     private RateWrapper rateWrapper;
 
-    public ExchangeRateWrapper() {
-    }
-
     public RateWrapper getRateWrapper() {
         return rateWrapper;
+    }
+
+    public ExchangeRateWrapper() {
     }
 
     @Override

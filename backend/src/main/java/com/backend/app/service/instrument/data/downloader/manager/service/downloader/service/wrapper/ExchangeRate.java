@@ -1,21 +1,24 @@
-package com.backend.app.domain;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
 import java.time.LocalDateTime;
 
 public class ExchangeRate {
     private String fromCurrencyCode;
     private String toCurrencyCode;
-    private double exchangeRate;
+    private double rate;
     private LocalDateTime lastRefreshed;
     private String timeZone;
     private double bidPrice;
     private double askPrice;
 
-    public ExchangeRate(String fromCurrencyCode, String toCurrencyCode, double exchangeRate, LocalDateTime lastRefreshed,
+    public ExchangeRate() {
+    }
+
+    public ExchangeRate(String fromCurrencyCode, String toCurrencyCode, double rate, LocalDateTime lastRefreshed,
                         String timeZone, double bidPrice, double askPrice) {
         this.fromCurrencyCode = fromCurrencyCode;
         this.toCurrencyCode = toCurrencyCode;
-        this.exchangeRate = exchangeRate;
+        this.rate = rate;
         this.lastRefreshed = lastRefreshed;
         this.timeZone = timeZone;
         this.bidPrice = bidPrice;
@@ -30,8 +33,8 @@ public class ExchangeRate {
         return toCurrencyCode;
     }
 
-    public double getExchangeRate() {
-        return exchangeRate;
+    public double getRate() {
+        return rate;
     }
 
     public LocalDateTime getLastRefreshed() {
@@ -48,5 +51,18 @@ public class ExchangeRate {
 
     public double getAskPrice() {
         return askPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "ExchangeRate{" +
+                "fromCurrencyCode='" + fromCurrencyCode + '\'' +
+                ", toCurrencyCode='" + toCurrencyCode + '\'' +
+                ", exchangeRate=" + rate +
+                ", lastRefreshed=" + lastRefreshed +
+                ", timeZone='" + timeZone + '\'' +
+                ", bidPrice=" + bidPrice +
+                ", askPrice=" + askPrice +
+                '}';
     }
 }

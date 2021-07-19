@@ -1,4 +1,4 @@
-import { AccountDtoMessage } from "./account-message";
+
 import { OrderDto } from "./order";
 import { State } from "./state";
 
@@ -7,7 +7,6 @@ export interface AccountDto {
     accountName:string;
     leverage:number;
     balance:number;
-    state: State;
-    message: AccountDtoMessage;
+    created:boolean;
     orders:OrderDto[];
 }

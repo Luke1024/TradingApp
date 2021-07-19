@@ -1,37 +1,38 @@
 package com.backend.app.domain.dto;
 
-import com.backend.app.domain.State;
-
 public class OrderDto {
+    private long accountId;
     private long id;
     private String currency;
     private double lot;
-    private String lotMessage;
     private int tpPips;
-    private String tpPipsMessage;
     private double tpVal;
     private int slPips;
-    private String slPipsMessage;
     private double slVal;
     private double profit;
-    private State state;
+    private boolean longOrder;
+    private boolean created;
 
     public OrderDto() {
     }
 
-    public OrderDto(String currency, double lot, String lotMessage, int tpPips, String tpPipsMessage, double tpVal,
-                    int slPips, String slPipsMessage, double slVal, double profit, State state) {
+    public OrderDto(long accountId, long id, String currency, double lot, int tpPips,
+                    double tpVal, int slPips, double slVal, double profit, boolean longOrder, boolean created) {
+        this.accountId = accountId;
+        this.id = id;
         this.currency = currency;
         this.lot = lot;
-        this.lotMessage = lotMessage;
         this.tpPips = tpPips;
-        this.tpPipsMessage = tpPipsMessage;
         this.tpVal = tpVal;
         this.slPips = slPips;
-        this.slPipsMessage = slPipsMessage;
         this.slVal = slVal;
         this.profit = profit;
-        this.state = state;
+        this.longOrder = longOrder;
+        this.created = created;
+    }
+
+    public long getAccountId() {
+        return accountId;
     }
 
     public long getId() {
@@ -46,16 +47,8 @@ public class OrderDto {
         return lot;
     }
 
-    public String getLotMessage() {
-        return lotMessage;
-    }
-
     public int getTpPips() {
         return tpPips;
-    }
-
-    public String getTpPipsMessage() {
-        return tpPipsMessage;
     }
 
     public double getTpVal() {
@@ -66,10 +59,6 @@ public class OrderDto {
         return slPips;
     }
 
-    public String getSlPipsMessage() {
-        return slPipsMessage;
-    }
-
     public double getSlVal() {
         return slVal;
     }
@@ -78,7 +67,11 @@ public class OrderDto {
         return profit;
     }
 
-    public State getState() {
-        return state;
+    public boolean isLongOrder() {
+        return longOrder;
+    }
+
+    public boolean isCreated() {
+        return created;
     }
 }

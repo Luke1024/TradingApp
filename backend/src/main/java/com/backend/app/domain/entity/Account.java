@@ -1,7 +1,5 @@
 package com.backend.app.domain.entity;
 
-import com.backend.app.domain.State;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +13,13 @@ public class Account {
     private String accountName;
     private int leverage;
     private double balance;
-    private State state;
 
-    @OneToMany(targetEntity = Currency_Order.class,
+    @OneToMany(targetEntity = CurrencyOrder.class,
         mappedBy = "account",
         cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY)
+        fetch = FetchType.EAGER)
     @OrderColumn
-    private List<Currency_Order> currencyOrders;
+    private List<CurrencyOrder> currencyOrders;
 
     @ManyToOne()
     @JoinColumn(name = "USER_ID")
@@ -31,11 +28,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountName, int leverage, double balance, State state, List<Currency_Order> currencyOrders, User user) {
+    public Account(String accountName, int leverage, double balance, User user) {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
-        this.state = state;
         this.currencyOrders = new ArrayList<>();
         setUser(user);
     }
@@ -49,7 +45,7 @@ public class Account {
         this.user = user;
     }
 
-    public void addOrder(Currency_Order currency_order){
+    public void addOrder(CurrencyOrder currency_order){
         if(currency_order != null){
             currency_order.setAccount(this);
         }
@@ -71,12 +67,7 @@ public class Account {
         return balance;
     }
 
-    public State getState() {
-        return state;
-    }
-
-
-    public List<Currency_Order> getCurrencyOrders() {
+    public List<CurrencyOrder> getCurrencyOrders() {
         return currencyOrders;
     }
 
@@ -90,10 +81,6 @@ public class Account {
 
     public void setLeverage(int leverage) {
         this.leverage = leverage;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public void setBalance(double balance) {

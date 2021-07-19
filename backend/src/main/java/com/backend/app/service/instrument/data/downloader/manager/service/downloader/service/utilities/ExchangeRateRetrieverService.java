@@ -1,8 +1,8 @@
 package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities;
 
-import com.backend.app.domain.ExchangeRate;
-import com.backend.app.domain.wrapper.ExchangeRateWrapper;
-import com.backend.app.domain.wrapper.RateWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.ExchangeRate;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.ExchangeRateWrapper;
+import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper.RateWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

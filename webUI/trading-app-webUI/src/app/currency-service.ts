@@ -1,36 +1,55 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http"
 import { DataPointDto } from "./data-point-dto"
-import { Injectable } from "@angular/core"
-import { Observable, Subject } from "rxjs"
+import { Injectable, OnInit } from "@angular/core"
+import { Observable, of, Subject } from "rxjs"
 import { AccountDto } from "./models/account"
 import { OrderDto } from "./models/order"
 import { catchError } from "rxjs/operators"
 import { StringDto } from "./models/string-dto"
-import { AccountDtoMessage } from "./models/account-message"
-import { OrderDtoMessage } from "./models/order-message"
+import { AccountInfoDto } from "./models/account-info"
+import { OrderInfoDto } from "./models/order-info"
+import { AccountResponseDto } from "./models/account-response"
+import { OrderResponseDto } from "./models/order-response"
 
 @Injectable({
     providedIn: 'root'
   })
 export class CurrencyService {
-    rootUrl = 'http://localhost:8080/trading/currencydata'
+    rootUrl = 'http://localhost:8080/trading/'
+    timeSeriesUrl =  this.rootUrl + 'currencydata/'
 
-    tokenUrl = "http://localhost:8080/trading/token/"
-    accountUrl = "http://localhost:8080/trading/account/"
-    orderUrl = "http://localhost:8080/trading/order/"
+    tokenUrl = this.rootUrl + "token/"
+
+    //account service urls
+    accountTradingStateUrl = this.rootUrl + "account/all/"
+    accountInfoUrl = this.rootUrl + "account/info/"
+    accountUrl = this.rootUrl + "account/"
+    accountSaveUrl = this.rootUrl + "account/save/"
+    accountUpdateUrl = this.rootUrl + "account/update/"
+    
+    //order service urls
+    orderInfoUrl = this.rootUrl + "order/info/"
+    orderUrl = this.rootUrl + "order/"
+    saveOrderUrl = this.rootUrl + "order/save/"
+    updateOrderUrl = this.rootUrl + "order/update/"
 
     token=""
 
     private tradingData = new Subject()
     tradingDataStream = this.tradingData.asObservable()
+    private pulse = new Subject()
+    pulseStream = this.pulse.asObservable()
 
     constructor(private http:HttpClient) {
+        setInterval(()=> {
+            this.pulse.next(true);
+        }, 5000)
     }
 
     //token
     public getToken():void {
         this.http.get<StringDto>(this.tokenUrl, {observe:'response'})
-        .pipe(catchError(error => this.handlingError(error)))
+        .pipe(catchError(this.handleError<StringDto>("get token")))
         .subscribe(token => this.setToken(token))
     }
 
@@ -45,86 +64,96 @@ export class CurrencyService {
                 }
               }
             }
-          }
         }
+    }
 
 
     //chart data
     public getData():Observable<DataPointDto[]> {
-        return this.http.get<DataPointDto[]>(this.rootUrl)
+        return this.http.get<DataPointDto[]>(this.timeSeriesUrl)
     }
 
     //account
-    public accountCreate(accountDto:AccountDto){
-        this.http.post<AccountDto[]>(this.accountUrl + this.token, this.accountDtoReducing(accountDto), {observe:'response'})
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+
+    public getTradingState(): Observable<AccountDto[]> {
+        return this.http.get<AccountDto[]>(this.accountTradingStateUrl + this.token)
+//.pipe(catchError(this.handleError<AccountDto[]>(`load trading state`)))
     }
 
-    public accountUpdate(accountDto:AccountDto){
-        this.http.put<AccountDto[]>(this.accountUrl + this.token, this.accountDtoReducing(accountDto), {observe:'response'})
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+    public getAccountInfo(accountDto:AccountDto): Observable<AccountInfoDto> {
+        return this.http.put<AccountInfoDto>(this.accountInfoUrl, this.accountDtoReducing(accountDto))
+        .pipe(catchError(this.handleError<AccountInfoDto>('get account info')))
     }
 
-    public accountDelete(accountDto:AccountDto){
-        this.http.delete<AccountDto[]>(this.accountUrl + this.token + '/' + accountDto.id.toString())
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+    public getAccount(accountDto:AccountDto): Observable<AccountResponseDto> {
+        return this.http.get<AccountResponseDto>(this.accountUrl + '/' + this.token + '/' + accountDto.id)
+        .pipe(catchError(this.handleError<AccountResponseDto>('get account')))
+    }
+
+    public accountSave(accountDto:AccountDto): Observable<AccountResponseDto>{
+        return this.http.put<AccountResponseDto>(this.accountSaveUrl + '/' + this.token, this.accountDtoReducing(accountDto))
+        .pipe(catchError(this.handleError<AccountResponseDto>('account save')))
+    }
+
+    public accountUpdate(accountDto:AccountDto):Observable<AccountResponseDto> {
+        return this.http.put<AccountResponseDto>(this.accountUpdateUrl + this.token, this.accountDtoReducing(accountDto))
+        .pipe(catchError(this.handleError<AccountResponseDto>('account update')))
+    }
+
+    public accountDelete(accountDto:AccountDto): Observable<boolean>{
+        return this.http.delete<boolean>(this.accountUrl + '/' + this.token + '/' + accountDto.id)
+        .pipe(catchError(this.handleError<boolean>('account delete')))
     }
 
     private accountDtoReducing(accountDto:AccountDto):AccountDto{
         accountDto.orders = []
-        accountDto.message = {} as AccountDtoMessage
         return accountDto; 
     }
 
     //order
-    public orderCreate(orderDto:OrderDto, account:AccountDto){
-        this.http.post<AccountDto[]>(this.orderUrl + this.token + '/' + account.id,this.orderDtoReducing(orderDto), {observe:'response'})
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+
+    public getOrderInfo(orderDto:OrderDto): Observable<OrderInfoDto>{
+        return this.http.put<OrderInfoDto>(this.orderInfoUrl, orderDto)
+        .pipe(catchError(this.handleError<OrderInfoDto>("order info")))
     }
 
-    public orderUpdate(orderDto:OrderDto){
-        this.http.put<AccountDto[]>(this.orderUrl + this.token, this.orderDtoReducing(orderDto), {observe:'response'})
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+    public getOrder(orderDto:OrderDto): Observable<OrderResponseDto>{
+        return this.http.get<OrderResponseDto>(this.orderUrl + this.token + '/' + orderDto.id)
+        .pipe(catchError(this.handleError<OrderResponseDto>("get order")))
     }
 
-    public deleteOrder(orderDto:OrderDto){
-        this.http.delete<AccountDto[]>(this.orderUrl + this.token + '/' + orderDto.id.toString())
-        .pipe(catchError(error => this.handlingError(error)))
-        .subscribe(response => this.setResponse(response));
+    public saveOrder(orderDto:OrderDto): Observable<OrderResponseDto>{
+        return this.http.put<OrderResponseDto>(this.saveOrderUrl + this.token, orderDto)
+        .pipe(catchError(this.handleError<OrderResponseDto>("save order")))
     }
 
-    private orderDtoReducing(orderDto:OrderDto):OrderDto {
-        orderDto.message = {} as OrderDtoMessage
-        return orderDto;
+    public orderUpdate(orderDto:OrderDto): Observable<OrderResponseDto>{
+        return this.http.put<OrderResponseDto>(this.updateOrderUrl + this.token, orderDto)
+        .pipe(catchError(this.handleError<OrderResponseDto>("order update")))
     }
 
-    private setResponse(response:any){
-        if(response != null){
-            var status = response.status
-            if(response.body != null){
-                if(status==200){
-                    this.tradingData.next(response.body)
-                }
-            }
-        }
+    public deleteOrder(orderDto:OrderDto): Observable<boolean>{
+        return this.http.delete<boolean>(this.orderUrl + this.token + '/' + orderDto.id.toString())
+        .pipe(catchError(this.handleError<boolean>("order delete")))
     }
 
 
-    handlingError(error: HttpErrorResponse) {
-        return new Observable(observer => {
-          if (error.error instanceof ErrorEvent) {
-            //general error
-          } else {
-            //backend error
-            var errorValue:string = error.error.value
-            var errorStatus:number = error.status
-          }
-          observer.next(null)
-      })
-    }
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+    
+          // TODO: send the error to remote logging infrastructure
+          console.error(error); // log to console instead
+    
+          // TODO: better job of transforming error for user consumption
+          this.log(`${operation} failed: ${error.message}`);
+    
+          // Let the app keep running by returning an empty result.
+          return of(result as T);
+        };
+      }
+    
+      /** Log a HeroService message with the MessageService */
+      private log(message: string) {
+
+      }
 }

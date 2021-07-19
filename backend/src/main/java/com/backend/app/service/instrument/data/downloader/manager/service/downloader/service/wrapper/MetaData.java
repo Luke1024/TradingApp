@@ -1,4 +1,4 @@
-package com.backend.app.domain;
+package com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.wrapper;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +10,9 @@ public class MetaData {
     private String interval;
     private String outputSize;
     private String timeZone;
+
+    public MetaData() {
+    }
 
     public MetaData(String information, String fromSymbol, String toSymbol, LocalDateTime lastRefreshed,
                     String interval, String outputSize, String timeZone) {
