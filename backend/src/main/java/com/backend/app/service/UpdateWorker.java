@@ -4,9 +4,12 @@ import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.domain.enums.ShortLong;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.Currency_Order;
+import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.repository.OrderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +19,13 @@ public class UpdateWorker {
 
     private boolean enabled = false;
 
+    @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
     private OrderRepository orderRepository;
+
+    private Logger logger = LoggerFactory.getLogger(UpdateWorker.class);
 
     public void pointReceived(DataPoint dataPoint){
         if(enabled){
@@ -34,29 +42,32 @@ public class UpdateWorker {
     private void updateAccountsAndOrdersBasedOnReceivedDataPoint(DataPoint dataPoint){
         double value = dataPoint.getCloseValue();
         Iterable<Account> accounts = accountRepository.findAll();
-        for(Account account : accounts){
+        for (Account account : accounts) {
             updateOrdersAndAccountBalance(account, value);
         }
+        logger.info("Update pass executed.");
     }
 
     private void updateOrdersAndAccountBalance(Account account, double value){
-        List<Currency_Order> orders = account.getCurrencyOrders();
-        for(Currency_Order order : orders){
-            updateOrderAndAccountBalance(account,order, value);
+        List<CurrencyOrder> orders = account.getCurrencyOrders();
+        for(CurrencyOrder order : orders){
+            if(order.getOrderState()==OrderState.OPENED) {
+                updateOrderAndAccountBalance(account, order, value);
+            }
         }
         accountRepository.save(account);
     }
 
-    private void updateOrderAndAccountBalance(Account account,Currency_Order order, double value){
+    private void updateOrderAndAccountBalance(Account account, CurrencyOrder order, double value){
         double orderBalanceChange = computeOrderBalanceChange(order, value);
         updateOrderBalance(order, orderBalanceChange);
         updateAccountBalance(account, orderBalanceChange);
         closeOrderIfTakeProfitOrStopLossHit(order);
         orderRepository.save(order);
+
     }
 
-
-    private double computeOrderBalanceChange(Currency_Order order, double newValue){
+    private double computeOrderBalanceChange(CurrencyOrder order, double newValue){
         double earlierValue = order.getProfit();
         int pipsChange = computePipsChangeOnLong(earlierValue, newValue);
         double lot = order.getLot();
@@ -74,7 +85,7 @@ public class UpdateWorker {
     }
 
 
-    private void updateOrderBalance(Currency_Order order, double orderBalanceChange){
+    private void updateOrderBalance(CurrencyOrder order, double orderBalanceChange){
         double balanceToUpdate = order.getProfit();
         double newBalance = balanceToUpdate + orderBalanceChange;
         order.setProfit(newBalance);
@@ -86,7 +97,7 @@ public class UpdateWorker {
         account.setBalance(newBalance);
     }
 
-    private void closeOrderIfTakeProfitOrStopLossHit(Currency_Order order){
+    private void closeOrderIfTakeProfitOrStopLossHit(CurrencyOrder order){
         double balance = order.getProfit();
         double tpVal = order.getTpVal();
         double slVal = order.getSlVal();
@@ -122,7 +133,7 @@ public class UpdateWorker {
         return false;
     }
 
-    private void orderClose(Currency_Order order){
+    private void orderClose(CurrencyOrder order){
         order.setOrderState(OrderState.CLOSED);
     }
 }

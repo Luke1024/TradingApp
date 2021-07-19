@@ -19,9 +19,6 @@ public class MetaDataWrapper {
     @JsonProperty("7. Time Zone")
     private String timeZone;
 
-    public MetaDataWrapper() {
-    }
-
     public String getInformation() {
         return information;
     }

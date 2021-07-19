@@ -29,15 +29,19 @@ public class DataPointsRetrieverService {
     public Optional<DataPointsPackage> getTimeSeriesData(){
         Optional<CurrencyDataWrapper> currencyDataWrapper = connectorService.getM5();
         if(currencyDataWrapper.isPresent()) {
-            return Optional.of(parseWrapper(currencyDataWrapper.get()));
+            return parseWrapper(currencyDataWrapper.get());
         }
         return Optional.empty();
     }
 
-    private DataPointsPackage parseWrapper(CurrencyDataWrapper currencyDataWrapper){
-        Optional<MetaData> metaData = parseMetaData(currencyDataWrapper.getMetaDataWrapper());
-        List<DataPoint> dataPoints = parsePoints(currencyDataWrapper.getTimeSeries());
-        return new DataPointsPackage(metaData,dataPoints);
+    private Optional<DataPointsPackage> parseWrapper(CurrencyDataWrapper currencyDataWrapper){
+        if(currencyDataWrapper != null) {
+            Optional<MetaData> metaData = parseMetaData(currencyDataWrapper.getMetaDataWrapper());
+            List<DataPoint> dataPoints = parsePoints(currencyDataWrapper.getTimeSeries());
+            return Optional.of(new DataPointsPackage(metaData, dataPoints));
+        } else {
+            return Optional.empty();
+        }
     }
 
     private Optional<MetaData> parseMetaData(MetaDataWrapper metaDataWrapper){

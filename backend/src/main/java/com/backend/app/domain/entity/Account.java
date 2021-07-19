@@ -14,12 +14,12 @@ public class Account {
     private int leverage;
     private double balance;
 
-    @OneToMany(targetEntity = Currency_Order.class,
+    @OneToMany(targetEntity = CurrencyOrder.class,
         mappedBy = "account",
         cascade = CascadeType.ALL,
         fetch = FetchType.EAGER)
     @OrderColumn
-    private List<Currency_Order> currencyOrders;
+    private List<CurrencyOrder> currencyOrders;
 
     @ManyToOne()
     @JoinColumn(name = "USER_ID")
@@ -28,7 +28,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountName, int leverage, double balance, List<Currency_Order> currencyOrders, User user) {
+    public Account(String accountName, int leverage, double balance, User user) {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
@@ -45,7 +45,7 @@ public class Account {
         this.user = user;
     }
 
-    public void addOrder(Currency_Order currency_order){
+    public void addOrder(CurrencyOrder currency_order){
         if(currency_order != null){
             currency_order.setAccount(this);
         }
@@ -67,7 +67,7 @@ public class Account {
         return balance;
     }
 
-    public List<Currency_Order> getCurrencyOrders() {
+    public List<CurrencyOrder> getCurrencyOrders() {
         return currencyOrders;
     }
 

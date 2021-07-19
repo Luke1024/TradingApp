@@ -9,8 +9,6 @@ import java.util.Random;
 @Service
 public class MiscService {
 
-    private Random random = new Random();
-
     @Autowired
     private UserService userService;
 

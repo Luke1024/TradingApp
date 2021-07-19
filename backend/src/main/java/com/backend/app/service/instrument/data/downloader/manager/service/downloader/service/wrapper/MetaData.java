@@ -11,6 +11,9 @@ public class MetaData {
     private String outputSize;
     private String timeZone;
 
+    public MetaData() {
+    }
+
     public MetaData(String information, String fromSymbol, String toSymbol, LocalDateTime lastRefreshed,
                     String interval, String outputSize, String timeZone) {
         this.information = information;

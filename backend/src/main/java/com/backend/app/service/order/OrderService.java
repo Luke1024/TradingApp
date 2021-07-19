@@ -2,7 +2,7 @@ package com.backend.app.service.order;
 
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.Currency_Order;
+import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.repository.OrderRepository;
 import com.backend.app.service.TradingStateService;
@@ -31,18 +31,18 @@ public class OrderService {
 
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-    public Optional<Currency_Order> getOrder(String token, long id){
+    public Optional<CurrencyOrder> getOrder(String token, long id){
         return orderRepository.findById(id);
     }
 
     //use account id for creation
-    public Optional<Currency_Order> saveOrder(String token, OrderDto orderDto){
+    public Optional<CurrencyOrder> saveOrder(String token, OrderDto orderDto){
         Optional<Account> accountOptional = accountService.getAccount(token,orderDto.getAccountId());
         if(accountOptional.isPresent()){
             Account account = accountOptional.get();
-            Currency_Order order = orderRepository.save(orderMapper.mapToNewOrder(orderDto, account));
-            if(order != null) {
-                return Optional.of(order);
+            Optional<CurrencyOrder> orderOptional = orderMapper.mapToNewOrder(orderDto, account);
+            if(orderOptional.isPresent()) {
+                return Optional.of(orderRepository.save(orderOptional.get()));
             }
         } else {
             logger.warn("Account not found.");
@@ -50,13 +50,11 @@ public class OrderService {
         return Optional.empty();
     }
 
-    public Optional<Currency_Order> updateOrder(String token, OrderDto orderDto){
-        Optional<Currency_Order> currency_order = orderMapper.mapToExistingOrder(orderDto);
+    public Optional<CurrencyOrder> updateOrder(String token, OrderDto orderDto){
+        Optional<CurrencyOrder> currency_order = orderMapper.mapToExistingOrder(orderDto);
         if(currency_order.isPresent()){
-            Currency_Order order = orderRepository.save(currency_order.get());
-            if(order != null){
-                return Optional.of(order);
-            }
+            CurrencyOrder order = orderRepository.save(currency_order.get());
+            return Optional.of(order);
         }
         return Optional.empty();
     }

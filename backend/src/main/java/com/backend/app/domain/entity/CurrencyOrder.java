@@ -6,7 +6,7 @@ import com.backend.app.domain.enums.ShortLong;
 import javax.persistence.*;
 
 @Entity
-public class Currency_Order {
+public class CurrencyOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,18 +24,18 @@ public class Currency_Order {
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
-    public Currency_Order() {
+    public CurrencyOrder() {
     }
 
-    public Currency_Order(String currency, double lot, int tpPips, double tpVal, int slPips,
-                          double slVal, double profit, ShortLong shortLong, OrderState orderState, Account account) {
+    public CurrencyOrder(String currency, double lot, int tpPips, double tpVal, int slPips,
+                         double slVal, ShortLong shortLong, OrderState orderState, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
         this.tpVal = tpVal;
         this.slPips = slPips;
         this.slVal = slVal;
-        this.profit = profit;
+        this.profit = 0;
         this.orderState = orderState;
         this.shortLong = shortLong;
         setAccount(account);

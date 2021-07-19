@@ -15,9 +15,6 @@ public class OrderCorrectnessGuardService {
     @Autowired
     private OrderRepository orderRepository;
 
-
-    private Logger logger = LoggerFactory.getLogger(OrderCorrectnessGuardService.class);
-
     @Autowired
     private PipsAnalyzer pipsAnalyzer;
 

@@ -20,9 +20,7 @@ public class UserService {
     public String createUser(){
         String token = generateToken();
         User user = userRepository.save(new User(token, new ArrayList<>()));
-        if(user != null){
-            return user.getToken();
-        } else return "";
+        return user.getToken();
     }
 
     public void saveUser(User user){

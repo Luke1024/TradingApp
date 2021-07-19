@@ -8,11 +8,11 @@ public class ExchangeRateWrapper {
     @JsonProperty("Realtime Currency Exchange Rate")
     private RateWrapper rateWrapper;
 
-    public ExchangeRateWrapper() {
-    }
-
     public RateWrapper getRateWrapper() {
         return rateWrapper;
+    }
+
+    public ExchangeRateWrapper() {
     }
 
     @Override

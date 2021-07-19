@@ -3,7 +3,7 @@ package com.backend.app.controler;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.dto.OrderInfoDto;
 import com.backend.app.domain.dto.OrderResponseDto;
-import com.backend.app.domain.entity.Currency_Order;
+import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.service.order.orderCorrectnessGuardService.OrderCorrectnessGuardService;
 import com.backend.app.service.order.OrderService;
@@ -34,7 +34,7 @@ public class OrderController {
 
     @GetMapping(value="/order/{token}/{id}")
     public OrderResponseDto getOrder(@PathVariable String token, @PathVariable long id){
-        Optional<Currency_Order> orderOptional = orderService.getOrder(token, id);
+        Optional<CurrencyOrder> orderOptional = orderService.getOrder(token, id);
         if(orderOptional.isPresent()) {
             Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
             if(orderDtoOptional.isPresent()){
@@ -48,7 +48,7 @@ public class OrderController {
     public OrderResponseDto saveOrder(@PathVariable String token, @RequestBody OrderDto orderDto){
         OrderInfoDto orderInfoDto = getInfo(orderDto);
         if(orderInfoDto.isStatus()){
-            Optional<Currency_Order> orderOptional = orderService.saveOrder(token, orderDto);
+            Optional<CurrencyOrder> orderOptional = orderService.saveOrder(token, orderDto);
             if(orderOptional.isPresent()){
                 Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
                 if(orderDtoOptional.isPresent()){
@@ -63,7 +63,7 @@ public class OrderController {
     public OrderResponseDto orderUpdate(@PathVariable String token, @RequestBody OrderDto orderDto){
         OrderInfoDto orderInfoDto = getInfo(orderDto);
         if(orderInfoDto.isStatus()){
-            Optional<Currency_Order> orderOptional = orderService.updateOrder(token, orderDto);
+            Optional<CurrencyOrder> orderOptional = orderService.updateOrder(token, orderDto);
             if(orderOptional.isPresent()){
                 Optional<OrderDto> orderDtoOptional = orderMapper.mapToDtoFromExistingOrder(orderOptional.get());
                 if(orderDtoOptional.isPresent()){

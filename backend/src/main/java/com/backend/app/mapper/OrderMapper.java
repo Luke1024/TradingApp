@@ -1,12 +1,14 @@
 package com.backend.app.mapper;
 
+import com.backend.app.domain.dto.OrderInfoDto;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.domain.enums.ShortLong;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.Currency_Order;
+import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.repository.OrderRepository;
+import com.backend.app.service.order.orderCorrectnessGuardService.OrderCorrectnessGuardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,18 +25,24 @@ public class OrderMapper {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Currency_Order mapToNewOrder(OrderDto orderDto, Account account){
-        return new Currency_Order(
-                orderDto.getCurrency(),
-                orderDto.getLot(),
-                orderDto.getTpPips(),
-                orderDto.getTpVal(),
-                orderDto.getSlPips(),
-                orderDto.getSlVal(),
-                orderDto.getProfit(),
-                booleanOrderToEnumMapper(orderDto.isLongOrder()),
-                OrderState.OPENED,
-                account);
+    @Autowired
+    private OrderCorrectnessGuardService orderCorrectnessGuardService;
+
+    public Optional<CurrencyOrder> mapToNewOrder(OrderDto orderDto, Account account) {
+        OrderInfoDto orderInfoDto = orderCorrectnessGuardService.getInfo(orderDto);
+        if (orderInfoDto.isStatus()) {
+            return Optional.of(new CurrencyOrder(
+                    orderDto.getCurrency(),
+                    orderDto.getLot(),
+                    orderDto.getTpPips(),
+                    orderInfoDto.getTpVal(),
+                    orderDto.getSlPips(),
+                    orderInfoDto.getSlVal(),
+                    booleanOrderToEnumMapper(orderDto.isLongOrder()),
+                    OrderState.OPENED,
+                    account));
+        }
+        return Optional.empty();
     }
 
     private ShortLong booleanOrderToEnumMapper(boolean longOrder){
@@ -45,25 +53,32 @@ public class OrderMapper {
         }
     }
 
-    public Optional<Currency_Order> mapToExistingOrder(OrderDto orderDto){
-        Optional<Currency_Order> orderOptional = orderRepository.findById(orderDto.getId());
+    public Optional<CurrencyOrder> mapToExistingOrder(OrderDto orderDto){
+        Optional<CurrencyOrder> orderOptional = orderRepository.findById(orderDto.getId());
         if(orderOptional.isPresent()){
-            return mapOrder(orderOptional.get(), orderDto);
+            return mapExistingOrder(orderOptional.get(), orderDto);
         } else {
             return Optional.empty();
         }
     }
 
     //analyze what could and what could not be set
-    private Optional<Currency_Order> mapOrder(Currency_Order existingOrder, OrderDto orderDto){
-        existingOrder.setTpPips(orderDto.getTpPips());
-        existingOrder.setSlPips(orderDto.getSlPips());
-        return Optional.of(existingOrder);
+    private Optional<CurrencyOrder> mapExistingOrder(CurrencyOrder existingOrder, OrderDto orderDto){
+        OrderInfoDto orderInfoDto = orderCorrectnessGuardService.getInfo(orderDto);
+        if(orderInfoDto.isStatus()) {
+            existingOrder.setTpPips(orderDto.getTpPips());
+            existingOrder.setTpVal(orderInfoDto.getTpVal());
+            existingOrder.setSlPips(orderDto.getSlPips());
+            existingOrder.setSlVal(orderDto.getSlVal());
+            return Optional.of(existingOrder);
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public List<OrderDto> mapToOrderDtoList(List<Currency_Order> orders){
+    public List<OrderDto> mapToOrderDtoList(List<CurrencyOrder> orders){
         List<OrderDto> orderDtos = new ArrayList<>();
-        for(Currency_Order order: orders){
+        for(CurrencyOrder order: orders){
             Optional<OrderDto> orderDtoOptional = mapToDtoFromExistingOrder(order);
             if(orderDtoOptional.isPresent()) {
                 orderDtos.add(orderDtoOptional.get());
@@ -72,7 +87,7 @@ public class OrderMapper {
         return orderDtos;
     }
 
-    public Optional<OrderDto> mapToDtoFromExistingOrder(Currency_Order order){
+    public Optional<OrderDto> mapToDtoFromExistingOrder(CurrencyOrder order){
         Account account = order.getAccount();
         if(account != null){
             return Optional.of(new OrderDto(

@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class DataPointMockedRepository {
 
-    private Logger logger = LoggerFactory.getLogger(DataPointAndExchangeRateService.class);
+    private Logger logger = LoggerFactory.getLogger(DataPointMockedRepository.class);
 
     private List<DataPoint> dataPoints = new ArrayList<>();
 

@@ -14,9 +14,9 @@ public class AccountCorrectnessGuardService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public static String accountNameToShort = "Account name to short";
-    public static String maxLeverage = "Leverage must be under 100";
-    public static String balanceOnMinus = "Balance on minus";
+    public static final String accountNameToShort = "Account name to short";
+    public static final String maxLeverage = "Leverage must be under 100";
+    public static final String balanceOnMinus = "Balance on minus";
 
     public AccountInfoDto getInfo(AccountDto accountDto){
         String nameInfo = analyzeName(accountDto);
@@ -28,9 +28,7 @@ public class AccountCorrectnessGuardService {
     }
 
     private boolean isStringBiggerThanZero(String nameInfo, String leverageInfo, String balanceInfo){
-        if(nameInfo.length()>0 || leverageInfo.length()>0 || balanceInfo.length()>0){
-            return true;
-        } else return false;
+        return nameInfo.length()>0 || leverageInfo.length()>0 || balanceInfo.length()>0;
     }
 
     private String analyzeName(AccountDto accountDto){

@@ -33,9 +33,6 @@ public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
 
-    @Autowired
-    private AccountCorrectnessGuardService accountCorrectnessGuard;
-
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     public Optional<Account> getAccount(String token,long id){
@@ -46,8 +43,9 @@ public class AccountService {
         Optional<User> userOptional = userService.getUser(token);
         if(userOptional.isPresent()) {
             User user = userOptional.get();
-            Account account = accountRepository.save(accountMapper.mapToNewAccount(accountDto, user));
-            if (account != null) {
+            Optional<Account> accountOptional = accountMapper.mapToNewAccount(accountDto, user);
+            if(accountOptional.isPresent()) {
+                Account account = accountRepository.save(accountOptional.get());
                 return Optional.of(account);
             }
         }
@@ -58,9 +56,7 @@ public class AccountService {
         Optional<Account> accountOptional = accountMapper.mapToExistingAccount(accountDto);
         if(accountOptional.isPresent()) {
             Account account = accountRepository.save(accountOptional.get());
-            if(account != null){
-                return Optional.of(account);
-            }
+            return Optional.of(account);
         }
         return Optional.empty();
     }

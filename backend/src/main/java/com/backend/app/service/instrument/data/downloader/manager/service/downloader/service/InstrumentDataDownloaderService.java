@@ -10,8 +10,10 @@ import com.backend.app.service.instrument.data.downloader.manager.service.downlo
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -56,15 +58,23 @@ public class InstrumentDataDownloaderService {
     }
 
     public String getDataBaseInfo(){
-        return "In database there is " + dataPointMockedRepository.getAllDataPoints().size() + " datapoints.";
+        int databaseSize = dataPointMockedRepository.getAllDataPoints().size();
+        DataPoint lastDataPoint = dataPointMockedRepository.getAllDataPoints().get(databaseSize-1);
+        LocalDateTime lastTimeStamp = lastDataPoint.getTimeStamp();
+        return "In database there is " + databaseSize + " datapoints. Last timestamp is from " + lastTimeStamp;
     }
 
-    public boolean saveCurrentExchangeRate(){
-        Optional<ExchangeRate> exchangeRate = exchangeRateRetrieverService.getCurrentExchangeRate();
-        if(exchangeRate.isPresent()){
-            saveRate(exchangeRate.get());
-            return true;
-        } else return false;
+    @Scheduled(cron ="0 0/5 * * * *")
+    private void saveCurrentExchangeRate(){
+        if(enableExchangeRateDownloading){
+            Optional<ExchangeRate> exchangeRate = exchangeRateRetrieverService.getCurrentExchangeRate();
+            if(exchangeRate.isPresent()) {
+                saveRate(exchangeRate.get());
+                logger.info("Current exchange rate: " + exchangeRate.get().toString());
+            } else {
+                logger.info("Problem with saving exchange rate.");
+            }
+        }
     }
 
     private void savePoints(List<DataPoint> dataPoints) {

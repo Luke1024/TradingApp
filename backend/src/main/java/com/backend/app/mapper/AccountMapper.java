@@ -1,9 +1,11 @@
 package com.backend.app.mapper;
 
 import com.backend.app.domain.dto.AccountDto;
+import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
 import com.backend.app.repository.AccountRepository;
+import com.backend.app.service.account.AccountCorrectnessGuardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,20 +21,27 @@ public class AccountMapper {
     @Autowired
     private AccountRepository accountRepository;
 
-    public Account mapToNewAccount(AccountDto accountDto, User user){
-        return new Account(
-                accountDto.getAccountName(),
-                accountDto.getLeverage(),
-                accountDto.getBalance(),
-                new ArrayList<>(),
-                user
-        );
+    @Autowired
+    private AccountCorrectnessGuardService accountCorrectnessGuardService;
+
+    public Optional<Account> mapToNewAccount(AccountDto accountDto, User user){
+        AccountInfoDto accountInfoDto = accountCorrectnessGuardService.getInfo(accountDto);
+        if(accountInfoDto.isStatus()) {
+            return Optional.of(new Account(
+                    accountDto.getAccountName(),
+                    accountDto.getLeverage(),
+                    accountDto.getBalance(),
+                    user));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<Account> mapToExistingAccount(AccountDto accountDto){
         Optional<Account> accountOptional = accountRepository.findById((accountDto.getId()));
-        if(accountOptional.isPresent()){
-            return mapAccount(accountOptional.get(),accountDto);
+        AccountInfoDto accountInfoDto = accountCorrectnessGuardService.getInfo(accountDto);
+        if(accountOptional.isPresent() && accountInfoDto.isStatus()){
+            return mapExistingAccount(accountOptional.get(),accountDto);
         } else {
             return Optional.empty();
         }
@@ -49,7 +58,7 @@ public class AccountMapper {
         );
     }
 
-    private Optional<Account> mapAccount(Account existingAccount, AccountDto accountDto){
+    private Optional<Account> mapExistingAccount(Account existingAccount, AccountDto accountDto){
         existingAccount.setAccountName(accountDto.getAccountName());
         existingAccount.setLeverage(accountDto.getLeverage());
         return Optional.of(existingAccount);
