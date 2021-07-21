@@ -36,6 +36,16 @@ public class Account {
         setUser(user);
     }
 
+    public Account(long id, String accountName, int leverage,
+                   double balance, List<CurrencyOrder> currencyOrders, User user) {
+        this.id = id;
+        this.accountName = accountName;
+        this.leverage = leverage;
+        this.balance = balance;
+        this.currencyOrders = currencyOrders;
+        this.user = user;
+    }
+
     public void setUser(User user){
         if(user != null){
             user.getAccounts().add(this);
@@ -85,5 +95,16 @@ public class Account {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountName='" + accountName + '\'' +
+                ", leverage=" + leverage +
+                ", balance=" + balance +
+                ", user=" + user +
+                '}';
     }
 }

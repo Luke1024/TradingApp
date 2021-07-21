@@ -1,6 +1,5 @@
 package com.backend.app.service;
 
-import com.backend.app.domain.DataPoint;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.domain.enums.ShortLong;
 import com.backend.app.domain.entity.Account;
@@ -27,10 +26,10 @@ public class UpdateWorker {
 
     private Logger logger = LoggerFactory.getLogger(UpdateWorker.class);
 
-    public void pointReceived(DataPoint dataPoint){
+    public void updateChangeReceived(double valueChange){
         if(enabled){
-            if(dataPoint != null){
-                updateAccountsAndOrdersBasedOnReceivedDataPoint(dataPoint);
+            if(valueChange != 0){
+                updateAccountsAndOrdersBasedOnReceivedDataPoint(valueChange);
             }
         }
     }
@@ -39,37 +38,34 @@ public class UpdateWorker {
         enabled = true;
     }
 
-    private void updateAccountsAndOrdersBasedOnReceivedDataPoint(DataPoint dataPoint){
-        double value = dataPoint.getCloseValue();
+    private void updateAccountsAndOrdersBasedOnReceivedDataPoint(double valueChange){
         Iterable<Account> accounts = accountRepository.findAll();
         for (Account account : accounts) {
-            updateOrdersAndAccountBalance(account, value);
+            updateOrdersAndAccountBalance(account, valueChange);
         }
         logger.info("Update pass executed.");
     }
 
-    private void updateOrdersAndAccountBalance(Account account, double value){
+    private void updateOrdersAndAccountBalance(Account account, double valueChange){
         List<CurrencyOrder> orders = account.getCurrencyOrders();
         for(CurrencyOrder order : orders){
             if(order.getOrderState()==OrderState.OPENED) {
-                updateOrderAndAccountBalance(account, order, value);
+                updateOrderAndAccountBalance(account, order, valueChange);
             }
         }
         accountRepository.save(account);
     }
 
-    private void updateOrderAndAccountBalance(Account account, CurrencyOrder order, double value){
-        double orderBalanceChange = computeOrderBalanceChange(order, value);
+    private void updateOrderAndAccountBalance(Account account, CurrencyOrder order, double valueChange){
+        double orderBalanceChange = computeOrderBalanceChange(order, valueChange);
         updateOrderBalance(order, orderBalanceChange);
         updateAccountBalance(account, orderBalanceChange);
         closeOrderIfTakeProfitOrStopLossHit(order);
         orderRepository.save(order);
-
     }
 
-    private double computeOrderBalanceChange(CurrencyOrder order, double newValue){
-        double earlierValue = order.getProfit();
-        int pipsChange = computePipsChangeOnLong(earlierValue, newValue);
+    private double computeOrderBalanceChange(CurrencyOrder order, double valueChange){
+        int pipsChange = computePipsChangeOnLong(valueChange);
         double lot = order.getLot();
 
         if(order.getShortLong()== ShortLong.LONG){
@@ -79,9 +75,8 @@ public class UpdateWorker {
         }
     }
 
-    private int computePipsChangeOnLong(double earlierValue, double newValue){
-        double changeInValue = newValue - earlierValue;
-        return (int) (changeInValue * 10000);
+    private int computePipsChangeOnLong(double valueChange){
+        return (int) (valueChange * 10000);
     }
 
 
@@ -109,11 +104,11 @@ public class UpdateWorker {
 
     private boolean checkIfTakeProfitHit(double balance, double tpVal){
         if(tpVal > 0){
-            if(balance > tpVal){
+            if(balance >= tpVal){
                 return true;
             }
         } else {
-            if(balance < tpVal){
+            if(balance <= tpVal){
                 return true;
             }
         }
@@ -122,11 +117,11 @@ public class UpdateWorker {
 
     private boolean checkIfStopLossHit(double balance, double slVal){
         if(slVal > 0){
-            if(balance > slVal){
+            if(balance >= slVal){
                 return true;
             }
         } else {
-            if(balance < slVal){
+            if(balance <= slVal){
                 return true;
             }
         }
