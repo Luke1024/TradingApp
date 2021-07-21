@@ -121,4 +121,19 @@ public class CurrencyOrder {
     public void setLot(double lot) {
         this.lot = lot;
     }
+
+    @Override
+    public String toString() {
+        return "CurrencyOrder{" +
+                "currency='" + currency + '\'' +
+                ", lot=" + lot +
+                ", tpPips=" + tpPips +
+                ", tpVal=" + tpVal +
+                ", slPips=" + slPips +
+                ", slVal=" + slVal +
+                ", profit=" + profit +
+                ", shortLong=" + shortLong +
+                ", orderState=" + orderState +
+                '}';
+    }
 }

@@ -2,7 +2,6 @@ package com.backend.app.repository;
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.service.UpdateWorker;
-import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointAndExchangeRateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,16 @@ public class DataPointMockedRepository {
     public void save(DataPoint dataPoint){
         if(isTimestampNew(dataPoint)) {
             dataPoints.add(dataPoint);
-            updateWorker.pointReceived(dataPoint);
+            sendValueChangeToUpdateWorker();
+        }
+    }
+
+    private void sendValueChangeToUpdateWorker(){
+        if(dataPoints.size()>1) {
+            DataPoint lastPoint = dataPoints.get(dataPoints.size() - 1);
+            DataPoint earlierPoint = dataPoints.get(dataPoints.size() - 2);
+            double valueChange = lastPoint.getCloseValue() - earlierPoint.getCloseValue();
+            updateWorker.updateChangeReceived(valueChange);
         }
     }
 
