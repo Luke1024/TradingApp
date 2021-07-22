@@ -1,15 +1,13 @@
 <div class="card-body">
-    <p>
-        <span>{{order.currency}} </span>
-        <span>{{order.lot}} / </span>
-        <span>{{order.tpPips}} </span>
-        <span>{{order.tpVal}} / </span>
-        <span>{{order.slPips}} </span>
-        <span>{{order.slVal}} </span>
-        <span>{{order.profit}} </span>
-        <span>{{order.longOrder}}</span>
-        <span>{{order.created}}</span>
-    </p>
+    <p>Currency: {{order.currency}}</p>
+    <p>Lot: {{order.lot}}</p>
+    <p>Take profit in pips:` {{order.tpPips}}</p>
+    <p>Take profit in $: {{order.tpVal}}</p>
+    <p>Stop loss in pips: {{order.slPips}}</p>
+    <p>Stop loss in $ {{order.slVal}}</p>
+    <p>Profit: {{order.profit}}</p>
+    <p>Is long order:  {{order.longOrder}}</p>
+    <p>Is order created: {{order.created}}</p>
     <div *ngIf="!edit">
         <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
         <button class="btn btn-primary mb-3" (click)="delete()">Close</button>

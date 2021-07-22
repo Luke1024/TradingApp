@@ -68,10 +68,14 @@ public class UpdateWorker {
         int pipsChange = computePipsChangeOnLong(valueChange);
         double lot = order.getLot();
 
-        if(order.getShortLong()== ShortLong.LONG){
-            return pipsChange * lot * 10;
+        if(order.getOrderState()==OrderState.OPENED) {
+            if (order.getShortLong() == ShortLong.LONG) {
+                return pipsChange * lot * 10;
+            } else {
+                return -pipsChange * lot * 10;
+            }
         } else {
-            return -pipsChange * lot * 10;
+            return 0;
         }
     }
 
