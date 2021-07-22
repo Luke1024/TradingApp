@@ -3,6 +3,7 @@ package com.backend.app.service.order;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.CurrencyOrder;
+import com.backend.app.domain.enums.OrderState;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.repository.OrderRepository;
 import com.backend.app.service.TradingStateService;
@@ -53,8 +54,10 @@ public class OrderService {
     public Optional<CurrencyOrder> updateOrder(String token, OrderDto orderDto){
         Optional<CurrencyOrder> currency_order = orderMapper.mapToExistingOrder(orderDto);
         if(currency_order.isPresent()){
-            CurrencyOrder order = orderRepository.save(currency_order.get());
-            return Optional.of(order);
+            if(currency_order.get().getOrderState()== OrderState.OPENED) {
+                CurrencyOrder order = orderRepository.save(currency_order.get());
+                return Optional.of(order);
+            }
         }
         return Optional.empty();
     }
