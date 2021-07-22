@@ -12,5 +12,6 @@ export interface OrderDto {
     slVal:number;
     profit:number;
     longOrder:boolean;
+    isOpened:boolean;
     created:boolean;
 }

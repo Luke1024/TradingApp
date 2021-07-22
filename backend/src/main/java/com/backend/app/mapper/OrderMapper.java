@@ -100,15 +100,22 @@ public class OrderMapper {
                     order.getSlPips(),
                     order.getSlVal(),
                     order.getProfit(),
-                    enumToBooleanOrderMapper(order.getShortLong()),
+                    enumToBooleanShortLong(order.getShortLong()),
+                    enumToBooleanOrderState(order.getOrderState()),
                     true));
         } else {
             return Optional.empty();
         }
     }
 
-    private boolean enumToBooleanOrderMapper(ShortLong shortLong){
+    private boolean enumToBooleanShortLong(ShortLong shortLong){
         if(shortLong==ShortLong.LONG){
+            return true;
+        } else return false;
+    }
+
+    private boolean enumToBooleanOrderState(OrderState orderState){
+        if(orderState==OrderState.OPENED){
             return true;
         } else return false;
     }

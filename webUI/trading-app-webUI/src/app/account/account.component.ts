@@ -1,3 +1,4 @@
+import { trigger } from '@angular/animations';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
@@ -65,6 +66,7 @@ export class AccountComponent implements OnInit {
       slVal:0,
       profit:0,
       longOrder:true,
+      isOpened:true,
       created:false
     }
     this.account.orders.push(order)
