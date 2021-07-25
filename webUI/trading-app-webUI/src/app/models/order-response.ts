@@ -1,4 +1,4 @@
-import { OrderDto } from "./order";
+import { OrderDto } from "./order-dto";
 
 export interface OrderResponseDto {
     status:boolean;

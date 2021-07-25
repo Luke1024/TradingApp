@@ -1,5 +1,5 @@
 
-import { OrderDto } from "./order";
+import { OrderDto } from "./order-dto";
 import { State } from "./state";
 
 export interface AccountDto {

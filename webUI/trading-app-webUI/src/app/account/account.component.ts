@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
 import { AccountInfoDto } from '../models/account-info';
-import { OrderDto } from '../models/order';
+import { OrderDto } from '../models/order-dto';
 import { OrderInfoDto } from '../models/order-info';
 import { State } from '../models/state';
 
@@ -38,10 +38,6 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  ngOnDestroy(): void {
-    console.log("account destroyed")
-  }
-
   private getAccount(account:AccountDto){
     if(account.created){
       this.currencyService.getAccount(account).subscribe(account => {
@@ -57,7 +53,7 @@ export class AccountComponent implements OnInit {
   addOrder(){
     var order:OrderDto = {
       accountId:this.account.id,
-      id:1,
+      id:0,
       currency:"EUR/USD",
       lot:0.1,
       tpPips:0,
@@ -70,6 +66,16 @@ export class AccountComponent implements OnInit {
       created:false
     }
     this.account.orders.push(order)
+  }
+
+  deleteOrder(order:OrderDto){
+    this.account.orders.forEach((orderFromList, index)=>{
+      console.log("checking")
+      if(order==orderFromList){
+        console.log("order from list found")
+        this.account.orders.splice(index,1)
+      }
+    })
   }
 
   settings(){

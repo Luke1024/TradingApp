@@ -5,6 +5,12 @@ import com.backend.app.domain.enums.ShortLong;
 
 import javax.persistence.*;
 
+@NamedNativeQuery(
+        name = "CurrencyOrder.findByIdArchivedFalse",
+        query = "SELECT * FROM currency_order WHERE id=:ID AND archived=false;",
+        resultClass = CurrencyOrder.class
+)
+
 @Entity
 public class CurrencyOrder {
 
@@ -20,6 +26,7 @@ public class CurrencyOrder {
     private double profit;
     private ShortLong shortLong;
     private OrderState orderState;
+    private boolean archived;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
@@ -28,7 +35,7 @@ public class CurrencyOrder {
     }
 
     public CurrencyOrder(String currency, double lot, int tpPips, double tpVal, int slPips,
-                         double slVal, ShortLong shortLong, OrderState orderState, Account account) {
+                         double slVal, ShortLong shortLong, OrderState orderState, boolean archived, Account account) {
         this.currency = currency;
         this.lot = lot;
         this.tpPips = tpPips;
@@ -38,6 +45,7 @@ public class CurrencyOrder {
         this.profit = 0;
         this.orderState = orderState;
         this.shortLong = shortLong;
+        this.archived = archived;
         setAccount(account);
     }
 
@@ -96,6 +104,14 @@ public class CurrencyOrder {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public void setTpPips(int tpPips) {

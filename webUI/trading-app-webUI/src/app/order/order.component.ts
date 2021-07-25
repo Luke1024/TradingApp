@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CurrencyService } from '../currency-service';
-import { OrderDto } from '../models/order';
+import { OrderDto } from '../models/order-dto';
 import { OrderInfoDto } from '../models/order-info';
 import { State } from '../models/state';
 
@@ -10,6 +10,8 @@ import { State } from '../models/state';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+
+  @Output() autoRemoveEmitter: EventEmitter<OrderDto>;
 
   @Input() orderInput!:OrderDto;
 
@@ -23,7 +25,8 @@ export class OrderComponent implements OnInit {
   tpPips!:number;
   slPips!:number;
 
-  constructor(private currencyService:CurrencyService) { 
+  constructor(private currencyService:CurrencyService) {
+    this.autoRemoveEmitter = new EventEmitter();
     this.edit = true;
     this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
@@ -83,7 +86,21 @@ export class OrderComponent implements OnInit {
   }
 
   delete(){
-    //to solve
+    if(this.order.created){
+      if(this.deleteFromBackEnd()){
+        this.deleteFromFrontEnd()
+      } 
+    } else {
+      this.deleteFromFrontEnd();
+    }
+  }
+
+  private deleteFromBackEnd():boolean {
+    return true;
+  }
+
+  private deleteFromFrontEnd(){
+    this.autoRemoveEmitter.emit(this.order)
   }
 
   ngOnInit(): void {

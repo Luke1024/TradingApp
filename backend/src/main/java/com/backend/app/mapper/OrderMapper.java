@@ -40,6 +40,7 @@ public class OrderMapper {
                     orderInfoDto.getSlVal(),
                     booleanOrderToEnumMapper(orderDto.isLongOrder()),
                     OrderState.OPENED,
+                    false,
                     account));
         }
         return Optional.empty();
@@ -54,7 +55,7 @@ public class OrderMapper {
     }
 
     public Optional<CurrencyOrder> mapToExistingOrder(OrderDto orderDto){
-        Optional<CurrencyOrder> orderOptional = orderRepository.findById(orderDto.getId());
+        Optional<CurrencyOrder> orderOptional = orderRepository.findByIdArchivedFalse(orderDto.getId());
         if(orderOptional.isPresent()){
             return mapExistingOrder(orderOptional.get(), orderDto);
         } else {

@@ -1,6 +1,3 @@
-import { OrderInfoDto } from "./order-info";
-import { State } from "./state";
-
 export interface OrderDto {
     accountId:number;
     id:number;

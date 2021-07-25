@@ -33,7 +33,7 @@ public class OrderService {
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     public Optional<CurrencyOrder> getOrder(String token, long id){
-        return orderRepository.findById(id);
+        return orderRepository.findByIdArchivedFalse(id);
     }
 
     //use account id for creation
