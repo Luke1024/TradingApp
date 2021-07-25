@@ -17,6 +17,13 @@ export class TradingViewComponent implements OnInit {
 
   accounts:AccountDto[] = []
   
+  deleteAccount(account:AccountDto){
+    this.accounts.forEach((accountFromList, index)=>{
+      if(account==accountFromList){
+        this.accounts.splice(index,1);
+      }
+    })
+  }
 
   addAccount() {
     var account:AccountDto = {

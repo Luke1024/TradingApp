@@ -1,5 +1,5 @@
 import { trigger } from '@angular/animations';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CurrencyService } from '../currency-service';
 import { AccountDto as AccountDto } from '../models/account';
 import { AccountInfoDto } from '../models/account-info';
@@ -13,10 +13,10 @@ import { State } from '../models/state';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
+  
+  @Output() autoRemove = new EventEmitter<AccountDto>()
 
-  @Input() accountInput!:AccountDto
-
-  account!:AccountDto
+  @Input() account!:AccountDto
 
   correctness:AccountInfoDto
 
@@ -28,8 +28,6 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("account init")
-    this.account = Object.assign({},this.accountInput)
     this.onChange()
     this.currencyService.pulseStream.subscribe(pulse => {
       if(pulse){
@@ -70,9 +68,7 @@ export class AccountComponent implements OnInit {
 
   deleteOrder(order:OrderDto){
     this.account.orders.forEach((orderFromList, index)=>{
-      console.log("checking")
       if(order==orderFromList){
-        console.log("order from list found")
         this.account.orders.splice(index,1)
       }
     })
@@ -149,6 +145,22 @@ export class AccountComponent implements OnInit {
   }
 
   delete(){
-    //to solve
+    if(this.account.created){
+      this.deleteFromBackEndAndFrontEnd();
+    } else {
+      this.deleteFromFrontEnd();
+    }
+  }
+
+  private deleteFromBackEndAndFrontEnd(){
+    this.currencyService.accountDelete(this.account).subscribe(response => {
+      if(response){
+        this.deleteFromFrontEnd()
+      }
+    })
+  }
+
+  private deleteFromFrontEnd(){
+    this.autoRemove.emit(this.account)
   }
 }

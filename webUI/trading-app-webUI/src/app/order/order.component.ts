@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CurrencyService } from '../currency-service';
 import { OrderDto } from '../models/order-dto';
 import { OrderInfoDto } from '../models/order-info';
@@ -11,11 +12,9 @@ import { State } from '../models/state';
 })
 export class OrderComponent implements OnInit {
 
-  @Output() autoRemoveEmitter: EventEmitter<OrderDto>;
+  @Output() autoRemove = new EventEmitter<OrderDto>()
 
-  @Input() orderInput!:OrderDto;
-
-  order!:OrderDto;
+  @Input() order!:OrderDto;
 
   correctness!:OrderInfoDto;
 
@@ -24,9 +23,7 @@ export class OrderComponent implements OnInit {
   //parameters in edit mode when created
   tpPips!:number;
   slPips!:number;
-
   constructor(private currencyService:CurrencyService) {
-    this.autoRemoveEmitter = new EventEmitter();
     this.edit = true;
     this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
@@ -44,7 +41,7 @@ export class OrderComponent implements OnInit {
   }
 
   saveSlTp(){
-    if(this.correctness.status && this.order.created){
+    if(this.correctness.status && ! this.order.created){
       this.currencyService.orderUpdate(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -59,7 +56,7 @@ export class OrderComponent implements OnInit {
   }
 
   openOrder(){
-    if( ! this.order.created && this.correctness.status){
+    if(this.correctness.status){
       this.currencyService.saveOrder(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -87,24 +84,25 @@ export class OrderComponent implements OnInit {
 
   delete(){
     if(this.order.created){
-      if(this.deleteFromBackEnd()){
-        this.deleteFromFrontEnd()
-      } 
+      this.deleteFromBackEndAndFrontEnd(); 
     } else {
       this.deleteFromFrontEnd();
     }
   }
 
-  private deleteFromBackEnd():boolean {
-    return true;
+  private deleteFromBackEndAndFrontEnd():void {
+    this.currencyService.deleteOrder(this.order).subscribe(response => {
+      if(response){
+        this.deleteFromFrontEnd()
+      }
+    });
   }
 
   private deleteFromFrontEnd(){
-    this.autoRemoveEmitter.emit(this.order)
+    this.autoRemove.emit(this.order)
   }
 
   ngOnInit(): void {
-    this.order = Object.assign({},this.orderInput);
     this.onChange()
     this.currencyService.pulseStream.subscribe(
       pulse => {

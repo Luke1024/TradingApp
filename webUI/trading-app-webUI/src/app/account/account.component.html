@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="card m-2 shadow" *ngFor="let order of account.orders">
-            <app-order [orderInput]="order" (autoRemoveEmitter)="deleteOrder($event)"></app-order>
+            <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>
         </div>
     </div>
 </div>
