@@ -11,8 +11,18 @@ export class TradingViewComponent implements OnInit {
 
   constructor(private currencyService:CurrencyService) { }
 
+  tokenInMemory:boolean = false;
+
   ngOnInit(): void {
-    this.currencyService.getToken()
+    if(this.tokenInMemory){
+      this.currencyService.getToken()
+    } else {
+      this.currencyService.getAccountAll("hypotethical token").subscribe(accounts => {
+        if(accounts != null){
+          this.accounts = accounts;
+        }
+      })
+    }
   }
 
   accounts:AccountDto[] = []
@@ -32,7 +42,6 @@ export class TradingViewComponent implements OnInit {
       leverage:10,
       balance:10000,
       created:false,
-      orders:[]
     }
     this.accounts.push(account)
   }

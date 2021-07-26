@@ -21,13 +21,14 @@ export class CurrencyService {
     tokenUrl = this.rootUrl + "token/"
 
     //account service urls
-    accountTradingStateUrl = this.rootUrl + "account/all/"
+    accountsAll = this.rootUrl + "account/all/"
     accountInfoUrl = this.rootUrl + "account/info/"
     accountUrl = this.rootUrl + "account/"
     accountSaveUrl = this.rootUrl + "account/save/"
     accountUpdateUrl = this.rootUrl + "account/update/"
     
     //order service urls
+    ordersAll = this.rootUrl;
     orderInfoUrl = this.rootUrl + "order/info/"
     orderUrl = this.rootUrl + "order/"
     saveOrderUrl = this.rootUrl + "order/save/"
@@ -75,13 +76,12 @@ export class CurrencyService {
 
     //account
 
-    public getTradingState(): Observable<AccountDto[]> {
-        return this.http.get<AccountDto[]>(this.accountTradingStateUrl + this.token)
-//.pipe(catchError(this.handleError<AccountDto[]>(`load trading state`)))
+    public getAccountAll(token:string): Observable<AccountDto[]> {
+        return this.http.get<AccountDto[]>(this.accountsAll + token)
     }
 
     public getAccountInfo(accountDto:AccountDto): Observable<AccountInfoDto> {
-        return this.http.put<AccountInfoDto>(this.accountInfoUrl, this.accountDtoReducing(accountDto))
+        return this.http.put<AccountInfoDto>(this.accountInfoUrl, accountDto)
         .pipe(catchError(this.handleError<AccountInfoDto>('get account info')))
     }
 
@@ -91,12 +91,12 @@ export class CurrencyService {
     }
 
     public accountSave(accountDto:AccountDto): Observable<AccountResponseDto>{
-        return this.http.put<AccountResponseDto>(this.accountSaveUrl + '/' + this.token, this.accountDtoReducing(accountDto))
+        return this.http.put<AccountResponseDto>(this.accountSaveUrl + '/' + this.token, accountDto)
         .pipe(catchError(this.handleError<AccountResponseDto>('account save')))
     }
 
     public accountUpdate(accountDto:AccountDto):Observable<AccountResponseDto> {
-        return this.http.put<AccountResponseDto>(this.accountUpdateUrl + this.token, this.accountDtoReducing(accountDto))
+        return this.http.put<AccountResponseDto>(this.accountUpdateUrl + this.token, accountDto)
         .pipe(catchError(this.handleError<AccountResponseDto>('account update')))
     }
 
@@ -105,12 +105,11 @@ export class CurrencyService {
         .pipe(catchError(this.handleError<boolean>('account delete')))
     }
 
-    private accountDtoReducing(accountDto:AccountDto):AccountDto{
-        accountDto.orders = []
-        return accountDto; 
-    }
-
     //order
+
+    public getAllOrders(account:AccountDto): Observable<OrderDto[]>{
+        return this.http.get<OrderDto[]>(this.ordersAll + this.token + '/' + account.id)
+    }
 
     public getOrderInfo(orderDto:OrderDto): Observable<OrderInfoDto>{
         return this.http.put<OrderInfoDto>(this.orderInfoUrl, orderDto)

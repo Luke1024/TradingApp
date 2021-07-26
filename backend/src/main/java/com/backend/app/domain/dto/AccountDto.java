@@ -8,18 +8,16 @@ public class AccountDto {
     private int leverage;
     private double balance;
     private boolean created;
-    private List<OrderDto> orders;
 
     public AccountDto() {
     }
 
-    public AccountDto(long id, String accountName, int leverage, double balance, boolean created, List<OrderDto> orders) {
+    public AccountDto(long id, String accountName, int leverage, double balance, boolean created) {
         this.id = id;
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
         this.created = created;
-        this.orders = orders;
     }
 
     public long getId() {
@@ -40,9 +38,5 @@ public class AccountDto {
 
     public boolean isCreated() {
         return created;
-    }
-
-    public List<OrderDto> getOrders() {
-        return orders;
     }
 }

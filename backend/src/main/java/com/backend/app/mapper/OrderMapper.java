@@ -28,6 +28,17 @@ public class OrderMapper {
     @Autowired
     private OrderCorrectnessGuardService orderCorrectnessGuardService;
 
+    public List<OrderDto> mapToExistingOrderDtoList(List<CurrencyOrder> orders){
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for(CurrencyOrder order : orders){
+            Optional<OrderDto> orderDtoOptional = mapToDtoFromExistingOrder(order);
+            if(orderDtoOptional.isPresent()){
+                orderDtos.add(orderDtoOptional.get());
+            }
+        }
+        return orderDtos;
+    }
+
     public Optional<CurrencyOrder> mapToNewOrder(OrderDto orderDto, Account account) {
         OrderInfoDto orderInfoDto = orderCorrectnessGuardService.getInfo(orderDto);
         if (orderInfoDto.isStatus()) {

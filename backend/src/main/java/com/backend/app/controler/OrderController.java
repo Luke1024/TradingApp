@@ -10,6 +10,7 @@ import com.backend.app.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -29,6 +30,11 @@ public class OrderController {
     @PutMapping(value="/order/info")
     public OrderInfoDto getOrderInfo(@RequestBody OrderDto orderDto){
         return getInfo(orderDto);
+    }
+
+    @GetMapping(value="/order/all")
+    public List<OrderDto> getAllOrdersByToken(@PathVariable String token, @PathVariable long account_id){
+        return orderMapper.mapToExistingOrderDtoList(orderService.getAllOrdersByTokenAndAccountId(token, account_id));
     }
 
     @GetMapping(value="/order/{token}/{id}")

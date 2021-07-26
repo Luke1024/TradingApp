@@ -3,16 +3,19 @@ package com.backend.app.service.order;
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.CurrencyOrder;
+import com.backend.app.domain.entity.User;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.repository.OrderRepository;
-import com.backend.app.service.TradingStateService;
+import com.backend.app.service.UserService;
 import com.backend.app.service.account.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,10 +25,10 @@ public class OrderService {
     public OrderRepository orderRepository;
 
     @Autowired
-    private TradingStateService tradingStateService;
+    private AccountService accountService;
 
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -34,6 +37,24 @@ public class OrderService {
 
     public Optional<CurrencyOrder> getOrder(String token, long id){
         return orderRepository.findByIdArchivedFalse(id);
+    }
+
+    public List<CurrencyOrder> getAllOrdersByTokenAndAccountId(String token, long account_id){
+        Optional<User> userOptional = userService.getUser(token);
+        if(userOptional.isPresent()){
+            List<Account> accounts = userOptional.get().getAccounts();
+            Optional<Account> accountToFound = Optional.empty();
+            for(Account account : accounts){
+                if(account.getId()==account_id){
+                    accountToFound = Optional.of(account);
+                    break;
+                }
+            }
+            if(accountToFound.isPresent()){
+                return accountToFound.get().getCurrencyOrders();
+            }
+        }
+        return new ArrayList<>();
     }
 
     //use account id for creation

@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class AccountMapper {
@@ -23,6 +25,10 @@ public class AccountMapper {
 
     @Autowired
     private AccountCorrectnessGuardService accountCorrectnessGuardService;
+
+    public List<AccountDto> mapToExistingAccountDtoList(List<Account> accounts){
+        return accounts.stream().map(account -> mapToExistingAccountDto(account)).collect(Collectors.toList());
+    }
 
     public Optional<Account> mapToNewAccount(AccountDto accountDto, User user){
         AccountInfoDto accountInfoDto = accountCorrectnessGuardService.getInfo(accountDto);
@@ -47,31 +53,18 @@ public class AccountMapper {
         }
     }
 
-    public AccountDto mapToExistingAccountDtoWithoutOrder(Account account){
+    public AccountDto mapToExistingAccountDto(Account account){
         return new AccountDto(
                 account.getId(),
                 account.getAccountName(),
                 account.getLeverage(),
                 account.getBalance(),
-                true,
-                new ArrayList<>()
-        );
+                true);
     }
 
     private Optional<Account> mapExistingAccount(Account existingAccount, AccountDto accountDto){
         existingAccount.setAccountName(accountDto.getAccountName());
         existingAccount.setLeverage(accountDto.getLeverage());
         return Optional.of(existingAccount);
-    }
-
-    public AccountDto mapToAccountDtoWithOrders(Account account){
-        return new AccountDto(
-                account.getId(),
-                account.getAccountName(),
-                account.getLeverage(),
-                account.getBalance(),
-                true,
-                orderMapper.mapToOrderDtoList(account.getCurrencyOrders())
-        );
     }
 }

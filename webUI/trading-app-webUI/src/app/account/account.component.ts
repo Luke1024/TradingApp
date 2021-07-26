@@ -18,6 +18,8 @@ export class AccountComponent implements OnInit {
 
   @Input() account!:AccountDto
 
+  orders:OrderDto[] = [] 
+
   correctness:AccountInfoDto
 
   edit:boolean;
@@ -28,10 +30,23 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.account.created){
+      this.getOrders()
+    } else {
+      this.onChange()
+    }
     this.onChange()
     this.currencyService.pulseStream.subscribe(pulse => {
       if(pulse){
         this.getAccount(this.account);
+      }
+    })
+  }
+
+  private getOrders(){
+    this.currencyService.getAllOrders(this.account).subscribe(orders => {
+      if(orders != null){
+        this.orders = orders;
       }
     })
   }
@@ -63,13 +78,13 @@ export class AccountComponent implements OnInit {
       isOpened:true,
       created:false
     }
-    this.account.orders.push(order)
+    this.orders.push(order)
   }
 
   deleteOrder(order:OrderDto){
-    this.account.orders.forEach((orderFromList, index)=>{
+    this.orders.forEach((orderFromList, index)=>{
       if(order==orderFromList){
-        this.account.orders.splice(index,1)
+        this.orders.splice(index,1)
       }
     })
   }
