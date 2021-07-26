@@ -32,7 +32,7 @@ public class OrderController {
         return getInfo(orderDto);
     }
 
-    @GetMapping(value="/order/all")
+    @GetMapping(value="/order/all/{token}/{account_id}")
     public List<OrderDto> getAllOrdersByToken(@PathVariable String token, @PathVariable long account_id){
         return orderMapper.mapToExistingOrderDtoList(orderService.getAllOrdersByTokenAndAccountId(token, account_id));
     }

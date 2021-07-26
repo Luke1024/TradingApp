@@ -22,15 +22,15 @@ export class AccountComponent implements OnInit {
 
   correctness:AccountInfoDto
 
-  edit:boolean;
+  edit:boolean = true;
 
   constructor(private currencyService:CurrencyService) {
-    this.edit = true;
     this.correctness = {nameInfo:"", leverageInfo:"", balanceInfo:"", status:false} as AccountInfoDto
   }
 
   ngOnInit(): void {
     if(this.account.created){
+      this.edit = false;
       this.getOrders()
     } else {
       this.onChange()

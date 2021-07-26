@@ -18,13 +18,12 @@ export class OrderComponent implements OnInit {
 
   correctness!:OrderInfoDto;
 
-  edit:boolean;
+  edit:boolean = true;
 
   //parameters in edit mode when created
   tpPips!:number;
   slPips!:number;
   constructor(private currencyService:CurrencyService) {
-    this.edit = true;
     this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
 
@@ -103,6 +102,9 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.order.created){
+      this.edit = false
+    }
     this.onChange()
     this.currencyService.pulseStream.subscribe(
       pulse => {

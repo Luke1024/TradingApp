@@ -14,10 +14,9 @@ export class TradingViewComponent implements OnInit {
   tokenInMemory:boolean = false;
 
   ngOnInit(): void {
-    if(this.tokenInMemory){
-      this.currencyService.getToken()
-    } else {
-      this.currencyService.getAccountAll("hypotethical token").subscribe(accounts => {
+    var token = this.currencyService.getToken()
+    if(token != null){
+      this.currencyService.getAccountAll(token).subscribe(accounts => {
         if(accounts != null){
           this.accounts = accounts;
         }

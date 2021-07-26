@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http"
 import { DataPointDto } from "./data-point-dto"
-import { Injectable, OnInit } from "@angular/core"
+import { Inject, Injectable, OnInit } from "@angular/core"
 import { Observable, of, Subject } from "rxjs"
 import { AccountDto } from "./models/account"
 import { OrderDto } from "./models/order-dto"
@@ -28,7 +28,7 @@ export class CurrencyService {
     accountUpdateUrl = this.rootUrl + "account/update/"
     
     //order service urls
-    ordersAll = this.rootUrl;
+    ordersAll = this.rootUrl + "order/all/";
     orderInfoUrl = this.rootUrl + "order/info/"
     orderUrl = this.rootUrl + "order/"
     saveOrderUrl = this.rootUrl + "order/save/"
@@ -41,6 +41,8 @@ export class CurrencyService {
     private pulse = new Subject()
     pulseStream = this.pulse.asObservable()
 
+    private storageKey = "local_token" 
+
     constructor(private http:HttpClient) {
         setInterval(()=> {
             this.pulse.next(true);
@@ -48,10 +50,17 @@ export class CurrencyService {
     }
 
     //token
-    public getToken():void {
-        this.http.get<StringDto>(this.tokenUrl, {observe:'response'})
-        .pipe(catchError(this.handleError<StringDto>("get token")))
-        .subscribe(token => this.setToken(token))
+    public getToken() {
+        var token = localStorage.getItem(this.storageKey);
+        if(token == null){
+            this.http.get<StringDto>(this.tokenUrl, {observe:'response'})
+            .pipe(catchError(this.handleError<StringDto>("get token")))
+            .subscribe(token => this.setToken(token))
+            return null;
+        } else {
+            this.token = token;
+            return this.token;
+        }
     }
 
     private setToken(response:any){
@@ -62,6 +71,7 @@ export class CurrencyService {
                 if(response.body?.message != null){
                     console.log("Setting token " + response.body.message)
                     this.token = response.body.message
+                    localStorage.setItem(this.storageKey, this.token)
                 }
               }
             }
