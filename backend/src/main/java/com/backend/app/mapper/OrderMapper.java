@@ -114,6 +114,7 @@ public class OrderMapper {
                     order.getProfit(),
                     enumToBooleanShortLong(order.getShortLong()),
                     enumToBooleanOrderState(order.getOrderState()),
+                    enumToBooleanOrderState(order.getOrderState()),
                     true));
         } else {
             return Optional.empty();

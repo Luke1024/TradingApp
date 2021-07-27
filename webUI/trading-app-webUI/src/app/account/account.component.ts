@@ -75,7 +75,8 @@ export class AccountComponent implements OnInit {
       slVal:0,
       profit:0,
       longOrder:true,
-      isOpened:true,
+      isOpened:false,
+      isClosed:false,
       created:false
     }
     this.orders.push(order)

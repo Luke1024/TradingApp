@@ -10,5 +10,6 @@ export interface OrderDto {
     profit:number;
     longOrder:boolean;
     isOpened:boolean;
+    isClosed:boolean;
     created:boolean;
 }

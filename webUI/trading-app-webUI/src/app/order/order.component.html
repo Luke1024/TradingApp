@@ -8,6 +8,7 @@
     <p>Profit: {{order.profit}}</p>
     <p>Is long order:  {{order.longOrder}}</p>
     <p>Is order created: {{order.created}}</p>
+    <div *ngIf="!order.isClosed">
     <div *ngIf="!edit">
         <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
         <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
@@ -52,5 +53,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>

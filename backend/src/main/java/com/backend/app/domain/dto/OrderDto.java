@@ -12,13 +12,14 @@ public class OrderDto {
     private double profit;
     private boolean longOrder;
     private boolean isOpened;
+    private boolean isClosed;
     private boolean created;
 
     public OrderDto() {
     }
 
     public OrderDto(long accountId, long id, String currency, double lot, int tpPips, double tpVal,
-                    int slPips, double slVal, double profit, boolean longOrder, boolean isOpened, boolean created) {
+                    int slPips, double slVal, double profit, boolean longOrder, boolean isOpened, boolean isClosed, boolean created) {
         this.accountId = accountId;
         this.id = id;
         this.currency = currency;
@@ -30,6 +31,7 @@ public class OrderDto {
         this.profit = profit;
         this.longOrder = longOrder;
         this.isOpened = isOpened;
+        this.isClosed = isClosed;
         this.created = created;
     }
 
@@ -75,6 +77,10 @@ public class OrderDto {
 
     public boolean isOpened() {
         return isOpened;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
     }
 
     public boolean isCreated() {
