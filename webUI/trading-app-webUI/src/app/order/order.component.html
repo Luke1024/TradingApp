@@ -7,14 +7,16 @@
     <p>Stop loss in $ {{order.slVal}}</p>
     <p>Profit: {{order.profit}}</p>
     <p>Is long order:  {{order.longOrder}}</p>
-    <p>Is order created: {{order.created}}</p>
-    <div *ngIf="!order.isClosed">
+    <p>Is order opened: {{isOpened}}</p>
+    <p>Is order closed: {{isClosed}}</p>
+    <p>Is order created: {{order.createdStatus}}</p>
+    <div *ngIf="!isClosed">
     <div *ngIf="!edit">
         <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
         <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
     </div>
     <div *ngIf="edit">
-        <div *ngIf="order.created">
+        <div *ngIf="order.createdStatus">
             <button class="btn btn-primary mb-3" (click)="saveSlTp()">Save SL/TP</button>
             <button class="btn btn-primary mb-3" (click)="cancelEdit()">Cancel Edit</button>
             <div class="mb-3">
@@ -28,7 +30,7 @@
                 <p>{{correctness.slPipsInfo}}</p>
             </div>
         </div>
-        <div *ngIf="!order.created">
+        <div *ngIf="!order.createdStatus">
             <button class="btn btn-primary mb-3" (click)="openOrder()">Open Order</button>
             <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
             <div class="mb-3">

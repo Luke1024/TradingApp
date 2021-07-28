@@ -11,15 +11,15 @@ public class OrderDto {
     private double slVal;
     private double profit;
     private boolean longOrder;
-    private boolean isOpened;
-    private boolean isClosed;
-    private boolean created;
+    private boolean isOpenedStatus;
+    private boolean isClosedStatus;
+    private boolean createdStatus;
 
     public OrderDto() {
     }
 
     public OrderDto(long accountId, long id, String currency, double lot, int tpPips, double tpVal,
-                    int slPips, double slVal, double profit, boolean longOrder, boolean isOpened, boolean isClosed, boolean created) {
+                    int slPips, double slVal, double profit, boolean longOrder, boolean isOpenedStatus, boolean isClosedStatus, boolean createdStatus) {
         this.accountId = accountId;
         this.id = id;
         this.currency = currency;
@@ -30,9 +30,9 @@ public class OrderDto {
         this.slVal = slVal;
         this.profit = profit;
         this.longOrder = longOrder;
-        this.isOpened = isOpened;
-        this.isClosed = isClosed;
-        this.created = created;
+        this.isOpenedStatus = isOpenedStatus;
+        this.isClosedStatus = isClosedStatus;
+        this.createdStatus = createdStatus;
     }
 
     public long getAccountId() {
@@ -75,15 +75,15 @@ public class OrderDto {
         return longOrder;
     }
 
-    public boolean isOpened() {
-        return isOpened;
+    public boolean isOpenedStatus() {
+        return isOpenedStatus;
     }
 
-    public boolean isClosed() {
-        return isClosed;
+    public boolean isClosedStatus() {
+        return isClosedStatus;
     }
 
-    public boolean isCreated() {
-        return created;
+    public boolean isCreatedStatus() {
+        return createdStatus;
     }
 }

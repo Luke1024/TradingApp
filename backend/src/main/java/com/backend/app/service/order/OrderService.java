@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -39,7 +40,7 @@ public class OrderService {
         return orderRepository.findByIdArchivedFalse(id);
     }
 
-    public List<CurrencyOrder> getAllOrdersByTokenAndAccountId(String token, long account_id){
+    public List<CurrencyOrder> getAllOpenOrdersByTokenAndAccountId(String token, long account_id){
         Optional<User> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
             List<Account> accounts = userOptional.get().getAccounts();
@@ -51,7 +52,27 @@ public class OrderService {
                 }
             }
             if(accountToFound.isPresent()){
-                return accountToFound.get().getCurrencyOrders();
+                return accountToFound.get().getCurrencyOrders().stream()
+                        .filter(order -> order.getOrderState()==OrderState.OPENED).collect(Collectors.toList());
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public List<CurrencyOrder> getAllClosedOrdersByTokenAndAccountId(String token, long account_id){
+        Optional<User> userOptional = userService.getUser(token);
+        if(userOptional.isPresent()){
+            List<Account> accounts = userOptional.get().getAccounts();
+            Optional<Account> accountToFound = Optional.empty();
+            for(Account account : accounts){
+                if(account.getId()==account_id){
+                    accountToFound = Optional.of(account);
+                    break;
+                }
+            }
+            if(accountToFound.isPresent()){
+                return accountToFound.get().getCurrencyOrders().stream()
+                        .filter(order -> order.getOrderState()==OrderState.CLOSED).collect(Collectors.toList());
             }
         }
         return new ArrayList<>();

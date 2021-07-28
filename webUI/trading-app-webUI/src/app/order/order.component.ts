@@ -14,15 +14,17 @@ export class OrderComponent implements OnInit {
 
   @Output() autoRemove = new EventEmitter<OrderDto>()
 
-  @Input() order!:OrderDto;
+  @Input() order:OrderDto = {} as OrderDto;
 
-  correctness!:OrderInfoDto;
+  correctness:OrderInfoDto;
 
   edit:boolean = true;
 
+  //solution to undefined problem
+  isOpened!:boolean
+  isClosed!:boolean
+
   //parameters in edit mode when created
-  tpPips!:number;
-  slPips!:number;
   constructor(private currencyService:CurrencyService) {
     this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
@@ -40,7 +42,7 @@ export class OrderComponent implements OnInit {
   }
 
   saveSlTp(){
-    if(this.correctness.status && ! this.order.created){
+    if(this.correctness.status && ! this.order.createdStatus){
       this.currencyService.orderUpdate(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -66,23 +68,26 @@ export class OrderComponent implements OnInit {
   }
 
   private update(orderDto:OrderDto){
+    console.log(orderDto)
     this.order.accountId = orderDto.accountId
     this.order.id = orderDto.id
     this.order.currency = orderDto.currency
     this.order.lot = orderDto.lot
     this.order.tpVal = orderDto.tpVal
+    if(!this.edit){
+      this.order.tpPips = orderDto.tpPips
+      this.order.slPips = orderDto.slPips
+    }
     this.order.slVal = orderDto.slVal
     this.order.profit = orderDto.profit
     this.order.longOrder = orderDto.longOrder
-    this.order.created = orderDto.created
-    if(!this.edit){
-      this.tpPips = orderDto.tpPips;
-      this.slPips = orderDto.slPips;
-    }
+    this.order.isOpenedStatus = orderDto.isOpenedStatus
+    this.order.isClosedStatus = orderDto.isClosedStatus
+    this.order.createdStatus = orderDto.createdStatus
   }
 
   delete(){
-    if(this.order.created){
+    if(this.order.createdStatus){
       this.deleteFromBackEndAndFrontEnd(); 
     } else {
       this.deleteFromFrontEnd();
@@ -102,10 +107,9 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.order.created){
+    if(this.order.createdStatus){
       this.edit = false
     }
-    this.onChange()
     this.currencyService.pulseStream.subscribe(
       pulse => {
         if(pulse){
@@ -116,7 +120,7 @@ export class OrderComponent implements OnInit {
   }
 
   private getOrder(order:OrderDto){
-    if(order.created){
+    if(order.createdStatus){
       this.currencyService.getOrder(order).subscribe(response => {
         if(response != null){
           if(response.status){

@@ -20,6 +20,8 @@ export class AccountComponent implements OnInit {
 
   orders:OrderDto[] = [] 
 
+  closedOrders:OrderDto[] = []
+
   correctness:AccountInfoDto
 
   edit:boolean = true;
@@ -32,10 +34,10 @@ export class AccountComponent implements OnInit {
     if(this.account.created){
       this.edit = false;
       this.getOrders()
+      this.getClosedOrders()
     } else {
       this.onChange()
     }
-    this.onChange()
     this.currencyService.pulseStream.subscribe(pulse => {
       if(pulse){
         this.getAccount(this.account);
@@ -47,6 +49,14 @@ export class AccountComponent implements OnInit {
     this.currencyService.getAllOrders(this.account).subscribe(orders => {
       if(orders != null){
         this.orders = orders;
+      }
+    })
+  }
+
+  private getClosedOrders(){
+    this.currencyService.getAllClosedOrders(this.account).subscribe(closedOrders => {
+      if(closedOrders != null){
+        this.closedOrders = closedOrders;
       }
     })
   }
@@ -75,9 +85,9 @@ export class AccountComponent implements OnInit {
       slVal:0,
       profit:0,
       longOrder:true,
-      isOpened:false,
-      isClosed:false,
-      created:false
+      isOpenedStatus:false,
+      isClosedStatus:false,
+      createdStatus:false
     }
     this.orders.push(order)
   }

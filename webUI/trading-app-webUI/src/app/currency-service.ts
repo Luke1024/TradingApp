@@ -28,7 +28,8 @@ export class CurrencyService {
     accountUpdateUrl = this.rootUrl + "account/update/"
     
     //order service urls
-    ordersAll = this.rootUrl + "order/all/";
+    ordersAllUrl = this.rootUrl + "order/all/"
+    orderClosedAllUrl = this.rootUrl + "order/closed/"
     orderInfoUrl = this.rootUrl + "order/info/"
     orderUrl = this.rootUrl + "order/"
     saveOrderUrl = this.rootUrl + "order/save/"
@@ -116,9 +117,12 @@ export class CurrencyService {
     }
 
     //order
-
     public getAllOrders(account:AccountDto): Observable<OrderDto[]>{
-        return this.http.get<OrderDto[]>(this.ordersAll + this.token + '/' + account.id)
+        return this.http.get<OrderDto[]>(this.ordersAllUrl + this.token + '/' + account.id)
+    }
+
+    public getAllClosedOrders(account:AccountDto): Observable<OrderDto[]>{
+        return this.http.get<OrderDto[]>(this.orderClosedAllUrl + this.token + '/' + account.id)
     }
 
     public getOrderInfo(orderDto:OrderDto): Observable<OrderInfoDto>{

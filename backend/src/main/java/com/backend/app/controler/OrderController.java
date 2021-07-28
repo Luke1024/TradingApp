@@ -7,6 +7,8 @@ import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.service.order.orderCorrectnessGuardService.OrderCorrectnessGuardService;
 import com.backend.app.service.order.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ public class OrderController {
 
     @Autowired
     private OrderCorrectnessGuardService orderCorrectnessGuardService;
+    private Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @PutMapping(value="/order/info")
     public OrderInfoDto getOrderInfo(@RequestBody OrderDto orderDto){
@@ -34,7 +37,12 @@ public class OrderController {
 
     @GetMapping(value="/order/all/{token}/{account_id}")
     public List<OrderDto> getAllOrdersByToken(@PathVariable String token, @PathVariable long account_id){
-        return orderMapper.mapToExistingOrderDtoList(orderService.getAllOrdersByTokenAndAccountId(token, account_id));
+        return orderMapper.mapToExistingOrderDtoList(orderService.getAllOpenOrdersByTokenAndAccountId(token, account_id));
+    }
+
+    @GetMapping(value="/order/closed/{token}/{account_id}")
+    public List<OrderDto> getAllClosedOrdersByToken(@PathVariable String token, @PathVariable long account_id){
+        return orderMapper.mapToExistingOrderDtoList(orderService.getAllClosedOrdersByTokenAndAccountId(token, account_id));
     }
 
     @GetMapping(value="/order/{token}/{id}")
