@@ -7,54 +7,46 @@
     <p>Stop loss in $ {{order.slVal}}</p>
     <p>Profit: {{order.profit}}</p>
     <p>Is long order:  {{order.longOrder}}</p>
-    <p>Is order opened: {{isOpened}}</p>
-    <p>Is order closed: {{isClosed}}</p>
-    <p>Is order created: {{order.createdStatus}}</p>
-    <div *ngIf="!isClosed">
-    <div *ngIf="!edit">
-        <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
-        <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
-    </div>
-    <div *ngIf="edit">
-        <div *ngIf="order.createdStatus">
+    <p>Is order state: {{order.orderState}}</p>
+    <div *ngIf="order.orderState != orderState.CLOSED">
+        <div *ngIf="edit">
+            <div class="mb-3">
+                <div *ngIf="order.orderState==orderState.IN_CREATION">
+                    <label for="lots" class="form-label">Lot settings</label>
+                    <input class="form-control" id="lots" [(ngModel)]="order.lot" type="number" (ngModelChange)="onChange()">
+                    <p>{{correctness.lotInfo}}</p>
+                    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="order.longOrder" (ngModelChange)="onChange()">
+                        <label ngbButtonLabel class="btn-primary">
+                            <input ngbButton type="radio" value="true">Long
+                        </label>
+                        <label ngbButtonLabel class="btn-primary">
+                            <input ngbButton type="radio" value="false">Short
+                        </label>
+                    </div>
+                </div>
+                <label for="tpPips" class="form-label">Take profit in pips</label>
+                <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number" (ngModelChange)="onChange()">
+                <p>Tp pips value in currency {{correctness.tpVal}}</p>
+                <p>{{correctness.tpPipsInfo}}</p>
+                <label for="slPips" class="form-label"> Stop loss in pips</label>
+                <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number" (ngModelChange)="onChange()">
+                <p>Sl pips value in currency {{correctness.slVal}}</p>
+                <p>{{correctness.slPipsInfo}}</p>
+            </div>
+        </div>
+        <div *ngIf="!edit && order.orderState==orderState.OPENED">
+            <button class="btn btn-primary mb-3" (click)="editSlTp()">Edit SL/TP</button>
+            <button class="btn btn-primary mb-3" (click)="delete()">Close</button>
+        </div>
+        <div *ngIf="edit && order.orderState==orderState.OPENED">
             <button class="btn btn-primary mb-3" (click)="saveSlTp()">Save SL/TP</button>
             <button class="btn btn-primary mb-3" (click)="cancelEdit()">Cancel Edit</button>
-            <div class="mb-3">
-                <label for="tpPips" class="form-label">Take profit in pips</label>
-                <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number" (ngModelChange)="onChange()">
-                <p>Tp pips value in currency {{correctness.tpVal}}</p>
-                <p>{{correctness.tpPipsInfo}}</p>
-                <label for="slPips" class="form-label"> Stop loss in pips</label>
-                <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number" (ngModelChange)="onChange()">
-                <p>Sl pips value in currency {{correctness.slVal}}</p>
-                <p>{{correctness.slPipsInfo}}</p>
-            </div>
         </div>
-        <div *ngIf="!order.createdStatus">
+        <div *ngIf="edit && order.orderState==orderState.IN_CREATION">
             <button class="btn btn-primary mb-3" (click)="openOrder()">Open Order</button>
             <button class="btn btn-primary mb-3" (click)="delete()">Cancel</button>
-            <div class="mb-3">
-                <label for="lots" class="form-label">Lot settings</label>
-                <input class="form-control" id="lots" [(ngModel)]="order.lot" type="number" (ngModelChange)="onChange()">
-                <p>{{correctness.lotInfo}}</p>
-                <label for="tpPips" class="form-label">Take profit in pips</label>
-                <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number" (ngModelChange)="onChange()">
-                <p>Tp pips value in currency {{correctness.tpVal}}</p>
-                <p>{{correctness.tpPipsInfo}}</p>
-                <label for="slPips" class="form-label"> Stop loss in pips</label>
-                <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number" (ngModelChange)="onChange()">
-                <p>Sl pips value in currency {{correctness.slVal}}</p>
-                <p>{{correctness.slPipsInfo}}</p>
-                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="order.longOrder" (ngModelChange)="onChange()">
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="true">Long
-                    </label>
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="false">Short
-                    </label>
-                </div>
-            </div>
         </div>
     </div>
-    </div>
 </div>
+
+

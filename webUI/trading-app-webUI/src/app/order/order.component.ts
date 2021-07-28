@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CurrencyService } from '../currency-service';
 import { OrderDto } from '../models/order-dto';
 import { OrderInfoDto } from '../models/order-info';
+import { OrderState } from '../models/order-state';
 import { State } from '../models/state';
 
 @Component({
@@ -16,15 +17,12 @@ export class OrderComponent implements OnInit {
 
   @Input() order:OrderDto = {} as OrderDto;
 
+  orderState = OrderState
+
   correctness:OrderInfoDto;
 
   edit:boolean = true;
 
-  //solution to undefined problem
-  isOpened!:boolean
-  isClosed!:boolean
-
-  //parameters in edit mode when created
   constructor(private currencyService:CurrencyService) {
     this.correctness = {lotInfo:"", tpPipsInfo:"", tpVal:0, slPipsInfo:"", slVal:0, status:false} as OrderInfoDto;
   }
@@ -39,10 +37,11 @@ export class OrderComponent implements OnInit {
 
   editSlTp(){
     this.edit = true;
+    this.onChange()
   }
 
   saveSlTp(){
-    if(this.correctness.status && ! this.order.createdStatus){
+    if(this.correctness.status && this.order.orderState==OrderState.OPENED){
       this.currencyService.orderUpdate(this.order).subscribe(response => {
         if(response.status){
           this.update(response.orderDto)
@@ -81,13 +80,11 @@ export class OrderComponent implements OnInit {
     this.order.slVal = orderDto.slVal
     this.order.profit = orderDto.profit
     this.order.longOrder = orderDto.longOrder
-    this.order.isOpenedStatus = orderDto.isOpenedStatus
-    this.order.isClosedStatus = orderDto.isClosedStatus
-    this.order.createdStatus = orderDto.createdStatus
+    this.order.orderState = orderDto.orderState
   }
 
   delete(){
-    if(this.order.createdStatus){
+    if(this.order.orderState != OrderState.IN_CREATION){
       this.deleteFromBackEndAndFrontEnd(); 
     } else {
       this.deleteFromFrontEnd();
@@ -107,7 +104,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.order.createdStatus){
+    if(this.order.orderState != OrderState.IN_CREATION){
       this.edit = false
     }
     this.currencyService.pulseStream.subscribe(
@@ -120,7 +117,7 @@ export class OrderComponent implements OnInit {
   }
 
   private getOrder(order:OrderDto){
-    if(order.createdStatus){
+    if(order.orderState != OrderState.IN_CREATION){
       this.currencyService.getOrder(order).subscribe(response => {
         if(response != null){
           if(response.status){

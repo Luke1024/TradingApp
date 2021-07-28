@@ -1,4 +1,5 @@
 import { MinLengthValidator } from "@angular/forms";
+import { OrderState } from "./order-state";
 
 export interface OrderDto {
     accountId:number;
@@ -11,7 +12,5 @@ export interface OrderDto {
     slVal:number;
     profit:number;
     longOrder:boolean;
-    isOpenedStatus:boolean;
-    isClosedStatus:boolean;
-    createdStatus:boolean;
+    orderState:OrderState;
 }

@@ -1,5 +1,7 @@
 package com.backend.app.domain.dto;
 
+import com.backend.app.domain.enums.OrderState;
+
 public class OrderDto {
     private long accountId;
     private long id;
@@ -11,15 +13,13 @@ public class OrderDto {
     private double slVal;
     private double profit;
     private boolean longOrder;
-    private boolean isOpenedStatus;
-    private boolean isClosedStatus;
-    private boolean createdStatus;
+    private OrderState orderState;
 
     public OrderDto() {
     }
 
     public OrderDto(long accountId, long id, String currency, double lot, int tpPips, double tpVal,
-                    int slPips, double slVal, double profit, boolean longOrder, boolean isOpenedStatus, boolean isClosedStatus, boolean createdStatus) {
+                    int slPips, double slVal, double profit, boolean longOrder, OrderState orderState) {
         this.accountId = accountId;
         this.id = id;
         this.currency = currency;
@@ -30,9 +30,7 @@ public class OrderDto {
         this.slVal = slVal;
         this.profit = profit;
         this.longOrder = longOrder;
-        this.isOpenedStatus = isOpenedStatus;
-        this.isClosedStatus = isClosedStatus;
-        this.createdStatus = createdStatus;
+        this.orderState = orderState;
     }
 
     public long getAccountId() {
@@ -75,15 +73,7 @@ public class OrderDto {
         return longOrder;
     }
 
-    public boolean isOpenedStatus() {
-        return isOpenedStatus;
-    }
-
-    public boolean isClosedStatus() {
-        return isClosedStatus;
-    }
-
-    public boolean isCreatedStatus() {
-        return createdStatus;
+    public OrderState getOrderState() {
+        return orderState;
     }
 }

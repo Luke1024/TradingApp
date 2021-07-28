@@ -5,6 +5,7 @@ import { AccountDto as AccountDto } from '../models/account';
 import { AccountInfoDto } from '../models/account-info';
 import { OrderDto } from '../models/order-dto';
 import { OrderInfoDto } from '../models/order-info';
+import { OrderState } from '../models/order-state';
 import { State } from '../models/state';
 
 @Component({
@@ -85,9 +86,7 @@ export class AccountComponent implements OnInit {
       slVal:0,
       profit:0,
       longOrder:true,
-      isOpenedStatus:false,
-      isClosedStatus:false,
-      createdStatus:false
+      orderState:OrderState.IN_CREATION
     }
     this.orders.push(order)
   }
@@ -102,6 +101,7 @@ export class AccountComponent implements OnInit {
 
   settings(){
     this.edit = true;
+    this.onChange()
   }
 
   cancelEditSettings(){

@@ -35,6 +35,7 @@
         <div class="card m-2 shadow" *ngFor="let order of orders">
             <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>
         </div>
+        <button *ngIf="account.created" class="btn btn-primary mb-3" (click)='addOrder()'>Add Order</button>
         <div *ngIf="closedOrders.length>0">
             <p>Closed orders: </p>
             <div class="card m-2 shadow" *ngFor="let order of closedOrders">
@@ -43,4 +44,3 @@
         </div>
     </div>
 </div>
-<button *ngIf="account.created" class="btn btn-primary mb-3" (click)='addOrder()'>Add Order</button>

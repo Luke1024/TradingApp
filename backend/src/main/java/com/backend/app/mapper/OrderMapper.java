@@ -113,9 +113,7 @@ public class OrderMapper {
                     order.getSlVal(),
                     order.getProfit(),
                     enumToBooleanShortLong(order.getShortLong()),
-                    enumToBooleanOrderState(order.getOrderState()),
-                    !enumToBooleanOrderState(order.getOrderState()),
-                    true));
+                    order.getOrderState()));
         } else {
             return Optional.empty();
         }
