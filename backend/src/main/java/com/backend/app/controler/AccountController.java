@@ -34,7 +34,7 @@ public class AccountController {
 
     @GetMapping(value="/account/all/{token}")
     public List<AccountDto> getAllAccounts(@PathVariable String token){
-        return accountMapper.mapToExistingAccountDtoList(accountService.getAccountsByToken(token));
+        return accountMapper.mapToExistingAccountDtoList(accountService.getOpenedAccountsByToken(token));
     }
 
     @GetMapping(value="/account/{token}/{id}")

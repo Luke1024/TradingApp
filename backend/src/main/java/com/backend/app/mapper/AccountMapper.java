@@ -4,6 +4,7 @@ import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
+import com.backend.app.domain.enums.AccountStatus;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.service.account.AccountCorrectnessGuardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,8 @@ public class AccountMapper {
                     accountDto.getAccountName(),
                     accountDto.getLeverage(),
                     accountDto.getBalance(),
-                    user));
+                    user,
+                    AccountStatus.OPENED));
         } else {
             return Optional.empty();
         }

@@ -3,6 +3,7 @@ package com.backend.app.service.account;
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.User;
+import com.backend.app.domain.enums.AccountStatus;
 import com.backend.app.mapper.AccountMapper;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.service.order.OrderService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -34,14 +36,21 @@ public class AccountService {
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     public Optional<Account> getAccount(String token,long id){
-        return accountRepository.findById(id);
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if(accountOptional.isPresent()){
+            if(accountOptional.get().getAccountStatus() != AccountStatus.DELETED){
+                return Optional.of(accountOptional.get());
+            }
+        }
+        return Optional.empty();
     }
 
-    public List<Account> getAccountsByToken(String token){
+    public List<Account> getOpenedAccountsByToken(String token){
         Optional<User> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            return user.getAccounts();
+            return user.getAccounts().stream()
+                    .filter(account -> account.getAccountStatus()== AccountStatus.OPENED).collect(Collectors.toList());
         } else {
             return new ArrayList<>();
         }
@@ -70,7 +79,19 @@ public class AccountService {
     }
 
     public boolean deleteAccount(String token, long id){
-        accountRepository.deleteById(id);
-        return true;
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if(accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            if (account.getAccountStatus() == AccountStatus.OPENED) {
+                account.setAccountStatus(AccountStatus.ARCHIVED);
+            }
+            if (account.getAccountStatus() == AccountStatus.ARCHIVED) {
+                account.setAccountStatus(AccountStatus.DELETED);
+            }
+            accountRepository.save(account);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

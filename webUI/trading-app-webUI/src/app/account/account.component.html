@@ -7,27 +7,25 @@
         </p>
         <button *ngIf="account.created" class="btn btn-primary mb-3" (click)="settings()">Settings</button>
         <div *ngIf="edit">
-            <div *ngIf="account.created">
-                <label for="account_name" class="form-label">Account Name</label>
-                <input class="form-control" id="account_name" [(ngModel)]="account.accountName" (ngModelChange)="onChange()">
-                <p>{{correctness.nameInfo}}</p>
-                <label for="leverage_max" class="form-label">Leverage Max</label>
-                <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage" (ngModelChange)="onChange()">
-                <p>{{correctness.leverageInfo}}</p>
-                <button class="btn btn-primary mb-3" type="button" (click)="saveSettings()">Save Settings</button>
-                <button class="btn btn-primary mb-3" type="button" (click)="cancelEditSettings()">Cancel Edit</button>
-                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Remove Account</button>
-            </div>
-            <div *ngIf="!account.created">
+  
                 <label for="account_name" class="form-label">Account Name</label>
                 <input  class="form-control" id="account_name" [(ngModel)]="account.accountName" (ngModelChange)="onChange()">
                 <p>{{correctness.nameInfo}}</p>
                 <label for="leverage_max" class="form-label">Leverage Max</label>
                 <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage" (ngModelChange)="onChange()">
                 <p>{{correctness.leverageInfo}}</p>
+ 
+            <div *ngIf="!account.created">
                 <label for="balance" class="form-label">Balance</label>
                 <input type="number" class="form-control" id="balance" [(ngModel)]="account.balance" (ngModelChange)="onChange()">
                 <p>{{correctness.balanceInfo}}</p>
+            </div>
+            <div *ngIf="account.created">
+                <button class="btn btn-primary mb-3" type="button" (click)="saveSettings()">Save Settings</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="cancelEditSettings()">Cancel Edit</button>
+                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Remove Account</button>
+            </div>
+            <div *ngIf="!account.created">
                 <button class="btn btn-primary mb-3" type="button" (click)="saveAccount()">Save Account</button>
                 <button class="btn btn-primary mb-3" type="button" (click)="delete()">Cancel</button>
             </div>
