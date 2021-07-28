@@ -45,9 +45,16 @@ export class CurrencyService {
     private storageKey = "local_token" 
 
     constructor(private http:HttpClient) {
+
+        setTimeout(()=> {
+            this.calibrateIntervalStart()
+        }, 60000)
+    }
+
+    private calibrateIntervalStart(){
         setInterval(()=> {
             this.pulse.next(true);
-        }, 5000)
+        }, 300000)
     }
 
     //token

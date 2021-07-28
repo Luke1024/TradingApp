@@ -101,32 +101,42 @@ public class UpdateWorker {
         double tpVal = order.getTpVal();
         double slVal = order.getSlVal();
 
-        if(checkIfTakeProfitHit(balance, tpVal) || checkIfStopLossHit(balance, slVal)){
+        if(checkIfTakeProfitHit(order) || checkIfStopLossHit(order)){
             orderClose(order);
         }
     }
 
-    private boolean checkIfTakeProfitHit(double balance, double tpVal){
-        if(tpVal > 0){
-            if(balance >= tpVal){
-                return true;
-            }
-        } else {
-            if(balance <= tpVal){
-                return true;
+    private boolean checkIfTakeProfitHit(CurrencyOrder order){
+        double balance = order.getProfit();
+        double tpVal = order.getTpVal();
+        int tpPips = order.getTpPips();
+        if(tpPips != 0) {
+            if (tpVal > 0) {
+                if (balance >= tpVal) {
+                    return true;
+                }
+            } else {
+                if (balance <= tpVal) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    private boolean checkIfStopLossHit(double balance, double slVal){
-        if(slVal > 0){
-            if(balance >= slVal){
-                return true;
-            }
-        } else {
-            if(balance <= slVal){
-                return true;
+    private boolean checkIfStopLossHit(CurrencyOrder order){
+        double balance = order.getProfit();
+        double slVal = order.getSlVal();
+        int slPips = order.getSlPips();
+        if(slPips != 0) {
+            if (slVal > 0) {
+                if (balance >= slVal) {
+                    return true;
+                }
+            } else {
+                if (balance <= slVal) {
+                    return true;
+                }
             }
         }
         return false;
