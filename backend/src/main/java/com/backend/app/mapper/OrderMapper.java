@@ -51,7 +51,6 @@ public class OrderMapper {
                     orderInfoDto.getSlVal(),
                     booleanOrderToEnumMapper(orderDto.isLongOrder()),
                     OrderState.OPENED,
-                    false,
                     account));
         }
         return Optional.empty();

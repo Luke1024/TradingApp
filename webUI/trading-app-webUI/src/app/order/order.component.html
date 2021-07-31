@@ -8,6 +8,7 @@
     <p>Profit: {{order.profit}}</p>
     <p>Is long order:  {{order.longOrder}}</p>
     <p>Is order state: {{order.orderState}}</p>
+    <button *ngIf="order.orderState == orderState.CLOSED" class="btn btn-primary mb-3" (click)="delete()">Delete</button>
     <div *ngIf="order.orderState != orderState.CLOSED">
         <div *ngIf="edit">
             <div class="mb-3">
@@ -16,11 +17,11 @@
                     <input class="form-control" id="lots" [(ngModel)]="order.lot" type="number" (ngModelChange)="onChange()">
                     <p *ngIf="correctness.lotInfo">{{correctness.lotInfo}}</p>
                     <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="order.longOrder" (ngModelChange)="onChange()">
-                        <label ngbButtonLabel class="btn-primary">
-                            <input ngbButton type="radio" value="true">Long
+                        <label ngbButtonLabel class="btn-success">
+                            <input ngbButton type="radio" value="true">Buy
                         </label>
-                        <label ngbButtonLabel class="btn-primary">
-                            <input ngbButton type="radio" value="false">Short
+                        <label ngbButtonLabel class="btn-danger">
+                            <input ngbButton type="radio" value="false">Sell
                         </label>
                     </div>
                 </div>

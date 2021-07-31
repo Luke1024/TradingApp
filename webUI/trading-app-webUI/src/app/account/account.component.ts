@@ -19,6 +19,8 @@ export class AccountComponent implements OnInit {
 
   @Input() account!:AccountDto
 
+  showClosedOrders:boolean = false
+
   orders:OrderDto[] = [] 
 
   closedOrders:OrderDto[] = []
@@ -92,11 +94,19 @@ export class AccountComponent implements OnInit {
   }
 
   deleteOrder(order:OrderDto){
-    this.orders.forEach((orderFromList, index)=>{
-      if(order==orderFromList){
-        this.orders.splice(index,1)
-      }
-    })
+    if(order.orderState==OrderState.CLOSED){
+      this.closedOrders.forEach((orderFromList, index)=>{
+        if(order==orderFromList){
+          this.closedOrders.splice(index,1)
+        }
+      })
+    } else {
+      this.orders.forEach((orderFromList, index)=>{
+        if(order==orderFromList){
+          this.orders.splice(index,1)
+        }
+      })
+    }
   }
 
   settings(){
@@ -188,5 +198,13 @@ export class AccountComponent implements OnInit {
 
   private deleteFromFrontEnd(){
     this.autoRemove.emit(this.account)
+  }
+
+  public showClosed(){
+    this.showClosedOrders = true;
+  }
+
+  public hideClosed(){
+    this.showClosedOrders = false;
   }
 }

@@ -34,7 +34,9 @@
             <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>
         </div>
         <button *ngIf="account.created" class="btn btn-primary mb-3" (click)='addOrder()'>Add Order</button>
-        <div *ngIf="closedOrders.length>0">
+        <button *ngIf="closedOrders.length>0 && !showClosedOrders" (click)="showClosed()" class="btn btn-primary mb-3" type="button">Show Closed Orders</button>
+        <button *ngIf="closedOrders.length>0 && showClosedOrders" (click)="hideClosed()" class="btn btn-primary mb-3" type="button">Hide Closed Orders</button>
+        <div *ngIf="showClosedOrders">
             <p>Closed orders: </p>
             <div class="card m-2 shadow" *ngFor="let order of closedOrders">
                 <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>

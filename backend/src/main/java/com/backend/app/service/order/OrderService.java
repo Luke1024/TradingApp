@@ -105,7 +105,20 @@ public class OrderService {
     }
 
     public boolean deleteOrder(String token, long id){
-        orderRepository.deleteById(id);
-        return true;
+        Optional<CurrencyOrder> currencyOrderOptional = orderRepository.findById(id);
+        if(currencyOrderOptional.isPresent()){
+            CurrencyOrder order = currencyOrderOptional.get();
+            if(order.getOrderState()==OrderState.OPENED){
+                order.setOrderState(OrderState.CLOSED);
+                orderRepository.save(order);
+                return true;
+            }
+            if(order.getOrderState()==OrderState.CLOSED){
+                order.setOrderState(OrderState.ARCHIVED);
+                orderRepository.save(order);
+                return true;
+            }
+        }
+        return false;
     }
 }

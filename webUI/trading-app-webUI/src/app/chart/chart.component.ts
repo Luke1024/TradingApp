@@ -11,7 +11,7 @@ import { DataPointDto } from '../data-point-dto';
 export class ChartComponent implements OnInit {
 
   multi: any[] = []
-  view:[number,number] = [700, 600];
+  view:[number,number] = [1280, 600];
 
   // options
   autoScale: boolean = true;
@@ -22,8 +22,8 @@ export class ChartComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
+  xAxisLabel: string = 'Time';
+  yAxisLabel: string = 'Price';
   timeline: boolean = true;
 
   colorScheme = {
@@ -44,17 +44,15 @@ export class ChartComponent implements OnInit {
   }
 
   onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
   }
+  
 }

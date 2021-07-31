@@ -116,6 +116,7 @@ export class OrderComponent implements OnInit {
         }
       }
     )
+    this.onChange()
   }
 
   private getOrder(order:OrderDto){

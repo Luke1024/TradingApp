@@ -1,5 +1,5 @@
 package com.backend.app.domain.enums;
 
 public enum OrderState {
-    OPENED, CLOSED, IN_CREATION;
+    OPENED, CLOSED, IN_CREATION, ARCHIVED;
 }
