@@ -17,6 +17,8 @@ export class OrderComponent implements OnInit {
 
   @Input() order:OrderDto = {} as OrderDto;
 
+  unlimitedMessage:string = "0 is unlimited."
+
   orderState = OrderState
 
   correctness:OrderInfoDto;

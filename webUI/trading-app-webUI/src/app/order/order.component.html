@@ -14,7 +14,7 @@
                 <div *ngIf="order.orderState==orderState.IN_CREATION">
                     <label for="lots" class="form-label">Lot settings</label>
                     <input class="form-control" id="lots" [(ngModel)]="order.lot" type="number" (ngModelChange)="onChange()">
-                    <p>{{correctness.lotInfo}}</p>
+                    <p *ngIf="correctness.lotInfo">{{correctness.lotInfo}}</p>
                     <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="order.longOrder" (ngModelChange)="onChange()">
                         <label ngbButtonLabel class="btn-primary">
                             <input ngbButton type="radio" value="true">Long
@@ -26,12 +26,14 @@
                 </div>
                 <label for="tpPips" class="form-label">Take profit in pips</label>
                 <input class="form-control" id="tpPips" [(ngModel)]="order.tpPips" type="number" (ngModelChange)="onChange()">
-                <p>Tp pips value in currency {{correctness.tpVal}}</p>
-                <p>{{correctness.tpPipsInfo}}</p>
+                <p *ngIf="order.tpPips==0">{{unlimitedMessage}}</p>
+                <p *ngIf="correctness.tpVal">Tp pips value in currency {{correctness.tpVal}}</p>
+                <p *ngIf="correctness.lotInfo">{{correctness.tpPipsInfo}}</p>
                 <label for="slPips" class="form-label"> Stop loss in pips</label>
                 <input class="form-control" id="slPips" [(ngModel)]="order.slPips" type="number" (ngModelChange)="onChange()">
-                <p>Sl pips value in currency {{correctness.slVal}}</p>
-                <p>{{correctness.slPipsInfo}}</p>
+                <p *ngIf="order.slPips==0">{{unlimitedMessage}}</p>
+                <p *ngIf="correctness.slVal">Sl pips value in currency {{correctness.slVal}}</p>
+                <p *ngIf="correctness.slPipsInfo">{{correctness.slPipsInfo}}</p>
             </div>
         </div>
         <div *ngIf="!edit && order.orderState==orderState.OPENED">
