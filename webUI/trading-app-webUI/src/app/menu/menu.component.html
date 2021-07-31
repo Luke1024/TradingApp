@@ -1,4 +1,12 @@
-<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model" (ngModelChange)="onChange()">
+<button type="button" class="btn btn-primary">Main Chart
+  <a routerLink="/main" routerLinkActive="active"></a>
+</button>
+<button type="button" class="btn btn-primary">Trading
+  <a routerLink="/trading" routerLinkActive="active"></a>
+</button>
+
+
+<!--<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model" (ngModelChange)="onChange()">
     <label ngbButtonLabel class="btn-primary">
       <input ngbButton type="radio" value="main"> Main Chart
     </label>
@@ -12,3 +20,4 @@
         <input ngbButton type="radio" value="about"> About
     </label>
 </div>
+-->

@@ -1,3 +1,15 @@
-<app-menu></app-menu>
-<app-trading-view></app-trading-view>
-<app-chart></app-chart>
+<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model">
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="main" routerLink="/main" routerLinkActive="active"> Main Chart
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="trading" routerLink="/trading" routerLinkActive="active"> Trading
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="howTo" routerLink="/howTo" routerLinkActive="active"> How To
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="about" routerLink="/about" routerLinkActive="active"> About
+    </label>
+</div>
+<router-outlet></router-outlet>

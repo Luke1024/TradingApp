@@ -5,10 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
 
   constructor() { }
-
+/*
   model = "howTo";
 
   ngOnInit(): void {}
@@ -16,4 +16,5 @@ export class MenuComponent implements OnInit {
   onChange(): void {
     console.log(this.model)
   }
+  */
 }

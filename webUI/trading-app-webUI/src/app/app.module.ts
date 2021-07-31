@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { TradingViewComponent } from './trading-view/trading-view.component';
 import { AccountComponent } from './account/account.component';
 import { OrderComponent } from './order/order.component';
+import { HowToComponent } from './how-to/how-to.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { OrderComponent } from './order/order.component';
     TradingViewComponent,
     AccountComponent,
     OrderComponent,
+    HowToComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
