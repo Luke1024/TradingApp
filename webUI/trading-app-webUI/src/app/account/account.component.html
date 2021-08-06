@@ -1,42 +1,69 @@
 <div class="card-body">
     <div >
-        <p>
-            <span>{{account.accountName}} </span>
-            <span>{{account.leverage}} </span>
-            <span>{{account.balance}} </span>
-        </p>
-        <button *ngIf="account.created" class="btn btn-primary mb-3" (click)="settings()">Settings</button>
+        <div class="card-group mb-3">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Account name:</p>
+                <p class="card-text">{{account.accountName}}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Leverage:</p>
+                <p class="card-text">{{account.leverage}}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Account balance:</p>
+                <p class="card-text">{{account.balance}}</p>
+            </div>
+        </div>
+        </div>
+        <button *ngIf="account.created" class="btn btn-outline-success mb-3" (click)="settings()">Settings</button>
         <div *ngIf="edit">
-  
-                <label for="account_name" class="form-label">Account Name</label>
-                <input  class="form-control" id="account_name" [(ngModel)]="account.accountName" (ngModelChange)="onChange()">
-                <p>{{correctness.nameInfo}}</p>
-                <label for="leverage_max" class="form-label">Leverage Max</label>
-                <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage" (ngModelChange)="onChange()">
-                <p>{{correctness.leverageInfo}}</p>
- 
-            <div *ngIf="!account.created">
-                <label for="balance" class="form-label">Balance</label>
-                <input type="number" class="form-control" id="balance" [(ngModel)]="account.balance" (ngModelChange)="onChange()">
-                <p>{{correctness.balanceInfo}}</p>
+            <div class="card-group mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <label for="account_name" class="form-label">Account Name</label>
+                        <input  class="form-control" id="account_name" [(ngModel)]="account.accountName" (ngModelChange)="onChange()">
+                        <p>{{correctness.nameInfo}}</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <label for="leverage_max" class="form-label">Leverage Max</label>
+                        <input type="number" class="form-control" id="leverage_max" [(ngModel)]="account.leverage" (ngModelChange)="onChange()">
+                        <p>{{correctness.leverageInfo}}</p>
+                    </div>
+                </div>
+                <div class="card" *ngIf="!account.created">
+                    <div class="card-body">
+                        <label for="balance" class="form-label">Balance</label>
+                        <input type="number" class="form-control" id="balance" [(ngModel)]="account.balance" (ngModelChange)="onChange()">
+                        <p>{{correctness.balanceInfo}}</p>
+                    </div>
+                </div>
             </div>
-            <div *ngIf="account.created">
-                <button class="btn btn-primary mb-3" type="button" (click)="saveSettings()">Save Settings</button>
-                <button class="btn btn-primary mb-3" type="button" (click)="cancelEditSettings()">Cancel Edit</button>
-                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Remove Account</button>
+            <div *ngIf="account.created" class="btn-group mb-3">
+                <button class="btn btn-outline-success" type="button" (click)="saveSettings()">Save Settings</button>
+                <button class="btn btn-outline-success" type="button" (click)="cancelEditSettings()">Cancel Edit</button>
+                <button class="btn btn-outline-success" type="button" (click)="delete()">Remove Account</button>
             </div>
-            <div *ngIf="!account.created">
-                <button class="btn btn-primary mb-3" type="button" (click)="saveAccount()">Save Account</button>
-                <button class="btn btn-primary mb-3" type="button" (click)="delete()">Cancel</button>
+            <div *ngIf="!account.created" class="btn-group mb-3">
+                <button class="btn btn-outline-success" type="button" (click)="saveAccount()">Save Account</button>
+                <button class="btn btn-outline-success" type="button" (click)="delete()">Cancel</button>
             </div>
         </div>
         <div class="card m-2 shadow" *ngFor="let order of orders">
             <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>
         </div>
-        <button *ngIf="account.created" class="btn btn-primary mb-3" (click)='addOrder()'>Add Order</button>
-        <button *ngIf="closedOrders.length>0 && !showClosedOrders" (click)="showClosed()" class="btn btn-primary mb-3" type="button">Show Closed Orders</button>
-        <button *ngIf="closedOrders.length>0 && showClosedOrders" (click)="hideClosed()" class="btn btn-primary mb-3" type="button">Hide Closed Orders</button>
-        <div *ngIf="showClosedOrders">
+        <div class="mb-3">
+            <button *ngIf="account.created" class="btn btn-outline-success" (click)='addOrder()'>Add Order</button>
+        </div>
+        <button *ngIf="closedOrders.length>0 && !showClosedOrders" (click)="showClosed()" class="btn btn-outline-success mb-3" type="button">Show Closed Orders</button>
+        <button *ngIf="closedOrders.length>0 && showClosedOrders" (click)="hideClosed()" class="btn btn-outline-success mb-3" type="button">Hide Closed Orders</button>
+        <div *ngIf="showClosedOrders && closedOrders.length>0">
             <p>Closed orders: </p>
             <div class="card m-2 shadow" *ngFor="let order of closedOrders">
                 <app-order [order]="order" (autoRemove)="deleteOrder($event)"></app-order>

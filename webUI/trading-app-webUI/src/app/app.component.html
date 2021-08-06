@@ -1,15 +1,23 @@
-<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model">
-    <label ngbButtonLabel class="btn-primary">
-      <input ngbButton type="radio" value="main" routerLink="/main" routerLinkActive="active"> Main Chart
-    </label>
-    <label ngbButtonLabel class="btn-primary">
-      <input ngbButton type="radio" value="trading" routerLink="/trading" routerLinkActive="active"> Trading
-    </label>
-    <label ngbButtonLabel class="btn-primary">
-      <input ngbButton type="radio" value="howTo" routerLink="/howTo" routerLinkActive="active"> How To
-    </label>
-    <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" value="about" routerLink="/about" routerLinkActive="active"> About
-    </label>
+<div style="min-width: 80rem; max-width: 80%; margin: auto;">
+  <div class="card m-2 shadow">
+    <div class="card-body">
+      <div class="mb-3">
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model" style="width: 100%; margin: auto;">
+          <label ngbButtonLabel class="btn-success">
+            <input ngbButton type="radio" value="main" routerLink="/main" routerLinkActive="active"> Main Chart
+          </label>
+          <label ngbButtonLabel class="btn-success">
+            <input ngbButton type="radio" value="trading" routerLink="/trading" routerLinkActive="active"> Trading
+          </label>
+          <label ngbButtonLabel class="btn-success">
+            <input ngbButton type="radio" value="howTo" routerLink="/howTo" routerLinkActive="active"> How To
+          </label>
+          <label ngbButtonLabel class="btn-success">
+              <input ngbButton type="radio" value="about" routerLink="/about" routerLinkActive="active"> About
+          </label>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-<router-outlet></router-outlet>

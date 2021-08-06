@@ -1,5 +1,6 @@
 <div class="card m-2 shadow" *ngFor="let account of accounts">
     <app-account [account]="account" (autoRemove)="deleteAccount($event)"></app-account>
 </div>
-<button class="btn btn-primary mb-3" (click)='addAccount()'>Add Account
-</button>
+<div>
+    <button class="btn btn-outline-success" (click)='addAccount()'>Add Account</button>
+</div>
