@@ -15,7 +15,7 @@ import { OrderResponseDto } from "./models/order-response"
     providedIn: 'root'
   })
 export class CurrencyService {
-    rootUrl = 'http://localhost:8080/trading/'
+    rootUrl = 'https://protected-stream-68029.herokuapp.com/trading/'
     timeSeriesUrl =  this.rootUrl + 'currencydata/'
 
     tokenUrl = this.rootUrl + "token/"
@@ -104,12 +104,12 @@ export class CurrencyService {
     }
 
     public getAccount(accountDto:AccountDto): Observable<AccountResponseDto> {
-        return this.http.get<AccountResponseDto>(this.accountUrl + '/' + this.token + '/' + accountDto.id)
+        return this.http.get<AccountResponseDto>(this.accountUrl + this.token + '/' + accountDto.id)
         .pipe(catchError(this.handleError<AccountResponseDto>('get account')))
     }
 
     public accountSave(accountDto:AccountDto): Observable<AccountResponseDto>{
-        return this.http.put<AccountResponseDto>(this.accountSaveUrl + '/' + this.token, accountDto)
+        return this.http.put<AccountResponseDto>(this.accountSaveUrl + this.token, accountDto)
         .pipe(catchError(this.handleError<AccountResponseDto>('account save')))
     }
 
@@ -119,7 +119,7 @@ export class CurrencyService {
     }
 
     public accountDelete(accountDto:AccountDto): Observable<boolean>{
-        return this.http.delete<boolean>(this.accountUrl + '/' + this.token + '/' + accountDto.id)
+        return this.http.delete<boolean>(this.accountUrl + this.token + '/' + accountDto.id)
         .pipe(catchError(this.handleError<boolean>('account delete')))
     }
 

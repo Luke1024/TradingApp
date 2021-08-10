@@ -2,9 +2,11 @@ package com.backend.app.service;
 
 import com.backend.app.domain.DataPoint;
 import com.backend.app.service.instrument.data.downloader.manager.service.downloader.service.utilities.DataPointAndExchangeRateService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,10 +21,16 @@ public class DataPointAndExchangeRateServiceTest {
 
     private Random random = new Random();
 
+    @Autowired
+    private DataPointAndExchangeRateService dataPointAndExchangeRateService;
+
+    @After
+    public void cleanRepo(){
+        dataPointAndExchangeRateService.getAllDataPoints().clear();
+    }
+
     @Test
     public void testSavingAndRetrieving100DataPoints(){
-
-        DataPointAndExchangeRateService dataPointAndExchangeRateService = new DataPointAndExchangeRateService();
 
         List<DataPoint> dataPointListToSave = new ArrayList<>();
         for(int i=0; i<100; i++){
@@ -35,8 +43,6 @@ public class DataPointAndExchangeRateServiceTest {
 
     @Test
     public void testSavingAndRetrievingDataPointsInReverseDataOrder(){
-
-        DataPointAndExchangeRateService dataPointAndExchangeRateService = new DataPointAndExchangeRateService();
 
         List<DataPoint> dataPointListToSave = new ArrayList<>();
         for(int i=0; i<100; i++){
@@ -52,7 +58,6 @@ public class DataPointAndExchangeRateServiceTest {
 
     @Test
     public void testSavingAndRetrievingDataPointsWithTheSameDate(){
-        DataPointAndExchangeRateService dataPointAndExchangeRateService = new DataPointAndExchangeRateService();
 
         List<DataPoint> dataPointListToSave = new ArrayList<>();
         for(int i=0; i<100; i++){
@@ -67,7 +72,7 @@ public class DataPointAndExchangeRateServiceTest {
     }
 
     private LocalDateTime generateDateBasedOnInteger(int i){
-        return LocalDateTime.now().plusMinutes(i);
+        return LocalDateTime.now().minusMinutes(i);
     }
 
     private DataPoint randomPointGenerator(LocalDateTime timeStamp){

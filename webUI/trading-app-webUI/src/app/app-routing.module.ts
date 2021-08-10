@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'main', component: ChartComponent },
   { path: 'trading', component: TradingViewComponent },
   { path: 'howTo', component: HowToComponent },
-  { path: 'about', component: AboutComponent },
+  //{ path: 'about', component: AboutComponent },
   { path: '**', component: ChartComponent}
 ];
 

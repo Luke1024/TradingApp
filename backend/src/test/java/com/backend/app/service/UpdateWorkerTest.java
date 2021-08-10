@@ -3,6 +3,7 @@ package com.backend.app.service;
 import com.backend.app.domain.entity.Account;
 import com.backend.app.domain.entity.CurrencyOrder;
 import com.backend.app.domain.entity.User;
+import com.backend.app.domain.enums.AccountStatus;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.domain.enums.ShortLong;
 import com.backend.app.repository.AccountRepository;
@@ -42,7 +43,8 @@ public class UpdateWorkerTest {
         ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
         ArgumentCaptor<CurrencyOrder> orderCaptor = ArgumentCaptor.forClass(CurrencyOrder.class);
 
-        Account account = new Account(1,"account",10, 1000, new ArrayList<>(), new User());
+        User user = new User("", new ArrayList<>());
+        Account account = new Account("account",10, 1000, user, AccountStatus.OPENED);
 
         //change 10 pips on 0.2lot buy eurusd should generate 20$ profit
         //account balance should change to 1020$
@@ -78,7 +80,8 @@ public class UpdateWorkerTest {
         ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
         ArgumentCaptor<CurrencyOrder> orderCaptor = ArgumentCaptor.forClass(CurrencyOrder.class);
 
-        Account account = new Account(1,"account",10, 1000, new ArrayList<>(), new User());
+        User user = new User("", new ArrayList<>());
+        Account account = new Account("account",10, 1000, user, AccountStatus.OPENED);
 
         CurrencyOrder order1 = new CurrencyOrder("EUR/USD",
                 0.2, 50, 100, -200, -400, ShortLong.LONG, OrderState.OPENED, account);
@@ -112,7 +115,9 @@ public class UpdateWorkerTest {
 
         ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
         ArgumentCaptor<CurrencyOrder> orderCaptor = ArgumentCaptor.forClass(CurrencyOrder.class);
-        Account account = new Account(1,"account",10, 1000, new ArrayList<>(), new User());
+
+        User user = new User("", new ArrayList<>());
+        Account account = new Account("account",10, 1000, user, AccountStatus.OPENED);
 
         CurrencyOrder order1 = new CurrencyOrder("EUR/USD",
                 0.2, 50, 100, -50, -100, ShortLong.LONG, OrderState.OPENED, account);
