@@ -3,6 +3,7 @@ package com.backend.app.domain.entity;
 import com.backend.app.domain.enums.AccountStatus;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Account {
     @JoinColumn(name = "USER_ID")
     private User user;
     private AccountStatus accountStatus;
+    private LocalDateTime creationDate;
 
     public Account() {
     }
@@ -38,6 +40,7 @@ public class Account {
         this.currencyOrders = new ArrayList<>();
         setUser(user);
         this.accountStatus = accountStatus;
+        this.creationDate = LocalDateTime.now();
     }
 
     public Account(long id, String accountName, int leverage,
@@ -108,6 +111,10 @@ public class Account {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     @Override

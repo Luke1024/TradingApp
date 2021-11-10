@@ -4,8 +4,6 @@ import com.backend.app.domain.dto.StringDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 public class MiscService {
 

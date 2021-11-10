@@ -1,6 +1,7 @@
 package com.backend.app.domain.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NamedNativeQuery(
@@ -17,6 +18,7 @@ public class User {
     private Long id;
 
     private String token;
+    private LocalDateTime userCreationTime;
 
     @OneToMany(targetEntity = Account.class,
         mappedBy = "user",
@@ -30,6 +32,7 @@ public class User {
     }
 
     public User(String token, List<Account> accounts) {
+        this.userCreationTime = LocalDateTime.now();
         this.token = token;
         this.accounts = accounts;
     }
@@ -50,5 +53,9 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public LocalDateTime getUserCreationTime() {
+        return userCreationTime;
     }
 }

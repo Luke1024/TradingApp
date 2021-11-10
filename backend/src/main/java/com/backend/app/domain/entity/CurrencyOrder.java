@@ -4,6 +4,7 @@ import com.backend.app.domain.enums.OrderState;
 import com.backend.app.domain.enums.ShortLong;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NamedNativeQuery(
         name = "CurrencyOrder.findByIdArchivedFalse",
@@ -29,6 +30,7 @@ public class CurrencyOrder {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
+    private LocalDateTime creationDate;
 
     public CurrencyOrder() {
     }
@@ -45,6 +47,7 @@ public class CurrencyOrder {
         this.orderState = orderState;
         this.shortLong = shortLong;
         setAccount(account);
+        this.creationDate = LocalDateTime.now();
     }
 
     public void setAccount(Account account){
@@ -126,6 +129,10 @@ public class CurrencyOrder {
 
     public void setLot(double lot) {
         this.lot = lot;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     @Override
