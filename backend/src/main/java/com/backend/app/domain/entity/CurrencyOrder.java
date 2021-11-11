@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @NamedNativeQuery(
         name = "CurrencyOrder.findByIdArchivedFalse",
-        query = "SELECT * FROM currency_order WHERE id=:ID AND archived=false;",
+        query = "SELECT * FROM currency_order WHERE id=:ID AND order_state!=3;",
         resultClass = CurrencyOrder.class
 )
 
@@ -61,6 +61,10 @@ public class CurrencyOrder {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCurrency() {

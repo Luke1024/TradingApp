@@ -22,7 +22,7 @@ public class Account {
         cascade = CascadeType.ALL,
         fetch = FetchType.EAGER)
     @OrderColumn
-    private List<CurrencyOrder> currencyOrders;
+    private List<CurrencyOrder> currencyOrders = new ArrayList<>();
 
     @ManyToOne()
     @JoinColumn(name = "USER_ID")
@@ -37,7 +37,6 @@ public class Account {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
-        this.currencyOrders = new ArrayList<>();
         setUser(user);
         this.accountStatus = accountStatus;
         this.creationDate = LocalDateTime.now();
