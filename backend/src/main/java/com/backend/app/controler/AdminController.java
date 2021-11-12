@@ -1,8 +1,8 @@
 package com.backend.app.controler;
 
-import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.CurrencyOrder;
-import com.backend.app.domain.entity.User;
+import com.backend.app.domain.dto.admin.ExtendedAccountDto;
+import com.backend.app.domain.dto.admin.ExtendedOrderDto;
+import com.backend.app.domain.dto.admin.UserDto;
 import com.backend.app.service.UserService;
 import com.backend.app.service.account.AccountService;
 import com.backend.app.service.admin.AdminService;
@@ -30,17 +30,17 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping(value="/report/all")
-    public List<User> getAllRecentUsers(){
+    public List<UserDto> getAllRecentUsers(){
         return adminService.getAllUsers();
     }
 
     @GetMapping(value = "/report/account_by_user/{id}")
-    public List<Account> getAccountReport(@PathVariable long id) {
+    public List<ExtendedAccountDto> getAccountReport(@PathVariable long id) {
         return adminService.getAccountReportByUserId(id);
     }
 
     @GetMapping(value = "/report/order_by_account/{id}")
-    public List<CurrencyOrder> getOrderReport(@PathVariable long id){
+    public List<ExtendedOrderDto> getOrderReport(@PathVariable long id){
         return adminService.getOrderReportByAccountId(id);
     }
 }

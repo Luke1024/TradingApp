@@ -43,6 +43,10 @@ public class User {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }
