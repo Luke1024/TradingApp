@@ -4,8 +4,7 @@ import com.backend.app.domain.dto.admin.ExtendedAccountDto;
 import com.backend.app.domain.dto.admin.ExtendedOrderDto;
 import com.backend.app.domain.dto.admin.UserDto;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.CurrencyOrder;
-import com.backend.app.domain.entity.User;
+import com.backend.app.domain.entity.AppUser;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +25,16 @@ public class AdminService {
     private AccountRepository accountRepository;
 
     public List<UserDto> getAllUsers(){
-        Iterable<User> users = userRepository.findAll();
+        Iterable<AppUser> users = userRepository.findAll();
         List<UserDto> userDtos = new ArrayList<>();
-        for(User user : users){
-            userDtos.add(new UserDto(user.getId(), user.getToken(), user.getUserCreationTime()));
+        for(AppUser appUser : users){
+            userDtos.add(new UserDto(appUser.getId(), appUser.getToken(), appUser.getUserCreationTime()));
         }
         return userDtos;
     }
 
     public List<ExtendedAccountDto> getAccountReportByUserId(long id){
-        Optional<User> userOptional = userRepository.findById(id);
+        Optional<AppUser> userOptional = userRepository.findById(id);
         if(userOptional.isPresent()){
             return userOptional.get().getAccounts().stream().map(account -> new ExtendedAccountDto(
                     account.getId(),

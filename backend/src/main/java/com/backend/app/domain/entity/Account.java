@@ -25,41 +25,41 @@ public class Account {
     private List<CurrencyOrder> currencyOrders = new ArrayList<>();
 
     @ManyToOne()
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @JoinColumn(name = "APPUSER_ID")
+    private AppUser appUser;
     private AccountStatus accountStatus;
     private LocalDateTime creationDate;
 
     public Account() {
     }
 
-    public Account(String accountName, int leverage, double balance, User user, AccountStatus accountStatus) {
+    public Account(String accountName, int leverage, double balance, AppUser appUser, AccountStatus accountStatus) {
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
-        setUser(user);
+        setAppUser(appUser);
         this.accountStatus = accountStatus;
         this.creationDate = LocalDateTime.now();
     }
 
     public Account(long id, String accountName, int leverage,
-                   double balance, List<CurrencyOrder> currencyOrders, User user, AccountStatus accountStatus) {
+                   double balance, List<CurrencyOrder> currencyOrders, AppUser appUser, AccountStatus accountStatus) {
         this.id = id;
         this.accountName = accountName;
         this.leverage = leverage;
         this.balance = balance;
         this.currencyOrders = currencyOrders;
-        this.user = user;
+        this.appUser = appUser;
         this.accountStatus = accountStatus;
     }
 
-    public void setUser(User user){
-        if(user != null){
-            user.getAccounts().add(this);
-        } else if(this.user != null){
-            this.user.getAccounts().remove(this);
+    public void setAppUser(AppUser appUser){
+        if(appUser != null){
+            appUser.getAccounts().add(this);
+        } else if(this.appUser != null){
+            this.appUser.getAccounts().remove(this);
         }
-        this.user = user;
+        this.appUser = appUser;
     }
 
     public void addOrder(CurrencyOrder currency_order){
@@ -88,8 +88,8 @@ public class Account {
         return currencyOrders;
     }
 
-    public User getUser() {
-        return user;
+    public AppUser getAppUser() {
+        return appUser;
     }
 
     public AccountStatus getAccountStatus() {
@@ -123,7 +123,7 @@ public class Account {
                 ", accountName='" + accountName + '\'' +
                 ", leverage=" + leverage +
                 ", balance=" + balance +
-                ", user=" + user +
+                ", user=" + appUser +
                 '}';
     }
 }

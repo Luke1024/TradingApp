@@ -3,14 +3,13 @@ package com.backend.app.mapper;
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.dto.AccountInfoDto;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.User;
+import com.backend.app.domain.entity.AppUser;
 import com.backend.app.domain.enums.AccountStatus;
 import com.backend.app.repository.AccountRepository;
 import com.backend.app.service.account.AccountCorrectnessGuardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,14 +30,14 @@ public class AccountMapper {
         return accounts.stream().map(account -> mapToExistingAccountDto(account)).collect(Collectors.toList());
     }
 
-    public Optional<Account> mapToNewAccount(AccountDto accountDto, User user){
+    public Optional<Account> mapToNewAccount(AccountDto accountDto, AppUser appUser){
         AccountInfoDto accountInfoDto = accountCorrectnessGuardService.getInfo(accountDto);
         if(accountInfoDto.isStatus()) {
             return Optional.of(new Account(
                     accountDto.getAccountName(),
                     accountDto.getLeverage(),
                     accountDto.getBalance(),
-                    user,
+                    appUser,
                     AccountStatus.OPENED));
         } else {
             return Optional.empty();

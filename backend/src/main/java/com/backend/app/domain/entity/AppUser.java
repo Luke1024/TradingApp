@@ -4,14 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NamedNativeQuery(
-        name = "User.findByToken",
-        query = "SELECT * FROM user WHERE token=:TOKEN",
-        resultClass = User.class
-)
-
 @Entity
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,17 +15,17 @@ public class User {
     private LocalDateTime userCreationTime;
 
     @OneToMany(targetEntity = Account.class,
-        mappedBy = "user",
+        mappedBy = "appUser",
         cascade = CascadeType.ALL,
         fetch = FetchType.EAGER)
     @OrderColumn
     private List<Account> accounts;
 
-    public User() {
+    public AppUser() {
 
     }
 
-    public User(String token, List<Account> accounts) {
+    public AppUser(String token, List<Account> accounts) {
         this.userCreationTime = LocalDateTime.now();
         this.token = token;
         this.accounts = accounts;
@@ -39,7 +33,7 @@ public class User {
 
     public void addAcount(Account account){
         if(account != null) {
-            account.setUser(this);
+            account.setAppUser(this);
         }
     }
 

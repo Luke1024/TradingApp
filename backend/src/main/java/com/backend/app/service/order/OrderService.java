@@ -2,8 +2,8 @@ package com.backend.app.service.order;
 
 import com.backend.app.domain.dto.OrderDto;
 import com.backend.app.domain.entity.Account;
+import com.backend.app.domain.entity.AppUser;
 import com.backend.app.domain.entity.CurrencyOrder;
-import com.backend.app.domain.entity.User;
 import com.backend.app.domain.enums.OrderState;
 import com.backend.app.mapper.OrderMapper;
 import com.backend.app.repository.OrderRepository;
@@ -41,7 +41,7 @@ public class OrderService {
     }
 
     public List<CurrencyOrder> getAllOpenOrdersByTokenAndAccountId(String token, long account_id){
-        Optional<User> userOptional = userService.getUser(token);
+        Optional<AppUser> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
             List<Account> accounts = userOptional.get().getAccounts();
             Optional<Account> accountToFound = Optional.empty();
@@ -60,7 +60,7 @@ public class OrderService {
     }
 
     public List<CurrencyOrder> getAllClosedOrdersByTokenAndAccountId(String token, long account_id){
-        Optional<User> userOptional = userService.getUser(token);
+        Optional<AppUser> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
             List<Account> accounts = userOptional.get().getAccounts();
             Optional<Account> accountToFound = Optional.empty();

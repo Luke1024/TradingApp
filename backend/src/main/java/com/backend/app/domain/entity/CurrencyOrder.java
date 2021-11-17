@@ -6,12 +6,6 @@ import com.backend.app.domain.enums.ShortLong;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NamedNativeQuery(
-        name = "CurrencyOrder.findByIdArchivedFalse",
-        query = "SELECT * FROM currency_order WHERE id=:ID AND order_state!=3;",
-        resultClass = CurrencyOrder.class
-)
-
 @Entity
 public class CurrencyOrder {
 

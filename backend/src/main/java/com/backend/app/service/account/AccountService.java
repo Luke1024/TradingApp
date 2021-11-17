@@ -2,7 +2,7 @@ package com.backend.app.service.account;
 
 import com.backend.app.domain.dto.AccountDto;
 import com.backend.app.domain.entity.Account;
-import com.backend.app.domain.entity.User;
+import com.backend.app.domain.entity.AppUser;
 import com.backend.app.domain.enums.AccountStatus;
 import com.backend.app.mapper.AccountMapper;
 import com.backend.app.repository.AccountRepository;
@@ -46,10 +46,10 @@ public class AccountService {
     }
 
     public List<Account> getOpenedAccountsByToken(String token){
-        Optional<User> userOptional = userService.getUser(token);
+        Optional<AppUser> userOptional = userService.getUser(token);
         if(userOptional.isPresent()){
-            User user = userOptional.get();
-            return user.getAccounts().stream()
+            AppUser appUser = userOptional.get();
+            return appUser.getAccounts().stream()
                     .filter(account -> account.getAccountStatus()== AccountStatus.OPENED).collect(Collectors.toList());
         } else {
             return new ArrayList<>();
@@ -57,10 +57,10 @@ public class AccountService {
     }
 
     public Optional<Account> saveAccount(String token, AccountDto accountDto){
-        Optional<User> userOptional = userService.getUser(token);
+        Optional<AppUser> userOptional = userService.getUser(token);
         if(userOptional.isPresent()) {
-            User user = userOptional.get();
-            Optional<Account> accountOptional = accountMapper.mapToNewAccount(accountDto, user);
+            AppUser appUser = userOptional.get();
+            Optional<Account> accountOptional = accountMapper.mapToNewAccount(accountDto, appUser);
             if(accountOptional.isPresent()) {
                 Account account = accountRepository.save(accountOptional.get());
                 return Optional.of(account);
