@@ -61,14 +61,17 @@ public class DataPointsRetrieverService {
     }
 
     private List<DataPoint> parsePoints(Map<String, DataPointWrapper> timeSeries){
-        List<DataPoint> dataPointsParsed = new ArrayList<>();
-        for(String key : timeSeries.keySet()) {
-            Optional<DataPoint> dataPointOptional = parsePoint(key, timeSeries.get(key));
-            if (dataPointOptional.isPresent()) {
-                dataPointsParsed.add(dataPointOptional.get());
+        if( timeSeries != null) {
+            List<DataPoint> dataPointsParsed = new ArrayList<>();
+            for (String key : timeSeries.keySet()) {
+                Optional<DataPoint> dataPointOptional = parsePoint(key, timeSeries.get(key));
+                if (dataPointOptional.isPresent()) {
+                    dataPointsParsed.add(dataPointOptional.get());
+                }
             }
+            return dataPointsParsed;
         }
-        return dataPointsParsed;
+        return new ArrayList<>();
     }
 
     private Optional<DataPoint> parsePoint(String key, DataPointWrapper pointWrapper){

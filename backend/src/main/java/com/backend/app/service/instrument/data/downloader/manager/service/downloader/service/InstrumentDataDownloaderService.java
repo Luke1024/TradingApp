@@ -58,10 +58,14 @@ public class InstrumentDataDownloaderService {
     }
 
     public String getDataBaseInfo(){
-        int databaseSize = dataPointMockedRepository.getAllDataPoints().size();
-        DataPoint lastDataPoint = dataPointMockedRepository.getAllDataPoints().get(databaseSize-1);
-        LocalDateTime lastTimeStamp = lastDataPoint.getTimeStamp();
-        return "In database there is " + databaseSize + " datapoints. Last timestamp is from " + lastTimeStamp;
+        if(dataPointMockedRepository.getAllDataPoints().isEmpty()){
+            return "Database is empty.";
+        } else {
+            int databaseSize = dataPointMockedRepository.getAllDataPoints().size();
+            DataPoint lastDataPoint = dataPointMockedRepository.getAllDataPoints().get(databaseSize - 1);
+            LocalDateTime lastTimeStamp = lastDataPoint.getTimeStamp();
+            return "In database there is " + databaseSize + " datapoints. Last timestamp is from " + lastTimeStamp;
+        }
     }
 
     @Scheduled(cron ="0 0/5 * * * *")

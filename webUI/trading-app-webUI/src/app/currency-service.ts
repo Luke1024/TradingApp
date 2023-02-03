@@ -15,7 +15,8 @@ import { OrderResponseDto } from "./models/order-response"
     providedIn: 'root'
   })
 export class CurrencyService {
-    rootUrl = 'http://localhost:8081/trading/'
+    //rootUrl = "http://ec2-3-73-59-212.eu-central-1.compute.amazonaws.com:8083/trading/";
+    rootUrl = 'http://localhost:8083/trading/'
     //rootUrl = 'https://protected-stream-68029.herokuapp.com/trading/'
     timeSeriesUrl =  this.rootUrl + 'currencydata/'
 

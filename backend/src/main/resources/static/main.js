@@ -747,8 +747,9 @@ __webpack_require__.r(__webpack_exports__);
 class CurrencyService {
     constructor(http) {
         this.http = http;
-        //rootUrl = 'http://localhost:8080/trading/'
-        this.rootUrl = 'https://protected-stream-68029.herokuapp.com/trading/';
+        //rootUrl = "http://ec2-3-73-59-212.eu-central-1.compute.amazonaws.com:8083/trading/";
+        this.rootUrl = 'http://localhost:8083/trading/';
+        //rootUrl = 'https://protected-stream-68029.herokuapp.com/trading/'
         this.timeSeriesUrl = this.rootUrl + 'currencydata/';
         this.tokenUrl = this.rootUrl + "token/";
         //account service urls

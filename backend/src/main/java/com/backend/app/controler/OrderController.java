@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
+//@CrossOrigin(origins = "http://ec2-3-73-59-212.eu-central-1.compute.amazonaws.com/")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/trading")
 public class OrderController {

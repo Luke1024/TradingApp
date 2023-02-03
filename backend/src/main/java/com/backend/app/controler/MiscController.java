@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+//@CrossOrigin(origins = "http://ec2-3-73-59-212.eu-central-1.compute.amazonaws.com/")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/trading")
 public class MiscController {
